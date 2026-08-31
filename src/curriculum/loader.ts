@@ -60,7 +60,10 @@ const markdownModules = normalizeMarkdownModules(
 let lessonsByIdCache: Map<string, LessonDefinition> | undefined;
 
 export function loadCurriculum(): CurriculumContent {
-  return filterVisibleCurriculum(loadFullCurriculum(), SHOW_UPCOMING_LESSONS);
+  return filterVisibleCurriculum(
+    loadFullCurriculum(),
+    import.meta.env.DEV && SHOW_UPCOMING_LESSONS
+  );
 }
 
 /**
