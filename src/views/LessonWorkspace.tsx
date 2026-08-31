@@ -198,6 +198,7 @@ export function LessonWorkspace({ lesson, tab, onSelectTab }: LessonWorkspacePro
   return (
     <>
       <main id="main" tabIndex={-1} className={styles.page} data-tab={tab}>
+        {/* eslint-disable jsx-a11y/no-noninteractive-tabindex -- scrollable panel is an intentional tab stop, same as the terminal */}
         <section
           ref={instructionsRef}
           tabIndex={0}
@@ -213,6 +214,7 @@ export function LessonWorkspace({ lesson, tab, onSelectTab }: LessonWorkspacePro
             {feedback}
           </div>
         </section>
+        {/* eslint-enable jsx-a11y/no-noninteractive-tabindex */}
 
         <div className={styles.terminal}>
           <VimTerminal lesson={lesson} onUpdate={onUpdate} viewRef={viewRef} />
