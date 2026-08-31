@@ -498,6 +498,53 @@ function toModel(
 const SCENE_ROWS = 20;
 const SCENE_COLS_FALLBACK = 60;
 
+/**
+ * Derive a screen-reader announcement for character-by-character input changes
+ * in command-line mode (`:`, `/`) or shell mode. The engine announces mode
+ * transitions, but individual keystrokes within the input line produce no
+ * announcement, leaving VoiceOver silent while the user types.
+ */
+function inputAnnouncement(prev: EditorState, next: EditorState): string {
+  if (next.mode === 'command-line' && prev.mode === 'command-line') {
+    const beforeLen = textLength(prev.commandLine);
+    const afterLen = textLength(next.commandLine);
+    if (afterLen > beforeLen && next.commandLineCursor > 0) {
+      const added = afterLen - beforeLen;
+      const start = next.commandLineCursor - added;
+      if (start >= 0) {
+        return textSlice(next.commandLine, start, next.commandLineCursor);
+      }
+    }
+    if (afterLen < beforeLen) {
+      const removed = beforeLen - afterLen;
+      return textSlice(prev.commandLine, next.commandLineCursor, next.commandLineCursor + removed);
+    }
+    return '';
+  }
+
+  if (next.mode === 'shell' && prev.mode === 'shell') {
+    const before = prev.shell?.input ?? '';
+    const after = next.shell?.input ?? '';
+    const beforeLen = textLength(before);
+    const afterLen = textLength(after);
+    const nextCursor = next.shell?.cursorPos ?? afterLen;
+    if (afterLen > beforeLen && nextCursor > 0) {
+      const added = afterLen - beforeLen;
+      const start = nextCursor - added;
+      if (start >= 0) {
+        return textSlice(after, start, nextCursor);
+      }
+    }
+    if (afterLen < beforeLen) {
+      const removed = beforeLen - afterLen;
+      return textSlice(before, nextCursor, nextCursor + removed);
+    }
+    return '';
+  }
+
+  return '';
+}
+
 export function createVimTerminalView(options: VimTerminalViewOptions): VimTerminalView {
   const engine = options.engine ?? vimLessonEngine;
   const controller = createLessonProgress(options.lesson, engine);
@@ -699,6 +746,16 @@ export function createVimTerminalView(options: VimTerminalViewOptions): VimTermi
         startLoop();
       }
 
+      // Announce command-line/shell input changes for screen readers.
+      // The engine announces mode transitions; this fills the gap for
+      // character-level typing that VoiceOver otherwise cannot convey.
+      if (!progress.announcement) {
+        const typed = inputAnnouncement(previousState, progress.state);
+        if (typed) {
+          progress = { ...progress, announcement: typed };
+        }
+      }
+
       render();
       emit();
     },
@@ -708,6 +765,14 @@ export function createVimTerminalView(options: VimTerminalViewOptions): VimTermi
       progress = { ...progress, state: result.state, announcement: '' };
       progress = regradeProgress(progress, options.lesson, engine, visited);
       trackHintAttempts(previousState, progress.state);
+
+      if (!progress.announcement) {
+        const typed = inputAnnouncement(previousState, progress.state);
+        if (typed) {
+          progress = { ...progress, announcement: typed };
+        }
+      }
+
       render();
       emit();
     },

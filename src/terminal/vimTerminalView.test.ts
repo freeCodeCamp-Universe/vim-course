@@ -723,4 +723,47 @@ describe('createVimTerminalView', () => {
 
     expect(q.getByTestId('terminal-pending')).toHaveTextContent('');
   });
+
+  it('should announce each character typed in command-line mode', () => {
+    const { q, type } = mount(lab);
+
+    type(':');
+    // The mode-entry announcement may vary; clear it by reading.
+    const live = q.getByTestId('terminal-announcement');
+
+    type('w');
+    expect(live).toHaveTextContent('w');
+
+    type('q');
+    expect(live).toHaveTextContent('q');
+  });
+
+  it('should announce the deleted character on Backspace in command-line mode', () => {
+    const { q, type } = mount(lab);
+
+    type(':', 'a', 'b');
+    const live = q.getByTestId('terminal-announcement');
+    expect(live).toHaveTextContent('b');
+
+    type('Backspace');
+    expect(live).toHaveTextContent('b');
+  });
+
+  it('should announce characters typed in shell mode', () => {
+    const shellLesson: AuthoredLessonDefinition = {
+      ...lab,
+      config: { ...lab.config, start: 'shell' },
+    };
+    const { q, type } = mount(shellLesson);
+    const live = q.getByTestId('terminal-announcement');
+
+    type('v');
+    expect(live).toHaveTextContent('v');
+
+    type('i');
+    expect(live).toHaveTextContent('i');
+
+    type('m');
+    expect(live).toHaveTextContent('m');
+  });
 });
