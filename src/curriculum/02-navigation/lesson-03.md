@@ -50,7 +50,7 @@ In 1991, Vim (short for "Vi IMproved") was released, adding essential modern fea
 
 ```json
 {
-  "cursor": [1, 1],
+  "cursor": [1, 10],
   "disallowedCommands": ["@arrows"],
   "checklist": [
     {

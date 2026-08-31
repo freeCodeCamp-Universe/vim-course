@@ -29,7 +29,9 @@ The learner distinguishes `i`'s and `a`'s cursor placement and knows `A` always 
 
 The `i` command inserts text _before_ the cursor.
 
-To add text _after_ the cursor, you use `a` (short for "append"). And to add text to the end of the line, you use `A`.
+To add text _after_ the cursor, you use the lowercase `a` command (short for "append"). When you press <kbd>a</kbd>, the cursor moves one column to the right and enters insert mode, so you can start typing immediately.
+
+To add text to the end of the line, you use the uppercase `A` command.
 
 Same as `i`, these commands don't require pressing <kbd>Enter</kbd> after them.
 

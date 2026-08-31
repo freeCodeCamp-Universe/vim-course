@@ -37,7 +37,7 @@ You're on the `abc.md` file.
 
 This lesson provides a `keyboard-history.md` file with an opening sentence in place, copied from `abc.md`. Copy the remaining content from `abc.md` into the file, then save it.
 
-Note that the `yy` command only works on one line at a time, so you will need a round trip: yank a line, then switch to the other file and paste it, then repeat for the next line.
+Note that the `yy` command only works on one line at a time, so you'll need a round trip: yank a line, then switch to the other file and paste it, then repeat for the next line.
 
 # --files--
 

@@ -30,7 +30,7 @@ The learner reliably switches into and out of insert mode and knows how to confi
 
 By default, Vim starts in normal mode. The mode is for navigating and executing commands, and key presses in this mode are interpreted as actions rather than text input.
 
-To edit text, you need to enter insert mode. You can do this by pressing <kbd>i</kbd> (short for "insert"), _without_ pressing <kbd>Enter</kbd>. You will see an `--INSERT--` text shown at the bottom of the terminal, indicating the mode has changed.
+To edit text, you need to enter insert mode. You can do this by pressing <kbd>i</kbd> (short for "insert"), _without_ pressing <kbd>Enter</kbd>. You'll see an `--INSERT--` text shown at the bottom of the terminal, indicating the mode has changed.
 
 Pressing <kbd>Esc</kbd> will return you to normal mode. You can confirm this by noticing that the `--INSERT--` indicator disappears.
 
