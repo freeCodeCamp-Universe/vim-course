@@ -4,6 +4,7 @@
  * sit side by side at full height.
  */
 .page {
+  position: relative;
   padding: 0;
   flex: 1;
   min-block-size: 0;
@@ -12,6 +13,26 @@
   flex-direction: column;
   overflow: hidden;
   overscroll-behavior: contain;
+}
+
+/*
+ * The default outline expands outside the border box, adding visible width and
+ * triggering a scrollbar. A negative outline-offset would be clipped by child
+ * panels that use overflow: hidden. Instead, an absolutely-placed pseudo-element
+ * draws an inset box-shadow ring above all children without affecting layout or
+ * blocking pointer events.
+ */
+.page:focus-visible {
+  outline: none;
+}
+
+.page:focus-visible::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  inset: 1px;
+  box-shadow: inset 0 0 0 2px var(--color-focus);
+  pointer-events: none;
 }
 
 /* ── Prose page (no terminal) ────────────────────────────────────────────── */
