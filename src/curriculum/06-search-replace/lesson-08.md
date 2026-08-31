@@ -61,7 +61,7 @@ The files use the term "fork" and the symbol `𐂐` incorrectly in several place
 ```markdown
 In the 1970s, the PDP-11 memory constraints were 64 KB max, meaning it could only load a file smaller than 64 KB. At the time, the standard editor, `ed`, included a search functionality, but required loading files into memory. The size constraint was an obstacle as users couldn't open large datasets and run searches on the computer.
 
-To solve this, Ken Thompson extracted the search logic from `ed` into a standalone tool called `grep`, named after `ed`'s internal command sequence `g/re/p` (global / regular expression / print). The key difference was how each program handled files: `ed` loaded the entire file into memory before doing anything, while `grep` streamed through it line by line, printing matches as it went. This meant `grep` could search files far larger than the PDP-11's memory ceiling.
+To solve this, Ken Thompson extracted the search logic from `ed` into a standalone tool called `grep`, named after `ed`'s internal command sequence `g/re/p` (global / regular expression / print). The key difference was how each program handled files: `ed` loaded the entire file into memory before doing anything, while `grep` streamed through the file line by line, printing matches as it went. This meant `grep` could search files far larger than the PDP-11's memory ceiling.
 
 As a standalone utility, `grep` could be scripted and chained with other Unix commands. Users could fork `grep` into other programs, letting them build more complex workflows.
 ```
