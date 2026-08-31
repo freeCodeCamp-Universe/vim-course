@@ -27,9 +27,9 @@ The learner adds a new line without manually positioning the cursor first, reinf
 
 # --instructions--
 
-With `i`, `a`, and `A`, you can add a new line by moving the cursor to the end of the current line and pressing <kbd>Enter</kbd>. But there's a faster way.
+`i`, `a`, and `A` are useful for adding text to the current line and at a specific position.
 
-The `o` command opens a new line directly below the current one, regardless of the cursor's position on the line, and puts you straight into insert mode.
+If you want to start editing on a new line, you can use the `o` command. It opens a new line directly below the current one, regardless of the cursor's position on the line, and puts you straight into insert mode.
 
 ---
 
