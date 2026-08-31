@@ -2050,6 +2050,7 @@ describe('loadCurriculum', () => {
       'editing',
       'visual-mode',
       'search-replace',
+      'command-grammar',
       'capstone',
     ]);
     expect(curriculum.modules[0].title).toBe('Modes, insert, save, quit');

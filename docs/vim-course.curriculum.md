@@ -101,7 +101,7 @@ Source: [file](../src/curriculum/01-modes/lesson-04.md)
   - `i` enters insert mode just before the cursor.
   - The status line at the bottom of the screen shows `--INSERT--` while insert mode is active — the way to confirm at a glance which mode you're in.
   - `Esc` returns to normal mode from insert mode.
-- **Activity:** Open `about-vim.md` with `vim about-vim.md` (a recap from the previous lesson), press `i`, notice the `--INSERT--` indicator appear at the bottom of the screen, then press `Esc` and notice it disappear.
+- **Activity:** Open `about-vim.md` with `vim about-vim.md` (a recap from the previous lesson), press <kbd>i</kbd>, notice the `--INSERT--` indicator appear at the bottom of the screen, then press <kbd>Esc</kbd> and notice it disappear.
 - **Goal:** The learner reliably switches into and out of insert mode and knows how to confirm their current mode from the status line.
 
 #### 5. **More ways in: a and A** — type: `learn`
@@ -115,7 +115,7 @@ Source: [file](../src/curriculum/01-modes/lesson-05.md)
   - Recap: `i` enters insert mode just before the cursor.
   - `a` enters insert mode just after the cursor — one column to the right of `i`.
   - `A` jumps to the end of the line and enters insert mode there, regardless of the cursor's column; it only works as a command from normal mode, so `Esc` is required before using it.
-- **Activity:** Open `about-vim.md` with `vim about-vim.md` (a recap from earlier lessons). Press `i` again to reinforce last lesson, then `Esc`. Press `a` and notice the one-column difference from `i`, then `Esc`. Press `A` and notice it jumps to the end of the line regardless of cursor position.
+- **Activity:** Open `about-vim.md` with `vim about-vim.md` (a recap from earlier lessons). Press <kbd>i</kbd> again to reinforce last lesson, then <kbd>Esc</kbd>. Press <kbd>a</kbd> and notice the one-column difference from <kbd>i</kbd>, then <kbd>Esc</kbd>. Press <kbd>A</kbd> and notice it jumps to the end of the line regardless of cursor position.
 - **Goal:** The learner distinguishes `i`'s and `a`'s cursor placement and knows `A` always targets the end of the line.
 - **Checklist note:** Only one `Return to normal mode` item, at the end. Requiring `a` and then `A` already proves the learner left each prior insert session, because both only register as commands from normal mode (a capital "A" typed in insert mode records an insert action, which `command` matching skips). Two identical `Esc` items would both tick on the first `Esc`, since `command` is an existence check.
 
@@ -129,7 +129,7 @@ Source: [file](../src/curriculum/01-modes/lesson-06.md)
 - **Concept:**
   - The colon opens command-line mode, where file operations live.
   - `:w` writes the buffer to disk without closing it — the status line confirms the write, and you stay in normal mode, ready to keep editing.
-  - The Down arrow key moves the cursor to the next line — handy here since Vim's own movement keys haven't been taught yet.
+  - The `Down` arrow key moves the cursor to the next line — handy here since Vim's own movement keys haven't been taught yet.
 - **Activity:** Press Down once to reach the last line, fix the "useed" typo into "used", then save with `:w`.
 - **Goal:** The learner saves work without ending the session.
 
@@ -365,7 +365,7 @@ Source: [file](../src/curriculum/03-opening-files/lesson-01.md)
   - Recap: a known file can be opened with `vim <filename>` from the shell or with `:e <filename>` from inside a running Vim session (module 01).
   - `ex`'s colon prompt is where that syntax comes from, and it's still the gateway into Vim's command-line mode today.
   - `Ctrl-g` reports which file is currently open, without changing anything or requiring Enter — useful once several files have been opened in the same session.
-- **Activity:** Open `colon.md` either by launching Vim with `vim colon.md` or by starting Vim and using `:e colon.md`, then press `Ctrl-g` to see which file is open.
+- **Activity:** Open `colon.md` either by launching Vim with `vim colon.md` or by starting Vim and using `:e colon.md`, then press <kbd>Ctrl</kbd> + <kbd>g</kbd> to see which file is open.
 - **Goal:** The learner refreshes both ways to open a known file, picks up where the colon prompt itself comes from, and learns how to check which file they're on.
 
 #### 2. **Opening a file that doesn't exist** — type: `learn`
@@ -392,8 +392,8 @@ Source: [file](../src/curriculum/03-opening-files/lesson-03.md)
   - `:Explore` opens a read-only directory listing inside the editor.
   - `:Explore` must be capitalized. Vim requires user-defined commands like this one to start with an uppercase letter, so `:explore` doesn't exist at all and errors instead.
   - The listing reuses ordinary movement keys — `j`/`k` move the selection down/up, no new motion commands to learn.
-  - Pressing `Enter` on a highlighted entry opens that file, the same result as typing `:e <filename>` yourself.
-- **Activity:** From the empty `exclamation.md` buffer (recap of last lesson's mistaken guess), open the directory listing with `:Explore`, move to `exclamation-point.md` with `j`/`k`, and open it with `Enter`. Then browse into the `letters` subdirectory and open `G.md`.
+  - Pressing <kbd>Enter</kbd> on a highlighted entry opens that file, the same result as typing `:e <filename>` yourself.
+- **Activity:** From the empty `exclamation.md` buffer (recap of last lesson's mistaken guess), open the directory listing with `:Explore`, move to `exclamation-point.md` with `j`/`k`, and open it with <kbd>Enter</kbd>. Then browse into the `letters` subdirectory and open `G.md`.
 - **Goal:** The learner finds and opens files whose exact names or locations they didn't already know, instead of guessing at `:e`.
 
 #### 4. **Practice: find the right file and fix it** — type: `practice`

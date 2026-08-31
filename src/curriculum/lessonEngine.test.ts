@@ -659,7 +659,7 @@ describe('authored lessons end to end', () => {
 
     const result = vimLessonEngine.feed(state, 'Enter');
 
-    expect(result.state.commandLine).toBe('§');
+    expect(result.state.commandLine).toBe('');
     expect(result.attempted).toBe(false);
   });
 });

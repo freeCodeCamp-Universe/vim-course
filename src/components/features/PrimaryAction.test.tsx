@@ -29,7 +29,7 @@ describe('PrimaryAction', () => {
     const user = userEvent.setup();
     const { onAdvance, onBlocked } = renderAction({ complete: true });
 
-    expect(screen.getByRole('button', { name: /next/i })).toHaveClass(styles.primary);
+    expect(screen.getByRole('button', { name: /next/i })).toHaveClass(styles.cta);
     await user.click(screen.getByRole('button', { name: /next/i }));
     expect(onAdvance).toHaveBeenCalledOnce();
     expect(onBlocked).not.toHaveBeenCalled();
