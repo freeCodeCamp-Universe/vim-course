@@ -16,24 +16,25 @@ describe('Checklist', () => {
     expect(within(list).getAllByRole('listitem')).toHaveLength(2);
   });
 
-  it('should convey each state by text, not color alone', () => {
+  it('should convey each state by text, announced before the label', () => {
     render(<Checklist items={items('not-done', 'completed', 'error')} />);
 
     const [notDone, completed, error] = screen.getAllByRole('listitem');
-    expect(within(notDone).getByText('(not done)')).toBeInTheDocument();
-    expect(within(completed).getByText('(done)')).toBeInTheDocument();
-    expect(within(error).getByText('(not yet)')).toBeInTheDocument();
-    expect(notDone).toHaveTextContent(/not done/i);
-    expect(completed).toHaveTextContent(/done/i);
-    expect(error).toHaveTextContent(/not yet/i);
+
+    // Status text precedes the label in the accessible reading order.
+    expect(notDone).toHaveTextContent('(not done) step 1');
+    expect(completed).toHaveTextContent('(done) step 2');
+    expect(error).toHaveTextContent('(not yet) step 3');
+
+    // Icons are decorative, not exposed as images.
     expect(within(notDone).queryByRole('img')).not.toBeInTheDocument();
     expect(within(completed).queryByRole('img')).not.toBeInTheDocument();
     expect(within(error).queryByRole('img')).not.toBeInTheDocument();
-    // Each state carries a distinct status marker (drives a distinct icon shape, not color).
+
+    // Each state carries a distinct status marker (drives a distinct icon shape).
     expect(notDone).toHaveAttribute('data-status', 'not-done');
     expect(completed).toHaveAttribute('data-status', 'completed');
     expect(error).toHaveAttribute('data-status', 'error');
-    expect(within(error).getByText('(not yet)')).toBeInTheDocument();
   });
 
   it('should announce a state change once via the live region', () => {

@@ -114,8 +114,8 @@ export function Checklist({
               <StatusIcon status={item.status} />
             </span>
             <div className={styles.body}>
+              <span className="sr-only">{`(${STATUS_TEXT[item.status]})`}</span>{' '}
               <span className={styles.label}>{renderInline(item.label)}</span>
-              <span className="sr-only">{`(${STATUS_TEXT[item.status]})`}</span>
               {item.showHint && item.hint ? (
                 <p className={styles.hint}>{renderInline(item.hint)}</p>
               ) : null}
