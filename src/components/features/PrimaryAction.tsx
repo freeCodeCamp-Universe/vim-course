@@ -59,7 +59,7 @@ export function PrimaryAction({
   return (
     <Button
       type="button"
-      variant="primary"
+      variant="cta"
       onClick={onAdvance}
       aria-keyshortcuts="Meta+Enter Control+Enter"
     >
