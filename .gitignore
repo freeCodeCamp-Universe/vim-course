@@ -1,6 +1,9 @@
 # Node
 node_modules/
 
+# Astro
+.astro/
+
 # Vite / build output
 dist/
 build/
