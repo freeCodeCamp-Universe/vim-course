@@ -60,12 +60,17 @@ export function CurriculumTree({
                     ref={isCurrentState(state) ? currentLessonRef : undefined}
                     onClick={onLessonClick}
                   >
-                    <Marker
-                      state={state}
-                      className={`${variantClass(`marker-${markerState(state)}`)} ${variant}-marker ${variant}-marker-${markerState(state)}`}
+                    <CheckCircleIcon
+                      className={`${variantClass('marker-completed')} ${variant}-marker ${variant}-marker-completed`}
+                    />
+                    <CircleIcon
+                      className={`${variantClass('marker-available')} ${variant}-marker ${variant}-marker-available`}
                     />{' '}
-                    <span className="sr-only">
-                      {isCompletedState(state) ? 'Completed' : 'Not completed'}
+                    <span className={`sr-only ${variant}-status-completed`}>
+                      Completed
+                    </span>
+                    <span className={`sr-only ${variant}-status-available`}>
+                      Not completed
                     </span>{' '}
                     <span className={variantClass('lesson-title')}>
                       {renderInline(lesson.title)}
@@ -81,25 +86,6 @@ export function CurriculumTree({
   );
 }
 
-function Marker({ state, className }: { state: CurriculumTreeLessonState; className: string }) {
-  return isCompletedState(state) ? (
-    <CheckCircleIcon className={className} />
-  ) : (
-    <CircleIcon className={className} />
-  );
-}
-
-function isCompletedState(state: CurriculumTreeLessonState): boolean {
-  return state === 'completed' || state === 'completed-current';
-}
-
 function isCurrentState(state: CurriculumTreeLessonState): boolean {
   return state === 'current' || state === 'completed-current';
-}
-
-function markerState(state: CurriculumTreeLessonState): 'completed' | 'current' | 'available' {
-  if (isCompletedState(state)) {
-    return 'completed';
-  }
-  return state === 'current' ? 'current' : 'available';
 }

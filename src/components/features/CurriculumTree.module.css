@@ -119,10 +119,8 @@ a.drawer-lesson-row:hover {
 
 .home-marker-completed,
 .home-marker-available,
-.home-marker-current,
 .drawer-marker-completed,
-.drawer-marker-available,
-.drawer-marker-current {
+.drawer-marker-available {
   flex-shrink: 0;
   inline-size: var(--icon-size);
   block-size: var(--icon-size);
@@ -133,12 +131,29 @@ a.drawer-lesson-row:hover {
   color: var(--color-fg-primary);
 }
 
-.home-marker-current,
-.drawer-marker-current {
-  color: var(--color-fg-primary);
-}
-
 .home-marker-available,
 .drawer-marker-available {
   color: var(--color-fg-tertiary);
+}
+
+/* Both icons are always in the DOM; CSS toggles visibility based on data-state.
+   Default (available/current): show circle, hide checkmark. */
+.home-lesson .home-marker-completed,
+.drawer-lesson .drawer-marker-completed {
+  display: none;
+}
+
+/* Completed states: show checkmark, hide circle. */
+.home-lesson[data-state='completed'] .home-marker-completed,
+.home-lesson[data-state='completed-current'] .home-marker-completed,
+.drawer-lesson[data-state='completed'] .drawer-marker-completed,
+.drawer-lesson[data-state='completed-current'] .drawer-marker-completed {
+  display: initial;
+}
+
+.home-lesson[data-state='completed'] .home-marker-available,
+.home-lesson[data-state='completed-current'] .home-marker-available,
+.drawer-lesson[data-state='completed'] .drawer-marker-available,
+.drawer-lesson[data-state='completed-current'] .drawer-marker-available {
+  display: none;
 }

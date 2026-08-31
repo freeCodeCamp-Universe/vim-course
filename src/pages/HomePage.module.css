@@ -5,11 +5,6 @@
   padding-block: var(--space-xl) var(--space-2xl);
 }
 
-/* Hide the loader once the island has mounted and rendered content. */
-.page:has(astro-island > *) [data-page-loader] {
-  display: none;
-}
-
 .title {
   font-family: var(--font-sans);
   font-size: var(--text-2xl);

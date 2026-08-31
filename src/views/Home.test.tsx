@@ -24,9 +24,10 @@ describe('Home', () => {
 
     render(<Home modules={modules} orderedLessonIds={['l1', 'l2']} />);
 
-    const completed = screen.getByRole('link', { name: /Enter insert mode/ });
-    expect(completed.closest('[data-lesson-id]')).toHaveAttribute('data-state', 'completed');
-    expect(within(completed).getByText(/completed/i)).toBeInTheDocument();
+    const completedLink = screen.getByRole('link', { name: /Enter insert mode/ });
+    const completedItem = completedLink.closest('[data-lesson-id]');
+    expect(completedItem).toHaveAttribute('data-state', 'completed');
+    expect(within(completedLink).getByText('Completed')).toBeInTheDocument();
     expect(screen.getByText('1/2 lessons completed')).toHaveAttribute('aria-hidden', 'true');
     expect(screen.getByText('1 out of 2 lessons completed')).toHaveClass('sr-only');
     expect(screen.queryByRole('link', { name: 'Continue' })).toBeNull();
