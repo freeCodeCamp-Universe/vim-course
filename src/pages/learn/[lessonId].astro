@@ -2,6 +2,7 @@
 import { getLessonById, loadCurriculum } from '@/curriculum/loader';
 import CourseLayout from '@/layouts/CourseLayout.astro';
 import { LessonPage } from '@/views/LessonPage';
+import loaderStyles from '@/components/base/PageLoader/PageLoader.module.css';
 
 export function getStaticPaths() {
   return loadCurriculum()
@@ -18,5 +19,8 @@ if (!lesson) {
 ---
 
 <CourseLayout title={lesson.title} currentLessonId={lesson.id}>
+  <div class={loaderStyles.loader} aria-label="Loading lesson" data-page-loader>
+    <div class={loaderStyles.spinner}></div>
+  </div>
   <LessonPage lesson={lesson} client:load />
 </CourseLayout>

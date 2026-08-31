@@ -1,0 +1,28 @@
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding-block: var(--space-3xl);
+}
+
+.spinner {
+  inline-size: 2rem;
+  block-size: 2rem;
+  border: 3px solid var(--color-border-secondary);
+  border-block-start-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 1.5s;
+  }
+}

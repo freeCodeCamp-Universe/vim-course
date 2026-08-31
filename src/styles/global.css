@@ -153,6 +153,12 @@ body:has([data-tab]) {
   flex-direction: column;
 }
 
+/* Hide the page loader once the island has mounted and rendered content. */
+body:has([data-lesson-page]) [data-page-loader],
+body:has([data-tab]) [data-page-loader] {
+  display: none;
+}
+
 a {
   text-underline-position: under;
 }
