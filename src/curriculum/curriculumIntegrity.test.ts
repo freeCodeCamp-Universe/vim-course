@@ -2,7 +2,12 @@ import { describe, expect, it } from 'vitest';
 import { enterShell, setVirtualFile, type EditorState } from '@/engine';
 import { loadFullCurriculum } from './loader';
 import { vimLessonEngine, type AllowedInput } from './lessonEngine';
-import { isProseLesson, type AuthoredLessonDefinition, type LessonTest } from './types';
+import {
+  isProseLesson,
+  type AuthoredLessonDefinition,
+  type EvaluateWhen,
+  type LessonTest,
+} from './types';
 
 /**
  * Integrity checks against the **real** authored curriculum, not fixtures. These
@@ -39,36 +44,7 @@ const authored = lessons.filter(
  *    (`:%s` needs its pattern and replacement), so no amount of config-reading
  *    produces the keystrokes. These need a different kind of check, not a fix.
  */
-const KNOWN_UNPLAYABLE = new Map<string, string>([
-  // -- evaluateWhen file-switch: the harness does not navigate to the
-  //    evaluateWhen file before driving the command.
-  [
-    '4.5 Switch to `qwerty.md` and copy the paragraph.',
-    'evaluateWhen requires qwerty.md but harness cannot navigate to it',
-  ],
-
-  // -- Cursor-position dependent: the command is correct but the harness cannot
-  //    navigate to the required cursor position before issuing it.
-  [
-    '4.6 Practice `cw` on any word in `abc.md`.',
-    'cw requires a cursor position and replacement text the harness cannot derive',
-  ],
-
-  // -- Derivation gaps: the command needs arguments the config does not carry
-  //    (file globs for :vimgrep, subcommands for :cdo).
-  [
-    '6.8 Search for `fork` across the files with `:vimgrep`.',
-    ':vimgrep needs a file glob argument the config does not carry',
-  ],
-  [
-    '6.8 Navigate to the next match.',
-    ':cnext depends on a prior :vimgrep the harness cannot drive',
-  ],
-  [
-    '6.8 Navigate to the previous match.',
-    ':cprev depends on a prior :vimgrep the harness cannot drive',
-  ],
-]);
+const KNOWN_UNPLAYABLE = new Map<string, string>();
 
 /** Identify a lesson in assertion messages by position and title, not opaque UUID. */
 function name(lesson: AuthoredLessonDefinition): string {
@@ -183,7 +159,12 @@ function hasContentAssertion(test: LessonTest): boolean {
  * cannot derive keystrokes for.
  */
 function isDrivable(test: LessonTest): boolean {
-  return commandText(test) !== undefined || test.saved === true || test.quit === true;
+  return (
+    commandText(test) !== undefined ||
+    test.saved === true ||
+    test.quit === true ||
+    test.quickfix !== undefined
+  );
 }
 
 /**
@@ -235,10 +216,25 @@ function satisfy(
   state: EditorState,
   lesson: AuthoredLessonDefinition,
   test: LessonTest,
-  allowed?: AllowedInput
+  allowed?: AllowedInput,
+  evaluateWhen?: EvaluateWhen
 ): EditorState {
   let next = state;
   const command = commandText(test);
+
+  // Navigate to the file required by an evaluateWhen gate before driving the
+  // command, so the deferred-evaluation condition is met when requirements are
+  // checked afterward.
+  const evaluateFile = evaluateWhen?.fileOpen;
+  if (evaluateFile && next.activeFilePath !== evaluateFile) {
+    if (next.mode === 'shell') {
+      next = feedKeys(next, commandToKeys(`vim ${evaluateFile}`), allowed);
+    } else if (next.mode === 'explorer') {
+      next = openFromExplorer(next, lesson, evaluateFile);
+    } else {
+      next = feedKeys(next, commandToKeys(':e', evaluateFile), allowed);
+    }
+  }
 
   // Shell-start lessons begin outside Vim. Enter the editor when the requirement
   // needs to operate inside it.
@@ -338,6 +334,18 @@ function satisfy(
     if (test.quit === true) {
       next = feedKeys(next, commandToKeys(':q'), allowed);
     }
+    // A quickfix predicate with `contains` implies a :vimgrep the learner would
+    // type. Synthesize the command from the search pattern; `*` matches every
+    // seeded file in the virtual filesystem.
+    if (test.quickfix?.contains) {
+      if (next.mode === 'shell') {
+        const target = test.file ?? lesson.config.open;
+        if (target) {
+          next = feedKeys(next, commandToKeys(`vim ${target}`), allowed);
+        }
+      }
+      next = feedKeys(next, commandToKeys(`:vimgrep /${test.quickfix.contains}/ *`), allowed);
+    }
   }
 
   if (next.mode === 'insert') {
@@ -416,7 +424,7 @@ describe('curriculum keystroke requirements', () => {
       // Requirements are driven in listed order, which is the order the instructions
       // teach them in and the order a learner would work through.
       for (const requirement of lesson.config.checklist) {
-        state = satisfy(state, lesson, requirement.test, allowed);
+        state = satisfy(state, lesson, requirement.test, allowed, requirement.evaluateWhen);
         vimLessonEngine.checkRequirements(state, lesson).forEach((result, i) => {
           if (result.passed) {
             everPassed.add(i);
@@ -434,7 +442,14 @@ describe('curriculum keystroke requirements', () => {
        * fails both ways is a real problem.
        */
       const passesAlone = (test: LessonTest, index: number): boolean => {
-        const alone = satisfy(vimLessonEngine.seed(lesson), lesson, test, allowed);
+        const req = lesson.config.checklist[index];
+        const alone = satisfy(
+          vimLessonEngine.seed(lesson),
+          lesson,
+          test,
+          allowed,
+          req.evaluateWhen
+        );
         return vimLessonEngine.checkRequirements(alone, lesson)[index].passed;
       };
 

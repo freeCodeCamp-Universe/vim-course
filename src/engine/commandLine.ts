@@ -3,7 +3,7 @@ import { setMode } from './state';
 import type { EditorState } from './types';
 import { runExCommand } from './commands/ex';
 import { runSearch } from './commands/search';
-import { textLength, textSlice } from './text';
+import { isSingleCharacter, textLength, textSlice } from './text';
 
 const ESCAPE_KEYS = new Set(['Escape', 'Esc', 'Ctrl-c']);
 const ENTER_KEYS = new Set(['Enter', 'Return']);
@@ -160,7 +160,7 @@ export function processCommandLineKey(state: EditorState, key: string): CommandR
     };
   }
 
-  if (key.length === 1) {
+  if (isSingleCharacter(key)) {
     const cursor = commandLineCursor(state);
     return {
       state: {
