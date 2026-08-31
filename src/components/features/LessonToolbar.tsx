@@ -1,0 +1,61 @@
+import type { RefObject } from 'react';
+import { isProseLesson, type LessonDefinition } from '@/curriculum/types';
+import type { TabId } from '@/views/LessonWorkspace';
+import { Button } from '@/components/base/Button/Button';
+import styles from './LessonToolbar.module.css';
+
+export interface LessonToolbarProps {
+  lesson: LessonDefinition;
+  tab: TabId;
+  onSelectTab: (tab: TabId) => void;
+  outlineOpen: boolean;
+  onOutlineToggle: () => void;
+  outlineButtonRef: RefObject<HTMLButtonElement | null>;
+}
+
+export function LessonToolbar({
+  lesson,
+  tab,
+  onSelectTab,
+  outlineOpen,
+  onOutlineToggle,
+  outlineButtonRef,
+}: LessonToolbarProps) {
+  const prose = isProseLesson(lesson);
+
+  return (
+    <div className={prose ? styles.toolbar : `${styles.toolbar} ${styles['toolbar-interactive']}`}>
+      {prose ? (
+        <Button
+          variant="primary"
+          ref={outlineButtonRef}
+          aria-expanded={outlineOpen}
+          aria-controls="lesson-outline"
+          onClick={onOutlineToggle}
+          className={styles['outline-button']}
+        >
+          Outline
+        </Button>
+      ) : (
+        <div className={styles.tabgroup}>
+          <button
+            type="button"
+            aria-pressed={tab === 'instructions'}
+            className={`${styles.tab} ${tab === 'instructions' ? styles['tab-active'] : ''}`}
+            onClick={() => onSelectTab('instructions')}
+          >
+            Instructions
+          </button>
+          <button
+            type="button"
+            aria-pressed={tab === 'terminal'}
+            className={`${styles.tab} ${tab === 'terminal' ? styles['tab-active'] : ''}`}
+            onClick={() => onSelectTab('terminal')}
+          >
+            Terminal
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}

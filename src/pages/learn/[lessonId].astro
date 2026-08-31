@@ -1,0 +1,22 @@
+---
+import { getLessonById, loadCurriculum } from '@/curriculum/loader';
+import CourseLayout from '@/layouts/CourseLayout.astro';
+import { LessonPage } from '@/views/LessonPage';
+
+export function getStaticPaths() {
+  return loadCurriculum()
+    .modules.flatMap((module) => module.lessonIds)
+    .map((lessonId) => ({ params: { lessonId } }));
+}
+
+const lesson = getLessonById(Astro.params.lessonId!);
+if (!lesson) {
+  // getStaticPaths only emits ids that resolve, so this is unreachable at build
+  // time; it narrows the type and fails loudly if the two ever drift.
+  throw new Error(`No lesson found for id "${Astro.params.lessonId}"`);
+}
+---
+
+<CourseLayout title={lesson.title} currentLessonId={lesson.id}>
+  <LessonPage lesson={lesson} client:load />
+</CourseLayout>

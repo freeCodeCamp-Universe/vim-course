@@ -1,0 +1,15 @@
+/*
+ * The mount host holds the framework-free terminal, which fills its own height.
+ * A flex column lets the terminal's `block-size: 100%` resolve against the panel
+ * the workspace sizes for it.
+ */
+.host {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  block-size: 100%;
+}
+
+.host :global([data-terminal-hint]) {
+  color: var(--color-success);
+}

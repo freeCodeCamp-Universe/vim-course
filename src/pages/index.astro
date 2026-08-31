@@ -1,0 +1,38 @@
+---
+import { loadCurriculum } from '@/curriculum/loader';
+import type { CurriculumTreeModule } from '@/components/features/CurriculumTree';
+import CourseLayout from '@/layouts/CourseLayout.astro';
+import { Home } from '@/views/Home';
+import { FccLogoIcon } from '@/components/base/Icon';
+import styles from './HomePage.module.css';
+
+const { modules, lessons } = loadCurriculum();
+const titleById = new Map(lessons.map((lesson) => [lesson.id, lesson.title]));
+const treeModules: CurriculumTreeModule[] = modules.map((module, index) => ({
+  number: index + 1,
+  slug: module.slug,
+  title: module.title,
+  lessons: module.lessonIds.map((id) => ({ id, title: titleById.get(id) ?? id })),
+}));
+const orderedLessonIds = modules.flatMap((module) => module.lessonIds);
+---
+
+<CourseLayout>
+  <main id="main" class={styles.page} tabindex="-1">
+    <h1 class={styles.title}>Learn Vim for Terminal Editing</h1>
+    <Home modules={treeModules} orderedLessonIds={orderedLessonIds} client:only="react" />
+  </main>
+  <footer class={styles.footer}>
+    <p class={styles['footer-text']}>
+      <FccLogoIcon className={styles['footer-logo']} />
+      <span>
+        Developed by the <a
+          href="https://www.freecodecamp.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          class={styles['footer-link']}>freeCodeCamp</a
+        > team
+      </span>
+    </p>
+  </footer>
+</CourseLayout>

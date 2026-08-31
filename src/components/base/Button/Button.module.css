@@ -1,0 +1,95 @@
+.button {
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  padding-inline: var(--space-md);
+  padding-block: var(--space-sm);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.button.borderless {
+  border-color: transparent;
+}
+
+.primary {
+  color: var(--gray05);
+  background-color: var(--gray80);
+  border-color: var(--color-fg-primary);
+}
+
+.primary:hover,
+.primary:focus-visible,
+.primary:active,
+.primary[aria-expanded='true'] {
+  background-color: var(--gray05);
+  color: var(--gray80);
+}
+
+:root[data-theme='light'] .primary {
+  color: var(--gray90);
+  background-color: var(--gray10);
+  border-color: var(--color-fg-primary);
+}
+
+:root[data-theme='light'] .primary:hover,
+:root[data-theme='light'] .primary:focus-visible,
+:root[data-theme='light'] .primary:active,
+:root[data-theme='light'] .primary[aria-expanded='true'] {
+  background-color: var(--gray90);
+  color: var(--gray10);
+}
+
+.danger {
+  color: var(--color-danger);
+  background-color: var(--gray80);
+  border-color: var(--color-danger);
+}
+
+.danger:hover,
+.danger:active,
+.danger:focus-visible {
+  color: var(--color-bg-tertiary);
+  border-color: var(--color-danger);
+  background-color: var(--color-danger);
+}
+
+:root[data-theme='light'] .danger {
+  background-color: var(--gray10);
+}
+
+:root[data-theme='light'] .danger:hover,
+:root[data-theme='light'] .danger:active,
+:root[data-theme='light'] .danger:focus-visible {
+  color: var(--color-bg-tertiary);
+  border-color: var(--color-danger);
+  background-color: var(--color-danger);
+}
+
+.cta {
+  position: relative;
+  color: var(--gray90);
+  background-color: var(--yellow40);
+  border: none;
+  text-decoration: none;
+}
+
+.cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  transition: background-color var(--transition-fast);
+}
+
+.cta:hover::after,
+.cta:focus-visible::after,
+.cta:active::after {
+  background-color: rgb(0 0 0 / 12%);
+}
+
+.button:disabled,
+.button[aria-disabled='true'] {
+  color: var(--color-fg-tertiary);
+  cursor: not-allowed;
+}

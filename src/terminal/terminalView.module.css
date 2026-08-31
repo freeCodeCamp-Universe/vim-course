@@ -1,0 +1,241 @@
+.terminal {
+  --terminal-line-height: 1.5rem;
+  --terminal-bg: #15162b;
+  --terminal-fg: #d9d9e3;
+  --terminal-inactive-overlay: rgb(21 22 43 / 40%);
+  --terminal-selection-bg: #315f8f;
+  --terminal-selection-fg: #fff;
+  --terminal-mark-bg: var(--color-accent);
+  --terminal-mark-fg: var(--color-accent-fg);
+  --terminal-qf-location-fg: var(--color-link);
+  --terminal-qf-column-fg: #d4af37;
+  --terminal-gutter-fg: #8ab4f8;
+  --terminal-error-bg: #cc241d;
+  --terminal-error-fg: #fff;
+  --terminal-visited-fg: #22c55e;
+
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  min-block-size: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  font-size: var(--text-sm);
+  line-height: var(--terminal-line-height);
+  background-color: var(--terminal-bg);
+  color: var(--terminal-fg);
+  position: relative;
+}
+
+.header,
+.footer {
+  flex: 0 0 auto;
+  padding-block: var(--space-sm);
+  padding-inline: 2ch;
+}
+
+.footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1ch;
+  padding-inline-end: 2ch;
+  white-space: pre;
+}
+
+.footer-start {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  align-self: flex-end;
+}
+
+.footer-end-col {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+.terminal [hidden] {
+  display: none;
+}
+
+.footer-pending {
+  min-block-size: var(--terminal-line-height);
+}
+
+.footer-pending:empty {
+  visibility: hidden;
+}
+
+/*
+ * Rows soft-wrap, so the screen never scrolls sideways — a terminal has no
+ * horizontal scroll, and Vim's default `wrap` continues a long line on the next
+ * visual line instead.
+ */
+.screen {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  overflow: hidden auto;
+  scrollbar-gutter: stable;
+  padding-block: var(--space-sm);
+  padding-inline: 2ch;
+  outline: none;
+  outline-offset: -2px;
+}
+
+.terminal::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background-color: var(--terminal-inactive-overlay);
+  content: '';
+  pointer-events: none;
+  transition:
+    opacity 120ms ease,
+    visibility 120ms ease;
+}
+
+.terminal:focus-within::after {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.grid {
+  inline-size: 100%;
+  padding-inline-end: var(--terminal-right-inset, 0);
+  box-sizing: border-box;
+}
+
+/* One logical buffer line. */
+.line {
+  display: flex;
+  min-block-size: var(--terminal-line-height);
+}
+
+/*
+ * Line numbers sit beside the text rather than in it, so a selection range and
+ * the cursor column keep counting from the text's first character. The gap
+ * keeps the number column readable without reserving it when numbering is off.
+ */
+.gutter {
+  flex: 0 0 var(--terminal-gutter-width);
+  margin-inline-end: 1ch;
+  color: var(--terminal-gutter-fg);
+  user-select: none;
+  white-space: pre;
+}
+
+/*
+ * `pre-wrap` keeps the buffer's own spacing and indentation while still letting
+ * a long row break; `break-all` breaks it at the column edge mid-word, matching
+ * Vim's default (`linebreak` off) rather than moving whole words down. The zero
+ * `min-inline-size` is what lets a flex item narrower than its content wrap
+ * instead of overflowing.
+ */
+.text {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.selection {
+  background-color: var(--terminal-selection-bg);
+  color: var(--terminal-selection-fg);
+}
+
+.cursor-selection {
+  background-color: var(--color-cursor-bg);
+  color: var(--color-cursor-fg);
+}
+
+.mark {
+  background-color: var(--terminal-mark-bg);
+  color: var(--terminal-mark-fg);
+}
+
+.qf-location {
+  color: var(--terminal-qf-location-fg);
+}
+
+.qf-column {
+  color: var(--terminal-qf-column-fg);
+}
+
+.status-error {
+  background-color: var(--terminal-error-bg);
+  color: var(--terminal-error-fg);
+}
+
+:global([data-theme='light']) .terminal {
+  --terminal-bg: #eef0f5;
+  --terminal-fg: #292936;
+  --terminal-inactive-overlay: rgb(238 240 245 / 28%);
+  --terminal-selection-bg: #b7d5f3;
+  --terminal-selection-fg: #15162b;
+  --terminal-gutter-fg: #245b9e;
+  --terminal-qf-column-fg: #7b5e2c;
+  --terminal-error-bg: #991b1b;
+  --terminal-error-fg: #fff;
+  --terminal-visited-fg: #3c763d;
+}
+
+/*
+ * A cell the cursor has visited in a tracing exercise. The green distinguishes
+ * "done" positions from the remaining ones, giving visual feedback on progress
+ * through the shape.
+ */
+.visited {
+  color: var(--terminal-visited-fg);
+}
+
+/*
+ * The cursor is the cell it sits on, not an element floating over the grid: a
+ * wrapped row's cursor has to travel with its character to the continuation
+ * line, and only the browser knows where that break fell. Block mode uses an
+ * outline when unfocused and a filled cell when focused; the cursor's
+ * foreground color keeps the character readable inside that filled cell. Bar
+ * mode rules the cell's leading edge, with the width taken back as negative
+ * margin so the monospace columns stay aligned. Neither style blinks: a static
+ * cursor keeps the cell it occupies unambiguous instead of disappearing for
+ * half of every second.
+ */
+.selection,
+.mark,
+.cursor {
+  font: inherit;
+}
+
+.cursor.block {
+  display: inline-block;
+  min-inline-size: 1ch;
+  padding-block: 0.08em;
+  margin-block: -0.08em;
+  outline: 1px solid currentcolor;
+  outline-offset: -1px;
+}
+
+:where(.screen:focus-within) .cursor.block {
+  background-color: var(--color-cursor-bg);
+  color: var(--color-cursor-fg);
+  outline-width: 2px;
+}
+
+:where(.terminal:focus-within .footer) .cursor.block {
+  background-color: var(--color-cursor-bg);
+  color: var(--color-cursor-fg);
+  outline-width: 2px;
+}
+
+.cursor-selection .cursor.block {
+  padding-block: 0;
+  margin-block: 0;
+  outline: none;
+}
+
+.cursor.bar {
+  box-shadow: inset 2px 0 currentcolor;
+}

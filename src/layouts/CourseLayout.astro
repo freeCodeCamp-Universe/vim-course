@@ -1,0 +1,76 @@
+---
+import '@/styles/global.css';
+import Font from 'astro/components/Font.astro';
+import { HeaderControls } from '@/components/features/HeaderControls';
+import { CourseOverlays } from '@/components/features/CourseOverlays';
+import styles from './CourseLayout.module.css';
+
+interface Props {
+  /** Per-lesson name; folded into the document title and omitted on the home page. */
+  title?: string;
+  /** Per-page meta description; a course-level default is used when absent. */
+  description?: string;
+  currentLessonId?: string;
+}
+
+const { title, description, currentLessonId } = Astro.props;
+const documentTitle = title ? `${title} | Vim Course` : 'Vim Course';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // Pre-paint theme stamp. Runs before the stylesheet applies, so a light-theme
+      // learner never sees a dark flash. The key is duplicated from THEME_STORAGE_KEY
+      // in src/hooks/useTheme.ts because inline scripts cannot import; CourseLayout.test.ts
+      // guards the two against drift.
+      try {
+        const stored = localStorage.getItem('vim-course:theme');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.dataset.theme = stored;
+        } else {
+          // No stored preference; check system theme
+          document.documentElement.dataset.theme = window.matchMedia(
+            '(prefers-color-scheme: light)'
+          ).matches
+            ? 'light'
+            : 'dark';
+        }
+      } catch {
+        // Storage unavailable; check system theme as fallback
+        document.documentElement.dataset.theme = window.matchMedia('(prefers-color-scheme: light)')
+          .matches
+          ? 'light'
+          : 'dark';
+      }
+      try {
+        if (localStorage.getItem('vim-course:animationsEnabled') === 'false') {
+          document.documentElement.setAttribute('data-reduced-motion', '');
+        }
+      } catch {
+        /* Storage unavailable; skip reduced-motion stamping. */
+      }
+    </script>
+    <title>{documentTitle}</title>
+    {description && <meta name="description" content={description} />}
+    <Font cssVariable="--font-lato" preload />
+    <Font cssVariable="--font-inconsolata" preload />
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" />
+  </head>
+  <body>
+    <a href="#main" class="sr-only">Skip to main content</a>
+    <header class={styles.header}>
+      <a href="/" class={styles['home-link']}>Vim Course</a>
+      <HeaderControls
+        showDrawer={Boolean(currentLessonId)}
+        showShortcuts={Boolean(currentLessonId)}
+        client:only="react"
+      />
+    </header>
+    <slot />
+    <CourseOverlays currentLessonId={currentLessonId} client:only="react" />
+  </body>
+</html>

@@ -1,0 +1,33 @@
+/*
+ * LessonPage is the root island rendered as a body flex item. The body is
+ * locked to the viewport via `body:has([data-lesson-page])` in global.css,
+ * making the body a flex column: header + this wrapper.
+ */
+.wrapper {
+  flex: 1;
+  min-block-size: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+ * Prose-lesson area: contains the Outline sidebar and the LessonWorkspace
+ * main element. On desktop this becomes a flex row so they sit side by side,
+ * each filling the full available height (overflow: hidden is required for
+ * the children's overflow-y: auto to create a bounded scroll region).
+ */
+.prose-area {
+  flex: 1;
+  min-block-size: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+@media (width >= 1024px) {
+  .prose-area {
+    flex-direction: row;
+
+    /* align-items defaults to stretch → sidebar and main both fill height */
+  }
+}
