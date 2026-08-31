@@ -27,7 +27,7 @@ In this lesson, you'll practice the commands you've learned so far.
 
 First, create a `cursor-origin.md` file and write this line in it:
 
-```
+```md copy
 "Cursor" comes from the Latin word for "runner" or "messenger".
 ```
 
