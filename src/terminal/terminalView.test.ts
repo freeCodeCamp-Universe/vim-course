@@ -365,6 +365,12 @@ describe('createTerminalView', () => {
     expect(buffer).not.toContainElement(q.getByTestId('terminal-announcement'));
   });
 
+  it('should set aria-roledescription to terminal on the application region', () => {
+    const { screen } = mount({ accessibleName: 'editor' });
+
+    expect(screen()).toHaveAttribute('aria-roledescription', 'terminal');
+  });
+
   it('should forward a captured printable key and prevent its default', () => {
     const onKey = vi.fn();
     const { screen } = mount({ onKey });

@@ -462,6 +462,7 @@ export function createTerminalView(options: TerminalViewOptions): TerminalView {
   const screen = document.createElement('div');
   screen.className = styles.screen;
   screen.setAttribute('role', 'application');
+  screen.setAttribute('aria-roledescription', 'terminal');
   screen.setAttribute('aria-label', options.accessibleName);
   screen.tabIndex = 0;
 
