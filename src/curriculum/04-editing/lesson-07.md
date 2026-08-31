@@ -115,6 +115,19 @@ Over time, the physical wheels and rollerballs evolved into advanced optical lig
   "start": "file",
   "open": "computer-mouse.md",
   "cursor": [1, 1],
+  "decorativeRanges": [
+    {
+      "file": "computer-mouse.md",
+      "lines": [8, 17],
+      "description": "A computer mouse with two buttons, a scroll wheel, and a cord",
+      "anchor": "/-------/"
+    },
+    {
+      "file": "mouse.md",
+      "lines": [1, 1],
+      "description": "A small mouse"
+    }
+  ],
   "checklist": [
     {
       "label": "Change the title to `Computer Mouse`.",

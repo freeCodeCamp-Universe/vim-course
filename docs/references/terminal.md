@@ -279,14 +279,17 @@ rows excludes both decorative and image-group rows.
 `toModel()` in `src/terminal/vimTerminalView.ts` computes `lineRoles` from
 three sources, merged into one array:
 
-1. **Shell logo** (runtime): first 5 lines in shell mode get
-   `{ role: 'img', label: 'freeCodeCamp logo' }`.
+1. **Shell logo** (runtime): first 5 lines in shell mode get `'decorative'`
+   (`aria-hidden`). The braille logo is purely decorative branding.
 2. **Tilde rows** (runtime): lines beyond `state.buffer.length` in a new
    (not-on-disk) file get `'decorative'`.
 3. **Lesson-authored `decorativeRanges`** (config): ranges from `LessonConfig`
-   specify a `file`, `lines` (1-based inclusive), and optional `description`.
-   With a description: `{ role: 'img', label: description }`.
-   Without: `'decorative'`.
+   specify a `file`, `lines` (1-based inclusive), optional `description`, and
+   optional `anchor`. With a description: `{ role: 'img', label: description }`.
+   Without: `'decorative'`. When an `anchor` needle is set, the range is applied
+   while at least one buffer line within the range matches the anchor. When none
+   match (the drawing was fully deleted or shifted away), the range is skipped so
+   surviving content is not mislabeled.
 
 Tilde roles form the base array, then lesson ranges overwrite specific indices.
 `lineRoles` is left `undefined` during animations, splash, and quickfix

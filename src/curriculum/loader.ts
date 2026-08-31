@@ -746,7 +746,7 @@ function parseDecorativeRanges(
       throw new Error(`${prefix} must be an object`);
     }
 
-    const { file, lines, description, ...rest } = entry as Record<string, unknown>;
+    const { file, lines, description, anchor, ...rest } = entry as Record<string, unknown>;
     const extraKeys = Object.keys(rest);
     if (extraKeys.length > 0) {
       throw new Error(`${prefix} has unknown key(s): ${extraKeys.join(', ')}`);
@@ -788,9 +788,26 @@ function parseDecorativeRanges(
       throw new Error(`${prefix}.description must be a non-empty string when provided`);
     }
 
+    if (anchor !== undefined && (typeof anchor !== 'string' || anchor.trim() === '')) {
+      throw new Error(`${prefix}.anchor must be a non-empty string when provided`);
+    }
+    if (typeof anchor === 'string') {
+      const regex = parseNeedleRegex(anchor);
+      if (regex) {
+        try {
+          new RegExp(regex.source, regex.flags);
+        } catch {
+          throw new Error(`${prefix}.anchor contains an invalid regex: ${anchor}`);
+        }
+      }
+    }
+
     const result: DecorativeRange = { file, lines: [start, end] };
     if (typeof description === 'string') {
       result.description = description;
+    }
+    if (typeof anchor === 'string') {
+      result.anchor = anchor;
     }
     return result;
   });

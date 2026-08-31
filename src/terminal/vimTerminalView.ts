@@ -20,7 +20,7 @@ import {
   type ChecklistItem,
 } from '@/curriculum/lessonProgress';
 import { isProseLesson, type DecorativeRange, type LessonDefinition } from '@/curriculum/types';
-import { parseNeedleRegex } from '@/curriculum/needle';
+import { matchNeedle, parseNeedleRegex } from '@/curriculum/needle';
 import { createFrameLoop, type FrameLoop } from '@/animation/frameLoop';
 import { getScene } from '@/animation/scenes';
 import {
@@ -422,7 +422,7 @@ function toModel(
   if (!isAnimation && !state.splashVisible && !qf) {
     if (state.mode === 'shell') {
       lineRoles = lines.map((_, i): LineRole =>
-        i < SHELL_LOGO_ART_COUNT ? { role: 'img', label: 'freeCodeCamp logo' } : 'content'
+        i < SHELL_LOGO_ART_COUNT ? 'decorative' : 'content'
       );
     } else {
       const activeFile = state.files.get(state.activeFilePath);
@@ -441,6 +441,14 @@ function toModel(
             }
             const startIdx = range.lines[0] - 1;
             const endIdx = Math.min(range.lines[1] - 1, tildeStart - 1);
+            if (range.anchor) {
+              const anchorHit = state.buffer
+                .slice(startIdx, endIdx + 1)
+                .some((line) => matchNeedle(range.anchor!, line));
+              if (!anchorHit) {
+                continue;
+              }
+            }
             const role: LineRole = range.description
               ? { role: 'img', label: range.description }
               : 'decorative';

@@ -267,6 +267,10 @@ The fierce troll pursued the savage archer. -
   "unsupportedMessage": "{sequence} has no effect within this chamber",
   "completionScene": "capstone-congrats",
   "disallowedCommands": [":q", ":q!", ":wq", "@arrows"],
+  "decorativeRanges": [
+    { "file": "study.md", "lines": [1, 1] },
+    { "file": "study.md", "lines": [12, 12] }
+  ],
   "checklist": [
     {
       "label": "Enter the correct key 1.",

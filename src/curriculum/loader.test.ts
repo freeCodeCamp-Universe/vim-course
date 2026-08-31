@@ -2295,6 +2295,48 @@ describe('decorativeRanges config', () => {
     );
     expect(() => buildCurriculum(fixture.files, fixture.ordering)).toThrow('unknown key');
   });
+
+  it('should parse a decorativeRanges entry with an anchor', () => {
+    const fixture = rangeFixture(
+      '"decorativeRanges": [{ "file": "art.txt", "lines": [1, 3], "description": "ASCII cat", "anchor": "/\\\\/\\\\_\\\\/\\\\\\\\/" }],'
+    );
+    const [lesson] = buildCurriculum(fixture.files, fixture.ordering).lessons;
+
+    if (isProseLesson(lesson)) {
+      throw new Error('expected an authored lesson');
+    }
+    expect(lesson.config.decorativeRanges).toEqual([
+      { file: 'art.txt', lines: [1, 3], description: 'ASCII cat', anchor: '/\\/\\_\\/\\\\/' },
+    ]);
+  });
+
+  it('should parse a plain substring anchor', () => {
+    const fixture = rangeFixture(
+      '"decorativeRanges": [{ "file": "art.txt", "lines": [1, 3], "anchor": "/\\\\_" }],'
+    );
+    const [lesson] = buildCurriculum(fixture.files, fixture.ordering).lessons;
+
+    if (isProseLesson(lesson)) {
+      throw new Error('expected an authored lesson');
+    }
+    expect(lesson.config.decorativeRanges![0].anchor).toBe('/\\_');
+  });
+
+  it('should throw when anchor is an empty string', () => {
+    const fixture = rangeFixture(
+      '"decorativeRanges": [{ "file": "art.txt", "lines": [1, 3], "anchor": "" }],'
+    );
+    expect(() => buildCurriculum(fixture.files, fixture.ordering)).toThrow(
+      'non-empty string when provided'
+    );
+  });
+
+  it('should throw when anchor contains an invalid regex', () => {
+    const fixture = rangeFixture(
+      '"decorativeRanges": [{ "file": "art.txt", "lines": [1, 3], "anchor": "/[unclosed/" }],'
+    );
+    expect(() => buildCurriculum(fixture.files, fixture.ordering)).toThrow('invalid regex');
+  });
 });
 
 function createWorkshopFixture(): Fixture {

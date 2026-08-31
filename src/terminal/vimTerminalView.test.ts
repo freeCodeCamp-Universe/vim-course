@@ -583,21 +583,23 @@ describe('createVimTerminalView', () => {
     expect(items).toHaveLength(1);
 
     const grid = q.getByRole('list');
+    // eslint-disable-next-line testing-library/no-node-access -- aria-hidden elements are excluded from RTL queries by design
     const hidden = grid.querySelectorAll('[aria-hidden="true"]');
     expect(hidden.length).toBeGreaterThan(0);
   });
 
-  it('should wrap the shell logo in a described image container', () => {
+  it('should hide the shell logo from assistive tech', () => {
     const shellLesson: AuthoredLessonDefinition = {
       ...lab,
       config: { ...lab.config, start: 'shell' },
     };
     const { q } = mount(shellLesson);
 
-    const img = q.getByRole('img', { name: 'freeCodeCamp logo' });
-    expect(img).toBeInTheDocument();
-    // The braille art is 5 rows.
-    expect(img.children).toHaveLength(5);
+    const grid = q.getByRole('list');
+    // The braille art is 5 rows, each aria-hidden.
+    // eslint-disable-next-line testing-library/no-node-access -- aria-hidden elements are excluded from RTL queries by design
+    const hidden = grid.querySelectorAll('[aria-hidden="true"]');
+    expect(hidden.length).toBeGreaterThanOrEqual(5);
   });
 
   it('should hide splash screen content from assistive tech', () => {
@@ -629,6 +631,7 @@ describe('createVimTerminalView', () => {
     expect(items[0]).toHaveTextContent('hello world');
 
     const grid = q.getByRole('list');
+    // eslint-disable-next-line testing-library/no-node-access -- aria-hidden elements are excluded from RTL queries by design
     const hidden = grid.querySelectorAll('[aria-hidden="true"]');
     expect(hidden.length).toBeGreaterThanOrEqual(3);
   });
@@ -647,10 +650,45 @@ describe('createVimTerminalView', () => {
 
     const img = q.getByRole('img', { name: 'ASCII cat' });
     expect(img).toBeInTheDocument();
+    // eslint-disable-next-line testing-library/no-node-access -- verifying the decorative wrapper contains exactly 3 child rows
     expect(img.children).toHaveLength(3);
 
     const items = q.getAllByRole('listitem');
     expect(items).toHaveLength(1);
+  });
+
+  it('should keep the decorativeRange while any line in the range matches the anchor', () => {
+    const artLesson: AuthoredLessonDefinition = {
+      ...lab,
+      files: { 'a.txt': '##art##\n##art##\n##art##\nhello world' },
+      config: {
+        ...lab.config,
+        cursor: [1, 1],
+        decorativeRanges: [
+          { file: 'a.txt', lines: [1, 3], description: 'ASCII art', anchor: '##art##' },
+        ],
+      },
+    };
+    const { q, type } = mount(artLesson);
+
+    // All three art lines present: the described image should exist.
+    expect(q.getByRole('img', { name: 'ASCII art' })).toBeInTheDocument();
+
+    // Delete one art line. Two remain; anchor still matches within the range.
+    type('d', 'd');
+    expect(q.getByRole('img', { name: 'ASCII art' })).toBeInTheDocument();
+
+    // Delete a second art line. One remains; anchor still matches.
+    type('d', 'd');
+    expect(q.getByRole('img', { name: 'ASCII art' })).toBeInTheDocument();
+
+    // Delete the last art line. The range span now holds "hello world" only.
+    type('d', 'd');
+    expect(q.queryByRole('img', { name: 'ASCII art' })).toBeNull();
+
+    const items = q.getAllByRole('listitem');
+    expect(items).toHaveLength(1);
+    expect(items[0]).toHaveTextContent('hello world');
   });
 
   it('should show a pending count while typing a counted motion', () => {

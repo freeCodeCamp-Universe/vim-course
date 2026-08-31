@@ -69,6 +69,14 @@ Bottom Row: N O P Q R S T U V W X Y Z
   "start": "file",
   "open": "abc.md",
   "cursor": [1, 1],
+  "decorativeRanges": [
+    {
+      "file": "abc.md",
+      "lines": [1, 3],
+      "description": "A small cat sitting with a cup of tea",
+      "anchor": "/o\\\\.o|つ/"
+    }
+  ],
   "checklist": [
     {
       "label": "Delete the cat.",

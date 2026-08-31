@@ -545,10 +545,20 @@ Each entry names a file and a 1-based inclusive line range. Without a
 (`aria-hidden="true"`). With a `description`, consecutive lines in the range are
 wrapped in a single `role="img"` container and announced as a described image.
 
+When the learner's edits can shift or delete the drawing, add an `anchor` needle
+so the range is applied only while the anchor matches the buffer line at the
+range's start position. Without an anchor the range always applies (suitable for
+persistent drawings that the learner never moves).
+
 ```json
 {
   "decorativeRanges": [
-    { "file": "art.txt", "lines": [1, 3], "description": "ASCII cat" },
+    {
+      "file": "art.txt",
+      "lines": [1, 3],
+      "description": "A small cat sitting with a cup of tea",
+      "anchor": "/  \\//"
+    },
     { "file": "art.txt", "lines": [5, 6] }
   ]
 }
@@ -560,6 +570,12 @@ Rules:
 - `lines` is a two-element array `[start, end]` of 1-based integers where
   `start <= end`, and `end` must not exceed the file's line count.
 - `description` is optional. When provided, it must be a non-empty string.
+  Write it as alt text: describe what the image shows, not how it is constructed.
+- `anchor` is optional. A needle (plain substring or `/pattern/flags` regex)
+  tested against every buffer line within the range on each render. The range
+  stays active while at least one line matches. When none match (the drawing was
+  fully deleted or shifted away), the range is silently skipped. Use it for
+  drawings the learner will delete or rearrange.
 - Lines the learner must edit should NOT appear in a decorative range. Leave
   them as normal content listitems so screen readers can navigate them.
 

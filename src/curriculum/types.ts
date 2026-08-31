@@ -442,6 +442,14 @@ export interface DecorativeRange {
   lines: [number, number];
   /** When provided, the range is announced as a described image. */
   description?: string;
+  /**
+   * A needle (plain substring or `/pattern/flags` regex) tested against every
+   * buffer line within the range on each render. The range is applied while at
+   * least one line matches; when none do (the drawing was fully deleted or
+   * shifted away), the range is silently skipped so surviving content is not
+   * mislabeled.
+   */
+  anchor?: string;
 }
 
 export interface LessonConfig {
@@ -534,6 +542,10 @@ export interface LessonConfig {
    * hidden from screen readers or, when a `description` is provided, exposed as
    * a single described image. Lines within a range that the learner must edit
    * should NOT be listed here — leave them as normal content listitems.
+   *
+   * When the learner's edits shift or delete the drawing, an `anchor` needle
+   * keeps the label from misfiring: the range is applied only while at least
+   * one buffer line within the range matches the anchor.
    *
    * Validated at load time against seed content: the named file must exist, and
    * the line range must fall within the file's line count.
