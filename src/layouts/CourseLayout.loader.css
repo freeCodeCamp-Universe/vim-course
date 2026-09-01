@@ -12,7 +12,11 @@
  * The loader is shown by an inline <style> in CourseLayout.astro and
  * covers the viewport until this external stylesheet arrives.        */
 [data-page-loader] {
-  display: none;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ------------------------------------------------------------------ *
