@@ -26,7 +26,7 @@ import process from 'node:process';
 const projectRoot = resolve(import.meta.dirname, '..');
 const orderingPath = join(projectRoot, 'src', 'curriculum', 'ordering.ts');
 const curriculumRoot = join(projectRoot, 'src', 'curriculum');
-const docPath = join(projectRoot, 'docs', 'vim-course.curriculum.md');
+const docPath = join(projectRoot, 'docs', 'curriculum-outline.md');
 
 const CAG_LABELS = new Set(['Concept', 'Activity', 'Goal']);
 

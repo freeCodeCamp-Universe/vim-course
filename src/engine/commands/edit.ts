@@ -298,3 +298,37 @@ normalModeRegistry.register('c', ({ state }) => ({
   state: { ...state, pendingOperator: 'c', pendingTextObject: null },
   pending: true,
 }));
+
+/** Toggle the case of one character: uppercase → lowercase, lowercase → uppercase. */
+export function toggleCase(ch: string): string {
+  const upper = ch.toUpperCase();
+  return upper === ch ? ch.toLowerCase() : upper;
+}
+
+/**
+ * `~` — toggle case of the character under the cursor and advance one position
+ * to the right. With a count, toggles `count` characters and lands past the last
+ * toggled character (clamped to the end of the line). Non-alphabetic characters
+ * are left unchanged but the cursor still advances over them.
+ */
+normalModeRegistry.register('~', ({ state, count }) => {
+  const { line, col } = state.cursor;
+  const text = getLine(state.buffer, line);
+  const chars = textChars(text);
+  if (chars.length === 0) {
+    return { state, actions: [] };
+  }
+  const repeat = count ?? 1;
+  const end = Math.min(col + repeat, chars.length);
+  for (let i = col; i < end; i += 1) {
+    chars[i] = toggleCase(chars[i]);
+  }
+  const buffer = state.buffer.slice();
+  buffer[line] = chars.join('');
+  const next = setBuffer(markDirty(state), buffer);
+  const newCol = Math.min(end, chars.length - 1);
+  return {
+    state: moveCursor(next, { line, col: newCol }),
+    actions: [{ type: 'edit', command: '~', ...(count !== null ? { count: repeat } : {}) }],
+  };
+});

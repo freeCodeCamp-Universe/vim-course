@@ -350,3 +350,69 @@ describe('action history', () => {
     ]);
   });
 });
+
+describe('~ — toggle case', () => {
+  it('should toggle lowercase to uppercase', () => {
+    const state = run(at(['hello'], { line: 0, col: 0 }), ['~']);
+
+    expect(state.buffer).toEqual(['Hello']);
+    expect(state.cursor).toEqual({ line: 0, col: 1 });
+    expect(state.mode).toBe('normal');
+    expect(state.dirty).toBe(true);
+  });
+
+  it('should toggle uppercase to lowercase', () => {
+    const state = run(at(['Hello'], { line: 0, col: 0 }), ['~']);
+
+    expect(state.buffer).toEqual(['hello']);
+    expect(state.cursor).toEqual({ line: 0, col: 1 });
+  });
+
+  it('should advance the cursor over non-alphabetic characters without changing them', () => {
+    const state = run(at(['1abc'], { line: 0, col: 0 }), ['~']);
+
+    expect(state.buffer).toEqual(['1abc']);
+    expect(state.cursor).toEqual({ line: 0, col: 1 });
+    expect(state.dirty).toBe(true);
+  });
+
+  it('should clamp the cursor at the last column on the final character', () => {
+    const state = run(at(['abc'], { line: 0, col: 2 }), ['~']);
+
+    expect(state.buffer).toEqual(['abC']);
+    expect(state.cursor).toEqual({ line: 0, col: 2 });
+  });
+
+  it('should be a no-op on an empty line', () => {
+    const state = run(at(['', 'next'], { line: 0, col: 0 }), ['~']);
+
+    expect(state.buffer).toEqual(['', 'next']);
+    expect(state.dirty).toBe(false);
+  });
+
+  it('should toggle multiple characters with a count', () => {
+    const state = run(at(['hello world'], { line: 0, col: 0 }), ['3', '~']);
+
+    expect(state.buffer).toEqual(['HELlo world']);
+    expect(state.cursor).toEqual({ line: 0, col: 3 });
+  });
+
+  it('should clamp count past the end of the line', () => {
+    const state = run(at(['hi'], { line: 0, col: 1 }), ['5', '~']);
+
+    expect(state.buffer).toEqual(['hI']);
+    expect(state.cursor).toEqual({ line: 0, col: 1 });
+  });
+
+  it('should record an edit action without count when no count was given', () => {
+    const state = run(at(['abc'], { line: 0, col: 0 }), ['~']);
+
+    expect(state.history).toEqual([{ type: 'edit', command: '~' }]);
+  });
+
+  it('should record count in the action when a count was given', () => {
+    const state = run(at(['abc'], { line: 0, col: 0 }), ['3', '~']);
+
+    expect(state.history).toEqual([{ type: 'edit', command: '~', count: 3 }]);
+  });
+});

@@ -5,7 +5,7 @@ says when it refuses. This is the reference for lesson authoring: if a command i
 not listed here, a lesson must not ask the learner to type it.
 
 Scope comes from the curriculum's goal statement
-([`docs/curriculum/vim-course.curriculum.md`](../../../../docs/curriculum/vim-course.curriculum.md)):
+([`docs/curriculum-outline.md`](../../../curriculum-outline.md)):
 the small subset of Vim needed to open, navigate, edit, save, and quit a file.
 Explicitly out of scope there: `f`/`t`, marks, named registers,
 macros, visual block, splits and windows, multi-buffer management, `H`/`M`/`L`,
@@ -86,6 +86,7 @@ a taught motion in a checklist.
 | Key       | Effect                                                                               | Count |
 | --------- | ------------------------------------------------------------------------------------ | ----- |
 | `x`       | Delete the character under the cursor                                                | No    |
+| `~`       | Toggle the case of the character under the cursor and advance one column             | Yes   |
 | `r<char>` | Replace the character under the cursor, staying in normal                            | No    |
 | `D`       | Delete from the cursor to end of line                                                | No    |
 | `dd`      | Delete the line (linewise)                                                           | Yes   |
@@ -181,6 +182,7 @@ counts included (`v3l`, `V2G`, `Vgg`).
 | `d` / `x`  | Delete the selection into the unnamed register                         |
 | `y`        | Yank the selection into the unnamed register, leaving the buffer alone |
 | `c`        | Delete the selection and enter insert mode where it began              |
+| `~`        | Toggle the case of every selected character and return to normal       |
 
 Switching granularity mid-selection keeps the anchor: `vjV` widens a two-line
 charwise selection to both whole lines, and `Vv` narrows it back.
@@ -213,8 +215,8 @@ draw exactly that line, and `src/engine/unsupported.ts` holds both.
 A charwise selection that covers nothing — `v` then `d` on an empty line — leaves
 visual mode and records nothing, the same silent no-op as `x` on an empty line.
 
-**What a checklist can match.** Visual mode records `v`, `V`, `d`, `x`, `y`, and
-`c` under exactly those names, so a `command` test names the key the lesson taught.
+**What a checklist can match.** Visual mode records `v`, `V`, `d`, `x`, `y`, `c`, and
+`~` under exactly those names, so a `command` test names the key the lesson taught.
 The bare operator names are unambiguous: normal mode never records `d`, `y`, or `c`
 alone — only `dd`, `dw`, `yy`, `cc`, `cw` — so a checklist asking for `d` can only
 be satisfied by a selection, and one asking for `dd` is never satisfied by a

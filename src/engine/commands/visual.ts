@@ -19,7 +19,8 @@ import {
   unsupportedInMode,
   unsupportedMessage,
 } from '../unsupported';
-import { textLength, textSlice } from '../text';
+import { textChars, textLength, textSlice } from '../text';
+import { toggleCase } from './edit';
 
 /**
  * Visual mode: `v` and `V` mark an arbitrary range, and `d`/`x`/`y`/`c` act on
@@ -30,7 +31,7 @@ import { textLength, textSlice } from '../text';
  */
 
 /** Operators that consume a selection; every other operator key is refused here. */
-const VISUAL_OPERATORS = new Set(['d', 'x', 'y', 'c']);
+const VISUAL_OPERATORS = new Set(['d', 'x', 'y', 'c', '~']);
 
 export function isVisualMode(mode: Mode): boolean {
   return mode === 'visual' || mode === 'visual-line';
@@ -210,7 +211,37 @@ function changeSelection(state: EditorState, selection: VisualSelection): Comman
   };
 }
 
+/**
+ * `~` on a selection: toggle the case of every selected character and return to
+ * normal mode. The cursor lands at the start of the selection, mirroring Vim.
+ * Non-alphabetic characters are left unchanged but are still part of the range.
+ */
+function toggleCaseSelection(state: EditorState, selection: VisualSelection): CommandResult {
+  const { start, end } = selection;
+  const buffer = state.buffer.slice();
+
+  for (let lineIdx = start.line; lineIdx <= end.line; lineIdx++) {
+    const chars = textChars(getLine(state.buffer, lineIdx));
+    const colStart = lineIdx === start.line ? start.col : 0;
+    const colEnd = lineIdx === end.line ? end.col + 1 : chars.length;
+    for (let i = colStart; i < colEnd; i++) {
+      chars[i] = toggleCase(chars[i]);
+    }
+    buffer[lineIdx] = chars.join('');
+  }
+
+  const next = setBuffer(markDirty(state), buffer);
+  const { state: normal } = exitVisual(next);
+  return {
+    state: moveCursor(normal, { line: start.line, col: start.col }),
+    actions: [{ type: 'edit', command: '~' }],
+  };
+}
+
 function applyOperator(state: EditorState, key: string, selection: VisualSelection): CommandResult {
+  if (key === '~') {
+    return toggleCaseSelection(state, selection);
+  }
   if (key === 'y') {
     return yankSelection(state, selection);
   }

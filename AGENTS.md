@@ -13,9 +13,14 @@ overrides these rules.
 
 ## Codebase Architecture
 
-[`docs/references/architecture.md`](docs/references/architecture.md) is an overview
+[`docs/architecture.md`](docs/architecture.md) is an overview
 of the codebase layers, build pipeline, runtime data flow, engine state shape, and
 test structure. Read it first when orienting to a new area of the codebase.
+
+[`docs/references/platform/adding-commands.md`](docs/references/platform/adding-commands.md) is
+the step-by-step guide for implementing a new engine command: registry, handler
+signature, action shapes, state helpers, dispatch routing, visual-mode support, and
+the test harness.
 
 ### Curriculum scripts
 
@@ -28,7 +33,7 @@ from the project root (`projects/vim-course/`).
 - **`pnpm add-lesson -- --module=<N> --title="<title>" [--type=<learn|practice>]`** —
   add a new lesson to an existing module (inserted before the review lesson) and
   register it in `ordering.ts`. Automatically syncs the curriculum doc.
-- **`pnpm sync-curriculum-doc`** — regenerate `docs/vim-course.curriculum.md` from
+- **`pnpm sync-curriculum-doc`** — regenerate `docs/curriculum-outline.md` from
   `ordering.ts` and the lesson files. Use `--check` to verify without writing
   (runs in CI).
 
@@ -146,11 +151,11 @@ narrow pointer-device windows. Never use a width-only breakpoint for this patter
 
 ## Curriculum Development
 
-[`docs/references/commands.md`](docs/references/commands.md) is the inventory of
+[`docs/references/curriculum/commands.md`](docs/references/curriculum/commands.md) is the inventory of
 every key and ex command the simulated terminal accepts, its messages, and its
 silent no-ops. Consult it before authoring a lesson, and update it in the same
 change that adds or removes a command.
 
-[`docs/references/lesson-authoring.md`](docs/references/lesson-authoring.md) is
+[`docs/references/curriculum/lesson-authoring.md`](docs/references/curriculum/lesson-authoring.md) is
 the reference for all lesson-authoring rules: config options, start modes,
 checklist test fields, command-filter options, and seed conventions.

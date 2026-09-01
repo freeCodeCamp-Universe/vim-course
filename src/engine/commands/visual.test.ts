@@ -415,3 +415,60 @@ describe('the workshop command filter', () => {
     expect(state.mode).toBe('normal');
   });
 });
+
+describe('~ — toggle case on selection', () => {
+  it('should toggle case of a charwise selection and return to normal mode', () => {
+    // Select 'hel' (cols 0-2) and toggle
+    const entered = run(at(['hello'], { line: 0, col: 0 }), ['v', 'l', 'l']);
+    const state = run(entered, ['~']);
+
+    expect(state.buffer).toEqual(['HELlo']);
+    expect(state.mode).toBe('normal');
+    expect(state.cursor).toEqual({ line: 0, col: 0 });
+    expect(state.dirty).toBe(true);
+  });
+
+  it('should toggle uppercase to lowercase', () => {
+    // v + lll selects cols 0-3: "WORL" → "worl", leaving D untouched
+    const entered = run(at(['WORLD'], { line: 0, col: 0 }), ['v', 'l', 'l', 'l']);
+    const state = run(entered, ['~']);
+
+    expect(state.buffer).toEqual(['worlD']);
+    expect(state.mode).toBe('normal');
+  });
+
+  it('should leave non-alphabetic characters unchanged', () => {
+    const entered = run(at(['a1b'], { line: 0, col: 0 }), ['v', 'l', 'l']);
+    const state = run(entered, ['~']);
+
+    expect(state.buffer).toEqual(['A1B']);
+    expect(state.cursor).toEqual({ line: 0, col: 0 });
+  });
+
+  it('should toggle across multiple lines in visual mode', () => {
+    // Cursor at (0,1), v, j → cursor moves to (1,1); selection (0,1)-(1,1)
+    // Line 0 cols 1-2: "bc" → "BC"; line 1 cols 0-1: "de" → "DE"
+    const entered = run(at(['abc', 'def'], { line: 0, col: 1 }), ['v', 'j']);
+    const state = run(entered, ['~']);
+
+    expect(state.buffer).toEqual(['aBC', 'DEf']);
+    expect(state.cursor).toEqual({ line: 0, col: 1 });
+    expect(state.mode).toBe('normal');
+  });
+
+  it('should record an edit action', () => {
+    const entered = run(at(['abc'], { line: 0, col: 0 }), ['v', 'l']);
+    const state = run(entered, ['~']);
+
+    const editActions = state.history.filter((a) => a.type === 'edit');
+    expect(editActions).toContainEqual({ type: 'edit', command: '~' });
+  });
+
+  it('should toggle all selected lines in visual-line mode', () => {
+    const entered = run(at(['hello', 'world'], { line: 0, col: 0 }), ['V', 'j']);
+    const state = run(entered, ['~']);
+
+    expect(state.buffer).toEqual(['HELLO', 'WORLD']);
+    expect(state.mode).toBe('normal');
+  });
+});

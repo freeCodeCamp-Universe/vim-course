@@ -6,8 +6,8 @@ date: 2026-07-23
 
 # Curriculum: Practical Vim for Terminal Editing
 
-- [`projects/vim-course/docs/references/commands.md`](references/commands.md) for the full set of commands the terminal supports
-- [`projects/vim-course/docs/references/lesson-authoring.md`](references/lesson-authoring.md) for lesson file structure, config block, checklist rules, and seed continuity
+- [`projects/vim-course/docs/references/curriculum/commands.md`](references/curriculum/commands.md) for the full set of commands the terminal supports
+- [`projects/vim-course/docs/references/curriculum/lesson-authoring.md`](references/curriculum/lesson-authoring.md) for lesson file structure, config block, checklist rules, and seed continuity
 - [`projects/vim-course/docs/lesson-style-guide.md`](lesson-style-guide.md) for prose style, pedagogical conventions, and spaced repetition principles.
 
 ## Goal
@@ -557,12 +557,24 @@ Source: [file](../src/curriculum/05-visual-mode/lesson-01.md)
 - **Activity:** Select a span of text with `v` and movement, then leave visual mode with `Esc` without acting on it yet. This lesson is deliberately just the "try it out" step — selecting is a visible, self-contained thing to explore before the next lesson pairs it with an action.
 - **Goal:** The learner sees and controls a live selection, and understands `v` on its own before combining it with anything else.
 
-#### 2. **Line-wise selection: move the first paragraph** — type: `learn`
+#### 2. **Toggling text case** — type: `learn`
+
+<!-- lesson: 6a9739dff0c3a37f2239211a -->
+
+Status: 🚧
+Source: [file](../src/curriculum/05-visual-mode/lesson-02.md)
+
+- **Concept:**
+  - Add the lesson concept.
+- **Activity:** Describe the learner activity.
+- **Goal:** Describe the learner outcome.
+
+#### 3. **Line-wise selection: move the first paragraph** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586d7 -->
 
 Status: ✅
-Source: [file](../src/curriculum/05-visual-mode/lesson-02.md)
+Source: [file](../src/curriculum/05-visual-mode/lesson-03.md)
 
 - **Concept:**
   - `V` selects whole lines at a time. `V` must be typed as uppercase; lowercase `v` is the character-wise selection from the previous lesson. When this lesson is authored, call this out for the learner the same way modules 02 and 04 do for `G` and `D`.
@@ -570,34 +582,45 @@ Source: [file](../src/curriculum/05-visual-mode/lesson-02.md)
 - **Activity:** Move two paragraphs at once from `## Clipboard` to `## Final` using `V`, `d`, and `p`.
 - **Goal:** The learner applies `V` + `d` + `p` to move a line-wise selection to a new location.
 
-#### 3. **Using o to complete the rearrangement** — type: `learn`
+#### 4. **Deleting, copying, and pasting a selection** — type: `learn`
+<!-- lesson: 6a9739e2374a6d659e2e6d3f -->
+
+Status: 🚧
+Source: [file](../src/curriculum/05-visual-mode/lesson-04.md)
+
+- **Concept:**
+  - Add the lesson concept.
+- **Activity:** Describe the learner activity.
+- **Goal:** Describe the learner outcome.
+
+#### 5. **Using o to complete the rearrangement** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586da -->
 
 Status: ✅
-Source: [file](../src/curriculum/05-visual-mode/lesson-03.md)
+Source: [file](../src/curriculum/05-visual-mode/lesson-05.md)
 
 - **Concept:** `o` in visual mode jumps the cursor to the opposite end of the selection. This makes it easier to select and rearrange line-wise content from either end.
 - **Activity:** Use `o` with `V`, `d`, and `p` to move the remaining two paragraphs into order, fix the bullet list order, delete the `## Clipboard` heading, and save.
 - **Goal:** The learner uses `o` and the visual line editing flow to complete a multi-step rearrangement independently.
 
-#### 4. **Practice: Rearranging keyboard shortcuts** — type: `practice`
+#### 6. **Practice: Rearranging keyboard shortcuts** — type: `practice`
 
 <!-- lesson: 6a75e416116f97fc366586e4 -->
 
 Status: ✅
-Source: [file](../src/curriculum/05-visual-mode/lesson-04.md)
+Source: [file](../src/curriculum/05-visual-mode/lesson-06.md)
 
 - **Concept:** None new — use `V`, `o`, `y`, and `p` to copy content between files, then complete a sequence.
 - **Activity:** Copy the strand data from `strands.md` into `dna.md`, then use `guide.md` as reference to complete the incomplete Opposite Strand. When selecting multiple lines in `strands.md`, `o` lets the user swap to the top of the selection and trim if they overshoot.
 - **Goal:** The learner copies content between files using visual mode and completes a real DNA sequence using a reference file.
 
-#### 5. **Module review** — type: `review`
+#### 7. **Module review** — type: `review`
 
 <!-- lesson: 6a75e416116f97fc366586d9 -->
 
 Status: ✅
-Source: [file](../src/curriculum/05-visual-mode/lesson-05.md)
+Source: [file](../src/curriculum/05-visual-mode/lesson-07.md)
 
 - **Concept:** None new.
 - **Activity:** Review.
