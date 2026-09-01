@@ -46,11 +46,12 @@ export function CurriculumNavigator({
     <div className={`${styles.navigator} ${styles[variant]}`}>
       <div className={styles[`${variant}-search-status`]}>
         {showSearch ? (
-          <CurriculumSearch
-            query={query}
-            onQueryChange={handleQueryChange}
-            width={variant === 'home' ? 'half' : 'full'}
-          />
+          <div className={styles['search-wrapper']}>
+            <CurriculumSearch
+              query={query}
+              onQueryChange={handleQueryChange}
+            />
+          </div>
         ) : null}
         <p
           className={`${styles.status} ${

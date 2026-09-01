@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { CurriculumSearch } from './CurriculumSearch';
 
 function renderSearch(query = '', onQueryChange = vi.fn()) {
-  render(<CurriculumSearch query={query} onQueryChange={onQueryChange} width="full" />);
+  render(<CurriculumSearch query={query} onQueryChange={onQueryChange} />);
   return { onQueryChange };
 }
 

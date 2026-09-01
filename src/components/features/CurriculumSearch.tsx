@@ -5,10 +5,9 @@ import styles from './CurriculumSearch.module.css';
 interface Props {
   query: string;
   onQueryChange: (query: string) => void;
-  width: 'half' | 'full';
 }
 
-export function CurriculumSearch({ query, onQueryChange, width }: Props) {
+export function CurriculumSearch({ query, onQueryChange }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const altLabel = useAltLabel();
   const altKeyName = useAltKeyName();
@@ -34,7 +33,7 @@ export function CurriculumSearch({ query, onQueryChange, width }: Props) {
   }, []);
 
   return (
-    <div className={`${styles.search} ${styles[width]}`}>
+    <div className={styles.search}>
       <label className={styles.field}>
         <input
           ref={inputRef}

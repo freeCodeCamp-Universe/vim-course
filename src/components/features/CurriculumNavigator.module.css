@@ -28,6 +28,17 @@
   gap: var(--space-sm);
 }
 
+.search-wrapper {
+  inline-size: 100%;
+}
+
+@media (width >= 768px) {
+  .home .search-wrapper {
+    inline-size: 75%;
+    align-self: center;
+  }
+}
+
 .home .status {
   inline-size: 75%;
   align-self: center;
