@@ -32,7 +32,7 @@ For example, given the following text:
 This (is) another {example}.
 ```
 
-Similar to how it works with brackets, if you place your cursor on the `T`, pressing `%` will move the cursor to the closing `)`. Pressing `%` again will jump back to the opening `(`.
+Similar to how it works with brackets, if the cursor is on the `T`, pressing `%` will move the cursor to the closing `)`. Pressing `%` again will jump back to the opening `(`.
 
 The command searches forward, so if you then place your cursor on the `a`, pressing `%` will move the cursor to the closing `}`. Pressing `%` again will jump back to the opening `{`.
 

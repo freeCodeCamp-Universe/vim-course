@@ -36,7 +36,7 @@ For example, given the following text:
 This [is an] example.
 ```
 
-If you place your cursor on the `T`, pressing `%` will move the cursor to the closing `]`. Pressing `%` again will jump back to the opening `[`.
+If the cursor is on the `T`, pressing `%` will move the cursor to the closing `]`. Pressing `%` again will jump back to the opening `[`.
 
 The `%` command is powerful because it allows you to perform edits on the text between the delimiters.
 
