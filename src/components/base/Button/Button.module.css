@@ -19,7 +19,6 @@
 }
 
 .primary:hover,
-.primary:focus-visible,
 .primary:active,
 .primary[aria-expanded='true'] {
   background-color: var(--gray05);
@@ -33,7 +32,6 @@
 }
 
 :root[data-theme='light'] .primary:hover,
-:root[data-theme='light'] .primary:focus-visible,
 :root[data-theme='light'] .primary:active,
 :root[data-theme='light'] .primary[aria-expanded='true'] {
   background-color: var(--gray90);
@@ -47,8 +45,7 @@
 }
 
 .danger:hover,
-.danger:active,
-.danger:focus-visible {
+.danger:active {
   color: var(--color-bg-tertiary);
   border-color: var(--color-danger);
   background-color: var(--color-danger);
@@ -59,8 +56,7 @@
 }
 
 :root[data-theme='light'] .danger:hover,
-:root[data-theme='light'] .danger:active,
-:root[data-theme='light'] .danger:focus-visible {
+:root[data-theme='light'] .danger:active {
   color: var(--color-bg-tertiary);
   border-color: var(--color-danger);
   background-color: var(--color-danger);
@@ -83,7 +79,6 @@
 }
 
 .cta:hover::after,
-.cta:focus-visible::after,
 .cta:active::after {
   background-color: rgb(0 0 0 / 12%);
 }

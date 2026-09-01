@@ -19,7 +19,7 @@ const orderedLessonIds = modules.flatMap((module) => module.lessonIds);
 
 <CourseLayout>
   <main id="main" class={styles.page} tabindex="-1">
-    <h1 class={styles.title}>Learn Vim for Terminal Editing</h1>
+    <h1 class={styles.title}>Learn Vim for Terminal Text Editing</h1>
     <Home modules={treeModules} orderedLessonIds={orderedLessonIds} client:load />
   </main>
   <footer class={styles.footer}>

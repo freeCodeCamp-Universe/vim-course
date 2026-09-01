@@ -33,7 +33,6 @@
 }
 
 .copy-button:hover,
-.copy-button:focus-visible,
 .copy-button:active {
   background-color: var(--color-bg-quaternary);
   border-color: var(--color-fg-secondary);
@@ -46,7 +45,6 @@
 }
 
 :global(:root[data-theme='dark']) .copy-button:hover,
-:global(:root[data-theme='dark']) .copy-button:focus-visible,
 :global(:root[data-theme='dark']) .copy-button:active {
   background-color: #373748;
   border-color: #a0a0c0;
