@@ -21,13 +21,13 @@ import {
  * solution file to author and keep in sync.
  *
  * Uses `loadFullCurriculum` so every non-WIP lesson is checked regardless of the
- * visibility flag. WIP lessons (flagged in `ordering.ts`) come back as prose
- * placeholders and drop out of `authored` below — they are exempt from these
- * checks until finished and unflagged.
+ * visibility flag. WIP lessons (flagged in `ordering.ts`) drop out of `authored`
+ * below regardless of whether they have a config section — they are exempt from
+ * these checks until finished and unflagged.
  */
 const { lessons } = loadFullCurriculum();
 const authored = lessons.filter(
-  (lesson): lesson is AuthoredLessonDefinition => !isProseLesson(lesson)
+  (lesson): lesson is AuthoredLessonDefinition => !isProseLesson(lesson) && !lesson.wip
 );
 
 /**
@@ -279,8 +279,11 @@ function satisfy(
     }
 
     // `atCursor` is a precondition: the cursor must be at the target position
-    // *before* the command runs, so move there first.
-    const atCursor = test.atCursor;
+    // *before* the command runs, so move there first. The position may be
+    // declared at the top-level test or embedded in the command matcher (where
+    // it doubles as the engine's history constraint).
+    const commandAtCursor = typeof test.command === 'object' ? test.command.atCursor : undefined;
+    const atCursor = test.atCursor ?? commandAtCursor;
     if (atCursor !== undefined) {
       const [targetLine, targetCol] = atCursor;
       if (targetLine !== null) {
