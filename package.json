@@ -10,7 +10,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && tsx scripts/inject-modulepreload.ts",
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest run",

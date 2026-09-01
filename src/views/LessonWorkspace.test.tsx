@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { ProseLessonDefinition, AuthoredLessonDefinition } from '@/curriculum/types';
+import { renderMarkdown } from '@/components/base/Markdown/renderMarkdown';
 import { INITIAL_FOCUS_STORAGE_KEY } from '@/hooks/useInitialFocusPreference';
 import { LessonWorkspace } from './LessonWorkspace';
 
@@ -37,7 +38,8 @@ function renderWorkspace(
   lesson: AuthoredLessonDefinition | ProseLessonDefinition,
   tab: 'instructions' | 'terminal' = 'instructions'
 ) {
-  return render(<LessonWorkspace lesson={lesson} orderedLessonIds={orderedIds} tab={tab} onSelectTab={vi.fn()} />);
+  const instructionsHtml = renderMarkdown(lesson.instructions);
+  return render(<LessonWorkspace lesson={lesson} orderedLessonIds={orderedIds} instructionsHtml={instructionsHtml} tab={tab} onSelectTab={vi.fn()} />);
 }
 
 describe('LessonWorkspace', () => {
@@ -106,7 +108,7 @@ describe('LessonWorkspace', () => {
     // No announcement on initial render.
     expect(screen.queryByText('terminal', { exact: true })).not.toBeInTheDocument();
 
-    rerender(<LessonWorkspace lesson={workshop} orderedLessonIds={orderedIds} tab="terminal" onSelectTab={vi.fn()} />);
+    rerender(<LessonWorkspace lesson={workshop} orderedLessonIds={orderedIds} instructionsHtml={renderMarkdown(workshop.instructions)} tab="terminal" onSelectTab={vi.fn()} />);
 
     expect(screen.getByText('terminal', { exact: true })).toBeInTheDocument();
   });

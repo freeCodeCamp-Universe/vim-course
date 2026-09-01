@@ -9,6 +9,10 @@ import styles from './LessonPage.module.css';
 export interface LessonPageProps {
   lesson: LessonDefinition;
   orderedLessonIds: string[];
+  /** Pre-rendered instruction HTML, produced at build time by renderMarkdown. */
+  instructionsHtml: string;
+  /** Pre-rendered HTML per instruction segment (prose lessons with tab blocks). */
+  segmentHtmls?: string[];
 }
 
 /**
@@ -16,7 +20,7 @@ export interface LessonPageProps {
  * and owns the tab state shared between them. For prose lessons, also renders
  * a table-of-contents outline (drawer on mobile, toggleable sidebar on desktop).
  */
-export function LessonPage({ lesson, orderedLessonIds }: LessonPageProps) {
+export function LessonPage({ lesson, orderedLessonIds, instructionsHtml, segmentHtmls }: LessonPageProps) {
   const prose = isProseLesson(lesson);
   const [tab, setTab] = useState<TabId>('instructions');
 
@@ -73,10 +77,10 @@ export function LessonPage({ lesson, orderedLessonIds }: LessonPageProps) {
             onClose={closeOutline}
             triggerElement={outlineButtonRef.current}
           />
-          <LessonWorkspace lesson={lesson} orderedLessonIds={orderedLessonIds} tab={tab} onSelectTab={selectTab} />
+          <LessonWorkspace lesson={lesson} orderedLessonIds={orderedLessonIds} instructionsHtml={instructionsHtml} segmentHtmls={segmentHtmls} tab={tab} onSelectTab={selectTab} />
         </div>
       ) : (
-        <LessonWorkspace lesson={lesson} orderedLessonIds={orderedLessonIds} tab={tab} onSelectTab={selectTab} />
+        <LessonWorkspace lesson={lesson} orderedLessonIds={orderedLessonIds} instructionsHtml={instructionsHtml} segmentHtmls={segmentHtmls} tab={tab} onSelectTab={selectTab} />
       )}
     </div>
   );

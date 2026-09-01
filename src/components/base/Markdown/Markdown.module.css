@@ -52,7 +52,7 @@
   margin: 0;
 }
 
-.table-wrapper {
+.prose [data-table-wrapper] {
   inline-size: 100%;
   overflow-x: auto;
 }
@@ -88,15 +88,15 @@
   line-height: var(--prose-lh-code);
 }
 
-.prose .align-left {
+.prose [data-align='left'] {
   text-align: start;
 }
 
-.prose .align-center {
+.prose [data-align='center'] {
   text-align: center;
 }
 
-.prose .align-right {
+.prose [data-align='right'] {
   text-align: end;
 }
 

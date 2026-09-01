@@ -1,5 +1,6 @@
 ---
 import '@/styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import Font from 'astro/components/Font.astro';
 import { HeaderControls } from '@/components/features/HeaderControls';
 import { CourseOverlays } from '@/components/features/CourseOverlays';
@@ -131,6 +132,7 @@ const treeModules = buildTreeModules(rawModules, lessons);
     <Font cssVariable="--font-lato" preload />
     <Font cssVariable="--font-inconsolata" preload />
     <link rel="icon" type="image/png" href="/favicon-32x32.png" />
+    <ClientRouter />
   </head>
   <body>
     <div data-page-loader role="status" aria-label="Loading page">

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { navigate } from 'astro:transitions/client';
 import { isProseLesson, type LessonDefinition } from '@/curriculum/types';
 import { useCourseShortcuts } from '@/hooks/useCourseShortcuts';
 import { useLesson } from '@/hooks/useLesson';
@@ -22,6 +23,14 @@ export interface LessonWorkspaceProps {
   lesson: LessonDefinition;
   /** Lesson IDs in course order, passed from the Astro layout at build time. */
   orderedLessonIds: string[];
+  /** Pre-rendered instruction HTML, produced at build time by renderMarkdown. */
+  instructionsHtml: string;
+  /**
+   * Pre-rendered HTML for each instruction segment (prose lessons with tab
+   * blocks). Indices correspond 1:1 to `lesson.instructionSegments`; tab-group
+   * segments have an empty string since they are rendered by `<TabGroup>`.
+   */
+  segmentHtmls?: string[];
   /** Which panel is active. Owned by the parent (LessonPage). */
   tab: TabId;
   /** Called when the user switches panels via keyboard shortcut. */
@@ -36,7 +45,7 @@ export interface LessonWorkspaceProps {
  * plain Next control and no terminal, checklist, or Reset. On load, focus
  * lands on the lesson heading so the task is announced.
  */
-export function LessonWorkspace({ lesson, orderedLessonIds, tab, onSelectTab }: LessonWorkspaceProps) {
+export function LessonWorkspace({ lesson, orderedLessonIds, instructionsHtml, segmentHtmls, tab, onSelectTab }: LessonWorkspaceProps) {
   const chrome = useCourseChrome();
   const { shortcutsEnabled } = useShortcutsPreference();
   const { focusInstructionsOnLoad } = useInitialFocusPreference();
@@ -71,13 +80,13 @@ export function LessonWorkspace({ lesson, orderedLessonIds, tab, onSelectTab }: 
   const isCapstone = currentIndex === orderedLessonIds.length - 1;
   const isCompleted = completed.includes(lesson.id);
 
-  // Lesson-to-lesson movement is a real document load, so navigation is a
-  // location change and the next page load is the reset that a router remount used
-  // to provide. markComplete persists synchronously before the navigation is
-  // dispatched, so the next page reads fresh progress.
+  // Lesson-to-lesson movement uses Astro's client router for an SPA-style
+  // transition: the next page's HTML is fetched in the background and the DOM is
+  // swapped without a full page reload. markComplete persists synchronously
+  // before the navigation is dispatched, so the next page reads fresh progress.
   const advance = useCallback(() => {
     markComplete(lesson.id);
-    window.location.href = isCapstone || !nextId ? '/' : `/learn/${nextId}`;
+    navigate(isCapstone || !nextId ? '/' : `/learn/${nextId}`);
   }, [markComplete, lesson.id, isCapstone, nextId]);
 
   // Announce tab changes to screen readers, skipping the initial render.
@@ -133,7 +142,7 @@ export function LessonWorkspace({ lesson, orderedLessonIds, tab, onSelectTab }: 
     currentLessonId: lesson.id,
     reachableLessonIds: orderedLessonIds,
     onNavigate: (lessonId) => {
-      window.location.href = `/learn/${lessonId}`;
+      navigate(`/learn/${lessonId}`);
     },
     onFocusTerminal: prose ? () => {} : focusTerminal,
     onFocusInstructions: prose ? () => {} : focusInstructions,
@@ -175,16 +184,16 @@ export function LessonWorkspace({ lesson, orderedLessonIds, tab, onSelectTab }: 
         >
           <div className={lesson.type === 'review' ? styles['review-content'] : ''}>
             {heading}
-            {segments ? (
+            {segments && segmentHtmls ? (
               segments.map((segment, index) =>
                 segment.kind === 'markdown' ? (
-                  <Markdown key={index}>{segment.content}</Markdown>
+                  <Markdown key={index} html={segmentHtmls[index]} />
                 ) : (
                   <TabGroup key={index} tabs={segment.tabs} />
                 )
               )
             ) : (
-              <Markdown>{lesson.instructions}</Markdown>
+              <Markdown html={instructionsHtml} />
             )}
             <div className={styles.controls}>
               <PrimaryAction complete={complete} isCapstone={isCapstone} onAdvance={advance} />
@@ -208,7 +217,7 @@ export function LessonWorkspace({ lesson, orderedLessonIds, tab, onSelectTab }: 
         >
           {heading}
           <div className={styles['instruction-body']}>
-            <Markdown>{lesson.instructions}</Markdown>
+            <Markdown html={instructionsHtml} />
             <Checklist items={checklist} muteAnnouncement={feedback !== null} />
           </div>
           <div className={styles.feedback} role="status" aria-live="polite">
