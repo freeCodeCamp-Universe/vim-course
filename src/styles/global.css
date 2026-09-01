@@ -118,7 +118,7 @@
   --color-link: var(--blue90);
   --color-success: var(--green90);
   --color-danger: var(--red90);
-  --color-focus: var(--blue90);
+  --color-focus: var(--blue50);
   --color-current-indicator: var(--blue90);
   --color-cursor-bg: #292936;
   --color-cursor-fg: #eef0f5;
