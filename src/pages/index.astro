@@ -1,19 +1,13 @@
 ---
 import { loadCurriculum } from '@/curriculum/loader';
-import type { CurriculumTreeModule } from '@/components/features/CurriculumTree';
+import { buildTreeModules } from '@/curriculum/buildTreeModules';
 import CourseLayout from '@/layouts/CourseLayout.astro';
 import { Home } from '@/views/Home';
 import { FccLogoIcon } from '@/components/base/Icon';
 import styles from './HomePage.module.css';
 
 const { modules, lessons } = loadCurriculum();
-const titleById = new Map(lessons.map((lesson) => [lesson.id, lesson.title]));
-const treeModules: CurriculumTreeModule[] = modules.map((module, index) => ({
-  number: index + 1,
-  slug: module.slug,
-  title: module.title,
-  lessons: module.lessonIds.map((id) => ({ id, title: titleById.get(id) ?? id })),
-}));
+const treeModules = buildTreeModules(modules, lessons);
 const orderedLessonIds = modules.flatMap((module) => module.lessonIds);
 ---
 

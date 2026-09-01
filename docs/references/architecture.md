@@ -27,14 +27,18 @@ How a lesson `.md` file becomes a static HTML page:
 ```mermaid
 flowchart TD
     A["ordering.ts\n(lesson manifest)"] --> B
-    B["loader.ts\nbuildCurriculum()"] -->|"import.meta.glob\n(raw markdown)"| C
+    B["loader.ts\nloadCurriculum()"] -->|"import.meta.glob\n(raw markdown)"| C
     C["parseLesson()\nper-file parse"] --> D["LessonDefinition objects"]
     D --> E["[lessonId].astro\ngetStaticPaths()"]
     E -->|"one path per lesson"| F["CourseLayout.astro\n+ LessonWorkspace prop"]
     F --> G["learn/<id>/index.html\n(hydration props inline)"]
+    D --> H["buildTreeModules()\n(titles + IDs only)"]
+    H -->|"CurriculumTreeModule[]\nas hydration prop"| F
 ```
 
 `ordering.ts` is the source of truth for which lessons exist and in what order. `loader.ts` ingests the raw markdown at build time via `import.meta.glob`, parses the YAML frontmatter and `# --section--` blocks, expands `@group` command aliases, validates every field loudly, and returns typed `LessonDefinition` objects. The `.astro` page calls `getStaticPaths()` to emit one HTML file per lesson. The full lesson definition, including all file seeds and the checklist, is serialized as a hydration prop.
+
+`CourseLayout.astro` also calls `loadCurriculum()` in its frontmatter and passes a lightweight `CurriculumTreeModule[]` (module/lesson titles and IDs only, ~2KB serialized) to the `CourseOverlays` island as a hydration prop. This keeps the full markdown corpus out of the client bundle — `NavDrawer` receives pre-built tree data rather than importing `loader.ts` itself.
 
 ---
 
@@ -73,7 +77,7 @@ React owns only the shell (instructions, checklist display, nav buttons). The en
 | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `src/engine/`              | The Vim simulator. Pure functions only. No DOM, no React. `dispatch.ts` is the main reducer; `commands/` holds one file per command family.                      |
 | `src/terminal/`            | The DOM rendering layer. `terminalView.ts` paints a grid of `<span>` elements. `vimTerminalView.ts` bridges the engine to the grid and owns `LessonProgress`.    |
-| `src/curriculum/`          | Lesson parsing (`loader.ts`), domain types (`types.ts`), lesson engine adapter (`lessonEngine.ts`), progress state machine (`lessonProgress.ts`), and utilities. |
+| `src/curriculum/`          | Lesson parsing (`loader.ts`), domain types (`types.ts`), lesson engine adapter (`lessonEngine.ts`), progress state machine (`lessonProgress.ts`), `buildTreeModules.ts` (server-side helper that converts `LessonDefinition[]` to the lightweight `CurriculumTreeModule[]` passed to NavDrawer), and utilities. |
 | `src/validation/`          | `checklist.ts` evaluates `LessonTest` predicates against a `ChecklistContext`. Separate from the engine so it can be tested without engine state.                |
 | `src/components/base/`     | UI atoms with no domain knowledge: Button, Modal, Switch, TabGroup, Icon, Markdown.                                                                              |
 | `src/components/features/` | Domain-aware components: VimTerminal, Checklist, NavDrawer, SettingsModal, etc.                                                                                  |
@@ -94,6 +98,10 @@ Three islands share one lesson page. React Context cannot cross island boundarie
 | `LessonWorkspace` | `client:load`         | Instructions, terminal, checklist, nav   |
 
 `client:only` skips pre-rendering (the component renders entirely in the browser). `client:load` pre-renders to static HTML at build time and hydrates immediately; the lesson workspace has no `localStorage` dependency at render time so it can be pre-rendered safely.
+
+### Curriculum data as a hydration prop
+
+`NavDrawer` needs module and lesson titles to render its navigation tree. This data must not be imported client-side: `loader.ts` uses `import.meta.glob` with `{ eager: true }`, which bundles every lesson markdown file into the client JS (~455KB). Instead, `CourseLayout.astro` calls `buildTreeModules()` server-side at build time and serializes the result as a `modules: CurriculumTreeModule[]` hydration prop on `CourseOverlays`, which forwards it to `NavDrawer`. The client bundle receives only ~2KB of pre-built title/ID data. The same `buildTreeModules()` helper is used by `index.astro` for the home page curriculum tree.
 
 ---
 

@@ -3,6 +3,8 @@ import '@/styles/global.css';
 import Font from 'astro/components/Font.astro';
 import { HeaderControls } from '@/components/features/HeaderControls';
 import { CourseOverlays } from '@/components/features/CourseOverlays';
+import { loadCurriculum } from '@/curriculum/loader';
+import { buildTreeModules } from '@/curriculum/buildTreeModules';
 import './CourseLayout.loader.css';
 import styles from './CourseLayout.module.css';
 
@@ -16,6 +18,8 @@ interface Props {
 
 const { title, description, currentLessonId } = Astro.props;
 const documentTitle = title ? `${title} | Vim Course | freeCodeCamp.org` : 'Vim Course | freeCodeCamp.org';
+const { modules: rawModules, lessons } = loadCurriculum();
+const treeModules = buildTreeModules(rawModules, lessons);
 ---
 
 <!doctype html>
@@ -145,6 +149,6 @@ const documentTitle = title ? `${title} | Vim Course | freeCodeCamp.org` : 'Vim 
       />
     </header>
     <slot />
-    <CourseOverlays currentLessonId={currentLessonId} client:only="react" />
+    <CourseOverlays currentLessonId={currentLessonId} modules={treeModules} client:only="react" />
   </body>
 </html>
