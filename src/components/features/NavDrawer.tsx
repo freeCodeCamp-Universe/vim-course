@@ -75,7 +75,7 @@ export function NavDrawer({
       slideFrom="end"
       title="Lessons"
       subtitle={<Progress completed={completedSet.size} total={totalLessons} />}
-      headerContent={<CurriculumSearch query={query} onQueryChange={setQuery} width="full" />}
+      headerContent={<CurriculumSearch query={query} onQueryChange={setQuery} />}
       triggerElement={triggerElement}
       initialFocus={currentLessonId ? currentLessonRef : undefined}
     >
