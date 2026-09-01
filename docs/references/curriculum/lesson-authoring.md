@@ -319,7 +319,7 @@ Use `files` instead of `file` when one checklist item should require the same co
 | `commandAt`     | Modifier for one command matcher. Requires the command to have been issued while the cursor was at this `[line, column]` position (1-based, `null` for unconstrained axis). The check is atomic: the history entry must match both the command and the position, so two `yy` steps on different lines do not cross-satisfy each other. When `command` is a string, `commandAt` may be flat on the test object. When `command` is an object, `commandAt` must be inside the object — a flat `commandAt` is not applied to an object-form matcher. Never flat alongside `anyOfCommands`. |
 | `fromMode`      | Modifier for one command matcher. Requires the command to have been issued from the named Vim mode. **Must be inside the command-matcher object** — the loader rejects it as a flat test field. Use it when a key's meaning depends on the mode it leaves: `{ "command": { "command": "Esc", "fromMode": "visual" } }`.                                                                                                                                     |
 | `open`          | A specific file is the active buffer. Any route there counts.                                                                                                                                                                                                                                                                                                                                                                                              |
-| `cursorAt`      | Position(s) the cursor must reach, as `[line, column]` or `[[l,c], ...]`. Use `null` in either slot to leave that axis unconstrained (`[3, null]` means any column on line 3). An array of positions passes when every position has been visited. The label may use `{count}` and `{total}` for live progress.                                                                                                                                             |
+| `cursorReached` | Position(s) the cursor must reach, as `[line, column]` or `[[l,c], ...]`. Use `null` in either slot to leave that axis unconstrained (`[3, null]` means any column on line 3). An array of positions passes when every position has been visited. The label may use `{count}` and `{total}` for live progress.                                                                                                                                             |
 
 **Test fields — state predicates (what is true now).** Checked on every keystroke and always re-evaluated. An edit can be undone or Vim can reopen, so the item ticks and un-ticks as the buffer changes.
 
@@ -488,7 +488,7 @@ Matching behavior itself is unchanged. `:e` matches `:e notes.md`, `vim` matches
 
 Use `exact` when the lesson teaches one spelling among several that do the same thing (for example, `:set nonumber` exact so `:set nonu` does not complete it). Counts stay separate unless specified (`G` matches `7G` until a matcher requires `count`). `Esc` matches the engine's `Escape` token.
 
-Use `commandAt` when the lesson needs to verify the command was issued at a specific cursor position. The check is atomic: the same history entry must match both the command and the position. Without `commandAt`, `command` and `cursorAt` are independent session predicates that can be satisfied by different keystrokes, so a `yy` on line 1 plus a cursor visit to line 3 would satisfy both. `commandAt` prevents that: `{ "command": "yy", "commandAt": [3, null] }` requires `yy` to have been pressed while the cursor was on line 3. This scales to any number of same-command items on different lines.
+Use `commandAt` when the lesson needs to verify the command was issued at a specific cursor position. The check is atomic: the same history entry must match both the command and the position. Without `commandAt`, `command` and `cursorReached` are independent session predicates that can be satisfied by different keystrokes, so a `yy` on line 1 plus a cursor visit to line 3 would satisfy both. `commandAt` prevents that: `{ "command": "yy", "commandAt": [3, null] }` requires `yy` to have been pressed while the cursor was on line 3. This scales to any number of same-command items on different lines.
 
 Use `fromMode` when a key's behavior depends on which mode issued it (for example, `~` in visual mode acts on a selection; in normal mode it toggles one character). Because `fromMode` must live inside the command object, pair it with `commandAt` inside the same object when both constraints apply.
 
@@ -591,13 +591,13 @@ The loader validates ranges against seed content at load time.
 
 ## Dynamic labels with `{count}` and `{total}`
 
-When `cursorAt` holds an array of positions, the checklist label may include `{count}` and `{total}` placeholders. `{total}` is the number of positions in the array (static), and `{count}` is how many of those positions the learner has visited so far (monotonically increasing).
+When `cursorReached` holds an array of positions, the checklist label may include `{count}` and `{total}` placeholders. `{total}` is the number of positions in the array (static), and `{count}` is how many of those positions the learner has visited so far (monotonically increasing).
 
 ```json
 {
   "label": "Trace the V ({count} of {total})",
   "test": {
-    "cursorAt": [
+    "cursorReached": [
       [2, 1],
       [3, 2],
       [4, 3],
@@ -610,7 +610,7 @@ When `cursorAt` holds an array of positions, the checklist label may include `{c
 }
 ```
 
-The label renders as "Trace the V (0 of 7)" at seed and updates as positions are visited, reaching "Trace the V (7 of 7)" when the item completes. Positions may be visited in any order. The placeholders have no effect on single-position `cursorAt` tests.
+The label renders as "Trace the V (0 of 7)" at seed and updates as positions are visited, reaching "Trace the V (7 of 7)" when the item completes. Positions may be visited in any order. The placeholders have no effect on single-position `cursorReached` tests.
 
 Count-only changes (3 of 7 to 4 of 7) update the label visually without triggering a screen-reader announcement. The completion announcement fires when the item's status transitions to `completed`.
 

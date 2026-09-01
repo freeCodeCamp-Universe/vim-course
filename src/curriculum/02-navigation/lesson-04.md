@@ -64,7 +64,7 @@ Your cursor starts at the top-left of V. Navigate to each checkpoint to trace ev
       "label": "Trace the V ({count} of {total})",
       "hint": "You should navigate using `hjkl` to complete the V.",
       "test": {
-        "cursorAt": [
+        "cursorReached": [
           [2, 1],
           [3, 2],
           [4, 3],
@@ -79,7 +79,7 @@ Your cursor starts at the top-left of V. Navigate to each checkpoint to trace ev
       "label": "Trace the I ({count} of {total})",
       "hint": "You should navigate using `hjkl` to complete the I.",
       "test": {
-        "cursorAt": [
+        "cursorReached": [
           [2, 11],
           [2, 12],
           [2, 13],
@@ -103,7 +103,7 @@ Your cursor starts at the top-left of V. Navigate to each checkpoint to trace ev
       "label": "Trace the M ({count} of {total})",
       "hint": "You should navigate using `hjkl` to complete the M.",
       "test": {
-        "cursorAt": [
+        "cursorReached": [
           [5, 21],
           [4, 21],
           [3, 21],

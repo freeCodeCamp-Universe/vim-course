@@ -83,7 +83,7 @@ However, with the keys arranged alphabetically, highly common letter combination
       "label": "Switch to `qwerty.md` and copy the paragraph.",
       "hint": "You should open `qwerty.md`. Then, press <kbd>y</kbd> twice to yank the paragraph.",
       "evaluateWhen": { "fileOpen": "qwerty.md" },
-      "test": { "command": "yy", "cursorAt": [1, null] }
+      "test": { "command": "yy", "cursorReached": [1, null] }
     },
     {
       "label": "Switch back to `keyboard-history.md` and paste the paragraph in.",

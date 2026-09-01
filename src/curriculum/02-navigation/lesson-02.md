@@ -61,17 +61,17 @@ In 1991, Vim (short for "Vi IMproved") was released, adding essential modern fea
     {
       "label": "Move down to the last paragraph.",
       "hint": "You should press <kbd>j</kbd> to move the cursor down a line.",
-      "test": { "command": "j", "cursorAt": [7, null] }
+      "test": { "command": "j", "cursorReached": [7, null] }
     },
     {
       "label": "Jump forward through the words.",
       "hint": "You should press <kbd>w</kbd> to jump forward word by word until the cursor reaches \"essential\".",
-      "test": { "command": "w", "cursorAt": [7, 61] }
+      "test": { "command": "w", "cursorReached": [7, 61] }
     },
     {
       "label": "Jump backward through the words.",
       "hint": "You should press <kbd>b</kbd> to jump backward word by word until the cursor reaches \"IMproved\".",
-      "test": { "command": "b", "cursorAt": [7, 29] }
+      "test": { "command": "b", "cursorReached": [7, 29] }
     }
   ]
 }

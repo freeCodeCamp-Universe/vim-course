@@ -57,22 +57,22 @@ E . . . #
     {
       "label": "Get around the wall.",
       "hint": "You should go right past the wall, then down.",
-      "test": { "cursorAt": [3, 1] }
+      "test": { "cursorReached": [3, 1] }
     },
     {
       "label": "Cross the water.",
       "hint": "You can use <kbd>$</kbd> to jump to the end of the line across the `~` tiles.",
-      "test": { "cursorAt": [4, 9] }
+      "test": { "cursorReached": [4, 9] }
     },
     {
       "label": "Get past the rocks.",
       "hint": "You can use <kbd>b</kbd> to jump backward across the `%` tiles.",
-      "test": { "cursorAt": [6, 1] }
+      "test": { "cursorReached": [6, 1] }
     },
     {
       "label": "Reach the exit.",
       "hint": "You should navigate to the `E` in the bottom-left corner.",
-      "test": { "cursorAt": [7, 1] }
+      "test": { "cursorReached": [7, 1] }
     }
   ]
 }

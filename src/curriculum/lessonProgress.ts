@@ -55,9 +55,9 @@ function initChecklist(lesson: LessonDefinition): ChecklistItem[] {
   }
 
   return lesson.config.checklist.map((item) => {
-    const cursorAt = item.test.cursorAt;
+    const cursorReached = item.test.cursorReached;
     const total =
-      cursorAt !== undefined && Array.isArray(cursorAt[0]) ? cursorAt.length : undefined;
+      cursorReached !== undefined && Array.isArray(cursorReached[0]) ? cursorReached.length : undefined;
     const isDynamicLabel = total !== undefined && /\{count\}|\{total\}/.test(item.label);
 
     return {

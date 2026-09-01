@@ -95,7 +95,7 @@ Today, regEx is a standard tool across programming languagEs, hElping dEvElopErs
       "hint": "You should press <kbd>Shift</kbd> + <kbd>5</kbd> to jump to the closing `]` on line 1.",
       "test": {
         "command": "%",
-        "cursorAt": [1, 62]
+        "cursorReached": [1, 62]
       }
     },
     {
@@ -106,7 +106,7 @@ Today, regEx is a standard tool across programming languagEs, hElping dEvElopErs
         // identify the closing delimiter as the command precondition
         "commandAt": [1, 62],
         // identify the opening delimiter as the postcondition
-        "cursorAt": [1, 53]
+        "cursorReached": [1, 53]
       }
     },
     {

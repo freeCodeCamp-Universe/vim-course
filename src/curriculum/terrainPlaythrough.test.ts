@@ -38,7 +38,7 @@ const mazeLesson = fullCurriculum.lessons.find(
 
 /**
  * Feed keys and track checklist completion with latching, the way the runtime
- * does. A monotonic item stays completed once it passes, so a `cursorAt` test
+ * does. A monotonic item stays completed once it passes, so a `cursorReached` test
  * that passed on step 3 still counts on step 14.
  */
 function feedWithLatching(
@@ -88,17 +88,17 @@ describe('terrain maze playthrough', () => {
     //   $ → (0,8)    end of row 0
     //   j → (1,8)    right edge of wall row
     //   j → (2,8)    row 2
-    //   0 → (2,0)    start of row 2      → checkpoint 1: cursorAt [3,1]
+    //   0 → (2,0)    start of row 2      → checkpoint 1: cursorReached [3,1]
     //   j → (3,0)    water row, col 0 (safe)
-    //   $ → (3,8)    end of water row    → checkpoint 2: cursorAt [4,9]
+    //   $ → (3,8)    end of water row    → checkpoint 2: cursorReached [4,9]
     //   j → (4,8)    clear row
     //   h → (4,7)    step left
     //   h → (4,6)    step left
     //   j → (5,6)    rock row, col 6 ('.')
     //   b → (5,4)    land on '%' (b permitted)
     //   b → (5,2)    land on '%' (b permitted)
-    //   b → (5,0)    start of row 5      → checkpoint 3: cursorAt [6,1]
-    //   j → (6,0)    exit row = 'E'      → checkpoint 4: cursorAt [7,1]
+    //   b → (5,0)    start of row 5      → checkpoint 3: cursorReached [6,1]
+    //   j → (6,0)    exit row = 'E'      → checkpoint 4: cursorReached [7,1]
     const solution = [
       '$',
       'j',

@@ -56,17 +56,17 @@ In 1991, Vim (short for "Vi IMproved") was released, adding essential modern fea
     {
       "label": "Move down to the third paragraph.",
       "hint": "You should press <kbd>j</kbd> to move the cursor down a line.",
-      "test": { "command": "j", "cursorAt": [5, null] }
+      "test": { "command": "j", "cursorReached": [5, null] }
     },
     {
       "label": "Jump to the end of that line.",
       "hint": "You should press <kbd>Shift</kbd> + <kbd>4</kbd> (which is `$`) to jump to the very end of the line.",
-      "test": { "command": "$", "cursorAt": [5, 266] }
+      "test": { "command": "$", "cursorReached": [5, 266] }
     },
     {
       "label": "Jump back to the start of that line.",
       "hint": "You should press <kbd>0</kbd> to jump to the very start of the line.",
-      "test": { "command": "0", "cursorAt": [5, 1] }
+      "test": { "command": "0", "cursorReached": [5, 1] }
     }
   ]
 }

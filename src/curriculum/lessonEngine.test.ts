@@ -682,7 +682,7 @@ describe('terrain seeding', () => {
         { glyph: '#', passableBy: [] },
         { glyph: '~', passableBy: ['0', '$'] },
       ],
-      checklist: [{ label: 'Reach the end', test: { cursorAt: [1, 3] } }],
+      checklist: [{ label: 'Reach the end', test: { cursorReached: [1, 3] } }],
     },
   };
 

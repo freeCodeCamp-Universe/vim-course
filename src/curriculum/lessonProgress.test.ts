@@ -221,7 +221,7 @@ const tracedWorkshop: AuthoredLessonDefinition = {
       {
         label: 'Trace the line ({count} of {total})',
         test: {
-          cursorAt: [
+          cursorReached: [
             [1, 1],
             [2, 1],
           ],

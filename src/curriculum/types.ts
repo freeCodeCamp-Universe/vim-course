@@ -91,7 +91,7 @@ export type CommandMatcher =
  * (logical AND), and a single item is free to mix the two families below — that
  * is the whole point of there being one test shape rather than two lesson modes.
  *
- * **Session predicates** (`command`, `exact`, `count`, `open`, `cursorAt`) ask
+ * **Session predicates** (`command`, `exact`, `count`, `open`, `cursorReached`) ask
  * what the learner *did*: which keys reached the history,
  * which file they landed in, where the cursor got to. They are answered from a
  * record of the past, so they latch — see {@link isLatchingTest}.
@@ -187,7 +187,7 @@ export interface LessonTest {
    * Because the item latches, this asserts the learner reached the position(s)
    * at some point, not that they are still there.
    */
-  cursorAt?: CursorAtPosition | CursorAtPosition[];
+  cursorReached?: CursorAtPosition | CursorAtPosition[];
   /**
    * The file every state predicate below reads. Required by all of them, with no
    * lesson-wide default to inherit: a test names its own subject, so that a
@@ -328,7 +328,7 @@ export interface LessonTest {
  * The session predicates: the fields answered from a record of what already
  * happened, and so the fields that may latch once true.
  */
-const LATCHING_TEST_KEYS: readonly string[] = ['command', 'anyOfCommands', 'open', 'cursorAt'];
+const LATCHING_TEST_KEYS: readonly string[] = ['command', 'anyOfCommands', 'open', 'cursorReached'];
 
 /**
  * Fields that assert nothing on their own: `file` names the subject of the state

@@ -71,7 +71,7 @@ In 1991, Vim (short for "Vi IMproved") was released, adding essential modern fea
     {
       "label": "Jump directly to line 7.",
       "hint": "You should type `7` then press <kbd>Shift</kbd> + <kbd>g</kbd> to jump straight to line 7.",
-      "test": { "command": "G", "count": 7, "cursorAt": [7, null] }
+      "test": { "command": "G", "count": 7, "cursorReached": [7, null] }
     },
     {
       "label": "Hide the line numbers again.",

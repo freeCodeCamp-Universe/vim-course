@@ -1441,7 +1441,7 @@ const TEST_PREDICATE_KEYS = [
   'command',
   'anyOfCommands',
   'open',
-  'cursorAt',
+  'cursorReached',
   'equals',
   'notEquals',
   'contains',
@@ -1779,8 +1779,8 @@ function parseLessonTest(
     test.open = expectConfigString(value.open, `${field}.open`, lessonId, path);
   }
 
-  if (value.cursorAt !== undefined) {
-    test.cursorAt = parseCursorAt(value.cursorAt, `${field}.cursorAt`, lessonId, path);
+  if (value.cursorReached !== undefined) {
+    test.cursorReached = parseCursorAt(value.cursorReached, `${field}.cursorReached`, lessonId, path);
   }
 
   if (value.file !== undefined) {
@@ -1950,7 +1950,7 @@ function parseLessonTest(
   // can stand as the whole test.
   if (TEST_PREDICATE_KEYS.every((key) => test[key] === undefined)) {
     throw new Error(
-      `Config field ${field} for ${lessonId} in ${path} must define one of command, anyOfCommands, open, cursorAt, equals, notEquals, equalsExpected, equalsExpectedNormalizingWhitespace, contains, matches, absent, occurrences, line, blank, saved, quit, lineNumbers, register, or quickfix`
+      `Config field ${field} for ${lessonId} in ${path} must define one of command, anyOfCommands, open, cursorReached, equals, notEquals, equalsExpected, equalsExpectedNormalizingWhitespace, contains, matches, absent, occurrences, line, blank, saved, quit, lineNumbers, register, or quickfix`
     );
   }
 

@@ -646,12 +646,12 @@ describe('buildCurriculum', () => {
     });
   });
 
-  it('should parse a single cursorAt position on a checklist item', () => {
+  it('should parse a single cursorReached position on a checklist item', () => {
     const fixture = edit(
       createWorkshopFixture(),
       WORKSHOP_PATH,
       '"test": { "command": ":e" }',
-      '"test": { "command": ":e", "cursorAt": [7, 16] }'
+      '"test": { "command": ":e", "cursorReached": [7, 16] }'
     );
     const [lesson] = buildCurriculum(fixture.files, fixture.ordering).lessons;
 
@@ -660,16 +660,16 @@ describe('buildCurriculum', () => {
     }
     expect(lesson.config.checklist[0].test).toEqual({
       command: ':e',
-      cursorAt: [7, 16],
+      cursorReached: [7, 16],
     });
   });
 
-  it('should parse multi-position cursorAt values and unconstrained axes', () => {
+  it('should parse multi-position cursorReached values and unconstrained axes', () => {
     const fixture = edit(
       createWorkshopFixture(),
       WORKSHOP_PATH,
       '"test": { "command": ":e" }',
-      '"test": { "cursorAt": [[1, 1], [2, null], [null, 3]] }'
+      '"test": { "cursorReached": [[1, 1], [2, null], [null, 3]] }'
     );
     const [lesson] = buildCurriculum(fixture.files, fixture.ordering).lessons;
 
@@ -677,7 +677,7 @@ describe('buildCurriculum', () => {
       throw new Error('expected an authored lesson');
     }
     expect(lesson.config.checklist[0].test).toEqual({
-      cursorAt: [
+      cursorReached: [
         [1, 1],
         [2, null],
         [null, 3],
@@ -726,32 +726,32 @@ describe('buildCurriculum', () => {
     );
   });
 
-  it('should throw when a cursorAt position is invalid', () => {
+  it('should throw when a cursorReached position is invalid', () => {
     for (const value of ['[0, 1]', '[1.5, 1]', '["7", 1]', '[null, null]']) {
       const fixture = edit(
         createWorkshopFixture(),
         WORKSHOP_PATH,
         '"test": { "command": ":e" }',
-        `"test": { "cursorAt": ${value} }`
+        `"test": { "cursorReached": ${value} }`
       );
 
       expect(() => buildCurriculum(fixture.files, fixture.ordering)).toThrow(
-        'checklist[0].test.cursorAt'
+        'checklist[0].test.cursorReached'
       );
     }
   });
 
-  it('should throw when cursorAt is empty or contains malformed positions', () => {
+  it('should throw when cursorReached is empty or contains malformed positions', () => {
     for (const value of ['[]', '[[1]]', '[[1, 1, 1]]']) {
       const fixture = edit(
         createWorkshopFixture(),
         WORKSHOP_PATH,
         '"test": { "command": ":e" }',
-        `"test": { "cursorAt": ${value} }`
+        `"test": { "cursorReached": ${value} }`
       );
 
       expect(() => buildCurriculum(fixture.files, fixture.ordering)).toThrow(
-        'checklist[0].test.cursorAt'
+        'checklist[0].test.cursorReached'
       );
     }
   });
@@ -1172,7 +1172,7 @@ describe('buildCurriculum', () => {
       const fixture = withChecklist(JSON.stringify([{ label: 'x', test: { file: 'words.txt' } }]));
 
       expect(() => buildCurriculum(fixture.files, fixture.ordering)).toThrow(
-        'must define one of command, anyOfCommands, open, cursorAt, equals'
+        'must define one of command, anyOfCommands, open, cursorReached, equals'
       );
     });
 
@@ -2115,7 +2115,7 @@ describe('terrain config', () => {
           '{',
           '  "allowedCommands": ["h", "l"],',
           `  ${terrainJson}`,
-          '  "checklist": [{ "label": "Reach the end", "test": { "cursorAt": [1, 3] } }]',
+          '  "checklist": [{ "label": "Reach the end", "test": { "cursorReached": [1, 3] } }]',
           '}',
           '```',
         ].join('\n'),

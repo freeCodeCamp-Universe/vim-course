@@ -64,9 +64,9 @@ export interface RequirementResult {
    * reveal its hint — the learner has not reached this step yet.
    */
   deferred?: boolean;
-  /** For multi-position cursorAt: positions visited so far. */
+  /** For multi-position cursorReached: positions visited so far. */
   count?: number;
-  /** For multi-position cursorAt: total positions required. */
+  /** For multi-position cursorReached: total positions required. */
   total?: number;
 }
 
@@ -364,11 +364,11 @@ function sessionPasses(test: LessonTest, context: ChecklistContext): TestResult 
     return { passed: false };
   }
 
-  if (test.cursorAt !== undefined) {
-    const multiPosition = Array.isArray(test.cursorAt[0]);
+  if (test.cursorReached !== undefined) {
+    const multiPosition = Array.isArray(test.cursorReached[0]);
     const positions: CursorAtPosition[] = multiPosition
-      ? (test.cursorAt as CursorAtPosition[])
-      : [test.cursorAt as CursorAtPosition];
+      ? (test.cursorReached as CursorAtPosition[])
+      : [test.cursorReached as CursorAtPosition];
 
     if (!multiPosition) {
       const [line, column] = positions[0];

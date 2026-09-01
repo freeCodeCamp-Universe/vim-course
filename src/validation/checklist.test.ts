@@ -137,7 +137,7 @@ describe('evaluateChecklist', () => {
     });
 
     it('should complete a cursor-line requirement only on the 1-based line asked for', () => {
-      const lesson = lessonWith([{ label: 'day 7', test: { cursorAt: [7, null] } }]);
+      const lesson = lessonWith([{ label: 'day 7', test: { cursorReached: [7, null] } }]);
 
       expect(passed(evaluateChecklist(lesson, context({ cursor: { line: 5, col: 0 } })))).toEqual([
         false,
@@ -152,7 +152,7 @@ describe('evaluateChecklist', () => {
     });
 
     it('should complete a cursor-column requirement only on the 1-based column asked for', () => {
-      const lesson = lessonWith([{ label: 'line end', test: { cursorAt: [null, 20] } }]);
+      const lesson = lessonWith([{ label: 'line end', test: { cursorReached: [null, 20] } }]);
 
       expect(passed(evaluateChecklist(lesson, context({ cursor: { line: 3, col: 18 } })))).toEqual([
         false,
@@ -163,7 +163,7 @@ describe('evaluateChecklist', () => {
     });
 
     it('should require both cursor coordinates when both are asserted', () => {
-      const lesson = lessonWith([{ label: 'summit', test: { cursorAt: [7, 16] } }]);
+      const lesson = lessonWith([{ label: 'summit', test: { cursorReached: [7, 16] } }]);
 
       expect(passed(evaluateChecklist(lesson, context({ cursor: { line: 6, col: 0 } })))).toEqual([
         false,
@@ -178,7 +178,7 @@ describe('evaluateChecklist', () => {
 
     it('should require a command and the cursor position together (AND)', () => {
       const lesson = lessonWith([
-        { label: 'j to day 7', test: { command: 'j', cursorAt: [7, null] } },
+        { label: 'j to day 7', test: { command: 'j', cursorReached: [7, null] } },
       ]);
       const moved = history('j');
 
@@ -198,7 +198,7 @@ describe('evaluateChecklist', () => {
         {
           label: 'trace',
           test: {
-            cursorAt: [
+            cursorReached: [
               [1, 1],
               [2, 2],
               [1, 2],
@@ -220,7 +220,7 @@ describe('evaluateChecklist', () => {
         {
           label: 'trace',
           test: {
-            cursorAt: [
+            cursorReached: [
               [1, 1],
               [2, 2],
             ],
@@ -238,7 +238,7 @@ describe('evaluateChecklist', () => {
         {
           label: 'trace',
           test: {
-            cursorAt: [
+            cursorReached: [
               [1, 1],
               [2, 2],
             ],
@@ -1140,7 +1140,7 @@ describe('evaluateChecklist', () => {
 
   describe('latching', () => {
     it('should latch an item built only from session predicates', () => {
-      const lesson = lessonWith([{ label: 'day 7', test: { cursorAt: [7, null] } }]);
+      const lesson = lessonWith([{ label: 'day 7', test: { cursorReached: [7, null] } }]);
 
       const arrived = evaluateChecklist(lesson, context({ cursor: { line: 6, col: 0 } }));
       expect(arrived).toEqual([{ passed: true, monotonic: true }]);
@@ -1156,7 +1156,7 @@ describe('evaluateChecklist', () => {
         { label: 'command', test: { command: 'x' } },
         { label: 'exact command', test: { command: 'x', exact: true } },
         { label: 'open', test: { open: 'a.txt' } },
-        { label: 'cursor', test: { cursorAt: [2, 3] } },
+        { label: 'cursor', test: { cursorReached: [2, 3] } },
         { label: 'content', test: { file: 'a.txt', equals: 'x' } },
         { label: 'blank', test: { file: 'a.txt', blank: true } },
         { label: 'saved', test: { file: 'a.txt', saved: true } },

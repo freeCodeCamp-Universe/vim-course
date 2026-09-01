@@ -168,7 +168,7 @@ function isDrivable(test: LessonTest): boolean {
 }
 
 /**
- * Whether the cursor has reached a target position. `cursorAt` values are
+ * Whether the cursor has reached a target position. `cursorReached` values are
  * 1-based; the engine's cursor is 0-based. A `null` component is a wildcard:
  * `[5, null]` matches any column on line 5.
  */
@@ -305,11 +305,11 @@ function satisfy(
     const countKeys = test.count !== undefined ? [...String(test.count)] : [];
     const keys = [...countKeys, ...commandToKeys(command, test.open)];
 
-    // When a `cursorAt` postcondition targets a single position, repeat the
+    // When a `cursorReached` postcondition targets a single position, repeat the
     // command until the cursor arrives there (capped to avoid infinite loops).
     const singleCursorAt =
-      test.cursorAt !== undefined && !Array.isArray(test.cursorAt[0])
-        ? (test.cursorAt as [number | null, number | null])
+      test.cursorReached !== undefined && !Array.isArray(test.cursorReached[0])
+        ? (test.cursorReached as [number | null, number | null])
         : undefined;
 
     if (singleCursorAt !== undefined) {
@@ -419,7 +419,7 @@ describe('curriculum keystroke requirements', () => {
       let state = vimLessonEngine.seed(lesson);
 
       // Track which items pass at any point during the drive. Single-position
-      // `cursorAt` checks the **current** cursor, so a later item can overwrite
+      // `cursorReached` checks the **current** cursor, so a later item can overwrite
       // an earlier item's position. Checking after every step catches the moment
       // each item's postcondition holds.
       const everPassed = new Set<number>();
@@ -459,7 +459,7 @@ describe('curriculum keystroke requirements', () => {
       lesson.config.checklist.forEach((requirement, index) => {
         // Content requirements (equals, contains, absent, line, blank, register) are
         // checked by the "declared end states" tests, not here. Items with nothing
-        // actionable for satisfy() (pure cursorAt waypoints) are also out of scope.
+        // actionable for satisfy() (pure cursorReached waypoints) are also out of scope.
         if (hasContentAssertion(requirement.test) || !isDrivable(requirement.test)) {
           return;
         }
