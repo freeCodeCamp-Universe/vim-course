@@ -1,0 +1,45 @@
+/*
+ * Loading and completion-state styles for CourseLayout.
+ *
+ * Every selector here is inherently global (data-attributes and bare class
+ * names emitted by CurriculumTree template literals), so this is a plain
+ * CSS file, not a CSS module. Imported as a side-effect by CourseLayout.astro.
+ */
+
+/* ------------------------------------------------------------------ *
+ * Page loader                                                        *
+ * ------------------------------------------------------------------ *
+ * The loader is shown by an inline <style> in CourseLayout.astro and
+ * covers the viewport until this external stylesheet arrives.        */
+[data-page-loader] {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ *
+ * Lesson loading state                                               *
+ * ------------------------------------------------------------------ *
+ * Hide the spinner once the lesson React island has mounted.         */
+body:has([data-lesson-page]) [data-loading-state],
+body:has([data-tab]) [data-loading-state] {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ *
+ * Completion status screen-reader text                               *
+ * ------------------------------------------------------------------ *
+ * Both "Completed" and "Not completed" labels are always in the DOM;
+ * CSS removes the wrong one from the accessibility tree so only the
+ * correct label is announced.                                        */
+[data-state='available'] .home-status-completed,
+[data-state='available'] .drawer-status-completed,
+[data-state='current'] .home-status-completed,
+[data-state='current'] .drawer-status-completed {
+  display: none;
+}
+
+[data-state='completed'] .home-status-available,
+[data-state='completed'] .drawer-status-available,
+[data-state='completed-current'] .home-status-available,
+[data-state='completed-current'] .drawer-status-available {
+  display: none;
+}

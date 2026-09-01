@@ -153,29 +153,6 @@ body:has([data-tab]) {
   flex-direction: column;
 }
 
-/* Hide the loading state once the lesson island has mounted. */
-body:has([data-lesson-page]) [data-loading-state],
-body:has([data-tab]) [data-loading-state] {
-  display: none;
-}
-
-/* Toggle completion status screen-reader text based on lesson state.
-   Both labels are always in the DOM; CSS removes the wrong one from
-   the accessibility tree so only the correct label is announced. */
-[data-state='available'] .home-status-completed,
-[data-state='available'] .drawer-status-completed,
-[data-state='current'] .home-status-completed,
-[data-state='current'] .drawer-status-completed {
-  display: none;
-}
-
-[data-state='completed'] .home-status-available,
-[data-state='completed'] .drawer-status-available,
-[data-state='completed-current'] .home-status-available,
-[data-state='completed-current'] .drawer-status-available {
-  display: none;
-}
-
 a {
   text-underline-position: under;
 }

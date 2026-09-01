@@ -3,6 +3,7 @@ import '@/styles/global.css';
 import Font from 'astro/components/Font.astro';
 import { HeaderControls } from '@/components/features/HeaderControls';
 import { CourseOverlays } from '@/components/features/CourseOverlays';
+import './CourseLayout.loader.css';
 import styles from './CourseLayout.module.css';
 
 interface Props {
@@ -54,6 +55,68 @@ const documentTitle = title ? `${title} | Vim Course | freeCodeCamp.org` : 'Vim 
         /* Storage unavailable; skip reduced-motion stamping. */
       }
     </script>
+    <style is:inline>
+      /*
+       * Full-page loader shown on first paint, before the external stylesheet
+       * arrives. Once global.css loads it sets [data-page-loader] { display: none },
+       * which hides this overlay and reveals the now-styled content underneath.
+       *
+       * Colors are hardcoded to match the design tokens in colors.css so the
+       * loader looks correct without any external CSS.
+       */
+      [data-page-loader] {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        /* Dark theme default */
+        background: #0a0a23;
+      }
+
+      :root[data-theme='light'] [data-page-loader] {
+        background: #fff;
+      }
+
+      [data-page-loader] svg {
+        inline-size: 3.5rem;
+        block-size: 3.5rem;
+        display: block;
+      }
+
+      @keyframes page-loader-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      [data-page-loader] .loader-base {
+        stroke: #3b3b4f;
+        stroke-linecap: round;
+      }
+
+      :root[data-theme='light'] [data-page-loader] .loader-base {
+        stroke: #939393;
+      }
+
+      [data-page-loader] .loader-arc {
+        stroke: #f5f6f7;
+        stroke-linecap: round;
+        transform-box: view-box;
+        transform-origin: center;
+        animation: page-loader-spin 0.9s linear infinite;
+      }
+
+      :root[data-theme='light'] [data-page-loader] .loader-arc {
+        stroke: #0a0a23;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        [data-page-loader] .loader-arc {
+          animation: none;
+        }
+      }
+    </style>
     <title>{documentTitle}</title>
     {description && <meta name="description" content={description} />}
     <Font cssVariable="--font-lato" preload />
@@ -61,6 +124,13 @@ const documentTitle = title ? `${title} | Vim Course | freeCodeCamp.org` : 'Vim 
     <link rel="icon" type="image/png" href="/favicon-32x32.png" />
   </head>
   <body>
+    <div data-page-loader role="status" aria-label="Loading page">
+      <svg viewBox="0 0 56 56" aria-hidden="true" focusable="false">
+        <circle class="loader-base" cx="28" cy="28" r="22" fill="none" stroke-width="6" />
+        <circle class="loader-arc" cx="28" cy="28" r="22" fill="none" stroke-width="6" stroke-dasharray="103.67 34.56" />
+      </svg>
+      <span class="sr-only">Loading…</span>
+    </div>
     <a href="#main" class="sr-only">Skip to main content</a>
     <header class={styles.header}>
       <a href="/" class={styles['home-link']}>Vim Course</a>
