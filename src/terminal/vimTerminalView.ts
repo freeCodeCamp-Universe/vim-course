@@ -733,7 +733,7 @@ export function createVimTerminalView(options: VimTerminalViewOptions): VimTermi
             onDismiss: { open: lessonConfig.open },
             isCompletion: true,
           }),
-          announcement: 'Capstone complete. Press any key to return to the study.',
+          announcement: getScene(completionScene)?.announcement ?? '',
         };
       }
 

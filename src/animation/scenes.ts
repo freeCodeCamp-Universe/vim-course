@@ -14,6 +14,8 @@ export interface SceneEntry {
   period: number;
   /** Target frames per second. */
   fps: number;
+  /** Screen-reader announcement when the scene is entered. */
+  announcement?: string;
 }
 
 /** Pad every row to `cols` and ensure exactly `rows` lines. */
@@ -100,6 +102,8 @@ scenes.set('capstone-congrats', {
   fn: completionScene,
   period: COMPLETION_PERIOD,
   fps: COMPLETION_FPS,
+  announcement:
+    "Congratulations! You've lifted the seal. The door is now open. Press any key to return to the study.",
 });
 
 /** Look up a registered scene by id. Returns undefined for unknown ids. */

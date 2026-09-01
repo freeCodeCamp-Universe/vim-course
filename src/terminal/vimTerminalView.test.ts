@@ -766,4 +766,23 @@ describe('createVimTerminalView', () => {
     type('m');
     expect(live).toHaveTextContent('m');
   });
+
+  it('should announce the congratulations message when the completion animation starts', () => {
+    const capstone: AuthoredLessonDefinition = {
+      ...lab,
+      config: {
+        ...lab.config,
+        completionScene: 'capstone-congrats',
+        checklist: [{ label: 'done', test: { command: 'x' } }],
+      },
+    };
+    const { q, type } = mount(capstone);
+    const live = q.getByTestId('terminal-announcement');
+
+    type('x');
+
+    expect(live).toHaveTextContent(
+      "Congratulations! You've lifted the seal. The door is now open. Press any key to return to the study."
+    );
+  });
 });
