@@ -6,6 +6,7 @@
   border: 1px solid transparent;
   border-radius: var(--radius);
   cursor: pointer;
+  text-align: center;
 }
 
 .button.borderless {
