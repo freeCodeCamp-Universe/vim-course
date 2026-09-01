@@ -4,7 +4,7 @@
   justify-content: space-between;
   gap: var(--space-md);
   padding-inline: var(--space-sm);
-  padding-block: var(--space-sm);
+  padding-block: var(--space-xs);
   background-color: var(--color-bg-primary);
 }
 
