@@ -65,6 +65,14 @@
   margin-inline: auto;
 }
 
+.review-content h2 {
+  margin-block: var(--space-2xl) var(--space-lg);
+}
+
+.review-content h3 {
+  margin-block: var(--space-xl) var(--space-md);
+}
+
 /* ── Heading ─────────────────────────────────────────────────────────────── */
 
 .heading {
