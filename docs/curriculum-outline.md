@@ -561,13 +561,16 @@ Source: [file](../src/curriculum/05-visual-mode/lesson-01.md)
 
 <!-- lesson: 6a9739dff0c3a37f2239211a -->
 
-Status: 🚧
+Status: ✅
 Source: [file](../src/curriculum/05-visual-mode/lesson-02.md)
 
 - **Concept:**
-  - Add the lesson concept.
-- **Activity:** Describe the learner activity.
-- **Goal:** Describe the learner outcome.
+  - `~` toggles the case of the character under the cursor in normal mode, and in visual mode, it toggles the case of all selected characters.
+- **Activity:**
+  - Use `v` to select a line, then use `~` to toggle the case of the selected text.
+  - Use `~` in normal mode to toggle the case of a single character.
+- **Goal:**
+  - Learners understand how to change the case of text in Vim.
 
 #### 3. **Line-wise selection: move the first paragraph** — type: `learn`
 
@@ -578,20 +581,21 @@ Source: [file](../src/curriculum/05-visual-mode/lesson-03.md)
 
 - **Concept:**
   - `V` selects whole lines at a time. `V` must be typed as uppercase; lowercase `v` is the character-wise selection from the previous lesson. When this lesson is authored, call this out for the learner the same way modules 02 and 04 do for `G` and `D`.
-  - With a selection active, `d` cuts it, `y` yanks (copies) it, and `p` pastes whatever is in the register after the current line — the same commands from module 4, now acting on entire lines instead of a motion.
-- **Activity:** Move two paragraphs at once from `## Clipboard` to `## Final` using `V`, `d`, and `p`.
-- **Goal:** The learner applies `V` + `d` + `p` to move a line-wise selection to a new location.
+- **Activity:**
+  - Select two paragraphs at once with `V` and toggle the case of the selection with `~`.
+- **Goal:** The learner applies `~` to a line-wise selection, and understands the difference between `v` and `V`.
 
 #### 4. **Deleting, copying, and pasting a selection** — type: `learn`
+
 <!-- lesson: 6a9739e2374a6d659e2e6d3f -->
 
-Status: 🚧
+Status: ✅
 Source: [file](../src/curriculum/05-visual-mode/lesson-04.md)
 
 - **Concept:**
-  - Add the lesson concept.
-- **Activity:** Describe the learner activity.
-- **Goal:** Describe the learner outcome.
+  - With a selection active, `d` cuts it, `y` yanks (copies) it, and `p` pastes whatever is in the register after the current line — the same commands from module 4, now acting on entire lines instead of a motion.
+- **Activity:** Move two paragraphs at once from `## Clipboard` to `## Final` using `V`, `d`, and `p`.
+- **Goal:** The learner applies `V` + `d` + `p` to move a line-wise selection to a new location.
 
 #### 5. **Using o to complete the rearrangement** — type: `learn`
 

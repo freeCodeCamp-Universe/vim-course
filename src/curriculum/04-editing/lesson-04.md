@@ -84,7 +84,7 @@ Bottom Row: N O P Q R S T U V W X Y Z
     {
       "label": "Copy the `Top Row` line in `abc.md`.",
       "hint": "You should move the cursor to the `Top Row` line and press <kbd>y</kbd> twice to yank it.",
-      "test": { "command": "yy", "atCursor": [3, null] }
+      "test": { "command": "yy", "commandAt": [3, null] }
     },
     {
       "label": "Paste the `Top Row` line into `keyboard-history.md`.",
@@ -117,7 +117,7 @@ Bottom Row: N O P Q R S T U V W X Y Z
       "label": "Switch to `abc.md` and copy the `Bottom Row` line.",
       "hint": "You can use `:e abc.md` to switch to the file. Then, move the cursor to the `Bottom Row` line and press <kbd>y</kbd> twice to yank it.",
       "evaluateWhen": { "fileOpen": "abc.md" },
-      "test": { "command": "yy", "atCursor": [4, null] }
+      "test": { "command": "yy", "commandAt": [4, null] }
     },
     {
       "label": "Paste the `Bottom Row` line into `keyboard-history.md`.",

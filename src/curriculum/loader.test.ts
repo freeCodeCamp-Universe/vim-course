@@ -1565,10 +1565,10 @@ describe('buildCurriculum', () => {
       });
     });
 
-    describe('atCursor', () => {
-      it('should carry atCursor through beside its command', () => {
+    describe('commandAt', () => {
+      it('should carry commandAt through beside its command', () => {
         const fixture = withChecklist(
-          JSON.stringify([{ label: 'x', test: { command: 'yy', atCursor: [3, null] } }])
+          JSON.stringify([{ label: 'x', test: { command: 'yy', commandAt: [3, null] } }])
         );
 
         const [lesson] = buildCurriculum(fixture.files, fixture.ordering).lessons;
@@ -1576,12 +1576,12 @@ describe('buildCurriculum', () => {
         if (isProseLesson(lesson)) {
           throw new Error('expected an authored lesson');
         }
-        expect(lesson.config.checklist[0].test).toEqual({ command: 'yy', atCursor: [3, null] });
+        expect(lesson.config.checklist[0].test).toEqual({ command: 'yy', commandAt: [3, null] });
       });
 
-      it('should throw when atCursor is set without a command', () => {
+      it('should throw when commandAt is set without a command', () => {
         const fixture = withChecklist(
-          JSON.stringify([{ label: 'x', test: { atCursor: [3, null], quit: true } }])
+          JSON.stringify([{ label: 'x', test: { commandAt: [3, null], quit: true } }])
         );
 
         expect(() => buildCurriculum(fixture.files, fixture.ordering)).toThrow(
@@ -1589,9 +1589,9 @@ describe('buildCurriculum', () => {
         );
       });
 
-      it('should throw when atCursor is not a valid position tuple', () => {
+      it('should throw when commandAt is not a valid position tuple', () => {
         const fixture = withChecklist(
-          JSON.stringify([{ label: 'x', test: { command: 'yy', atCursor: [3] } }])
+          JSON.stringify([{ label: 'x', test: { command: 'yy', commandAt: [3] } }])
         );
 
         expect(() => buildCurriculum(fixture.files, fixture.ordering)).toThrow(
@@ -1599,9 +1599,9 @@ describe('buildCurriculum', () => {
         );
       });
 
-      it('should throw when atCursor has both coordinates null', () => {
+      it('should throw when commandAt has both coordinates null', () => {
         const fixture = withChecklist(
-          JSON.stringify([{ label: 'x', test: { command: 'yy', atCursor: [null, null] } }])
+          JSON.stringify([{ label: 'x', test: { command: 'yy', commandAt: [null, null] } }])
         );
 
         expect(() => buildCurriculum(fixture.files, fixture.ordering)).toThrow(
@@ -1609,10 +1609,10 @@ describe('buildCurriculum', () => {
         );
       });
 
-      it('should throw when atCursor is set beside anyOfCommands at the top level', () => {
+      it('should throw when commandAt is set beside anyOfCommands at the top level', () => {
         const fixture = withChecklist(
           JSON.stringify([
-            { label: 'x', test: { anyOfCommands: ['yy', 'dd'], atCursor: [3, null] } },
+            { label: 'x', test: { anyOfCommands: ['yy', 'dd'], commandAt: [3, null] } },
           ])
         );
 

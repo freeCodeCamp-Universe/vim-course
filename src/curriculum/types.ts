@@ -82,7 +82,7 @@ export type CommandMatcher =
       command: string;
       exact?: boolean;
       count?: number;
-      atCursor?: CursorAtPosition;
+      commandAt?: CursorAtPosition;
       fromMode?: Mode;
     };
 
@@ -163,7 +163,7 @@ export interface LessonTest {
    * setting it without `command` is a config error, and it does not turn a
    * session item live.
    */
-  atCursor?: CursorAtPosition;
+  commandAt?: CursorAtPosition;
   /**
    * The path that must be the active buffer. Satisfied by any route that leaves
    * that file open (`vim <file>`, `vim` then `:e <file>`), not a specific
@@ -346,7 +346,7 @@ const NEUTRAL_TEST_KEYS: readonly string[] = [
   'newFile',
   'exact',
   'count',
-  'atCursor',
+  'commandAt',
   'matchAgainstSaved',
   'normalizeWhitespace',
 ];

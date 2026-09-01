@@ -123,7 +123,7 @@ interface ParsedCommandMatcher {
   command: string;
   exact: boolean;
   count?: number;
-  atCursor?: CursorAtPosition;
+  commandAt?: CursorAtPosition;
   fromMode?: Mode;
 }
 
@@ -131,14 +131,14 @@ function parseCommandMatcher(
   matcher: CommandMatcher,
   fallbackExact = false,
   fallbackCount?: number,
-  fallbackAtCursor?: CursorAtPosition
+  fallbackCommandAt?: CursorAtPosition
 ): ParsedCommandMatcher {
   if (typeof matcher === 'string') {
     return {
       command: matcher,
       exact: fallbackExact,
       count: fallbackCount,
-      atCursor: fallbackAtCursor,
+      commandAt: fallbackCommandAt,
       fromMode: undefined,
     };
   }
@@ -147,25 +147,25 @@ function parseCommandMatcher(
     command: matcher.command,
     exact: matcher.exact === true,
     count: matcher.count,
-    atCursor: matcher.atCursor,
+    commandAt: matcher.commandAt,
     fromMode: matcher.fromMode,
   };
 }
 
 /**
- * Whether the cursor position at the time an action was issued matches an
- * `atCursor` requirement. The position is looked up from the `actionCursors`
+ * Whether the cursor position at the time an action was issued matches a
+ * `commandAt` requirement. The position is looked up from the `actionCursors`
  * WeakMap (stamped by dispatch), not stored on the Action object. The
  * requirement is 1-based (matching `config.cursor`); the recorded cursor is
  * 0-based (engine coordinates). `null` in either slot leaves that axis
  * unconstrained.
  */
-function cursorMatchesAtCursor(action: Action, atCursor: CursorAtPosition): boolean {
+function cursorMatchesCommandAt(action: Action, commandAt: CursorAtPosition): boolean {
   const cursor = actionCursors.get(action);
   if (!cursor) {
     return false;
   }
-  const [line, column] = atCursor;
+  const [line, column] = commandAt;
   return (
     (line === null || cursor.line === line - 1) && (column === null || cursor.col === column - 1)
   );
@@ -176,7 +176,7 @@ function actionMatchesMatcher(action: Action, matcher: ParsedCommandMatcher): bo
     isIssuedCommand(action) &&
     commandMatches(action.command!, matcher.command, matcher.exact) &&
     (matcher.count === undefined || action.count === matcher.count) &&
-    (matcher.atCursor === undefined || cursorMatchesAtCursor(action, matcher.atCursor)) &&
+    (matcher.commandAt === undefined || cursorMatchesCommandAt(action, matcher.commandAt)) &&
     (matcher.fromMode === undefined || actionModes.get(action) === matcher.fromMode)
   );
 }
@@ -186,9 +186,9 @@ function historyHasCommand(
   matcher: CommandMatcher,
   fallbackExact = false,
   fallbackCount?: number,
-  fallbackAtCursor?: CursorAtPosition
+  fallbackCommandAt?: CursorAtPosition
 ): boolean {
-  const parsed = parseCommandMatcher(matcher, fallbackExact, fallbackCount, fallbackAtCursor);
+  const parsed = parseCommandMatcher(matcher, fallbackExact, fallbackCount, fallbackCommandAt);
   return history.some((action) => actionMatchesMatcher(action, parsed));
 }
 
@@ -347,7 +347,7 @@ function sessionPasses(test: LessonTest, context: ChecklistContext): TestResult 
       test.command,
       test.exact === true,
       test.count,
-      test.atCursor
+      test.commandAt
     )
   ) {
     return { passed: false };

@@ -1356,7 +1356,7 @@ function parseCommandMatcher(
 
   assertAllowedKeys(
     value,
-    new Set(['command', 'exact', 'count', 'atCursor', 'fromMode']),
+    new Set(['command', 'exact', 'count', 'commandAt', 'fromMode']),
     lessonId,
     path
   );
@@ -1384,8 +1384,8 @@ function parseCommandMatcher(
     matcher.count = value.count;
   }
 
-  if (value.atCursor !== undefined) {
-    matcher.atCursor = parseSingleCursorAt(value.atCursor, `${field}.atCursor`, lessonId, path);
+  if (value.commandAt !== undefined) {
+    matcher.commandAt = parseSingleCursorAt(value.commandAt, `${field}.commandAt`, lessonId, path);
   }
 
   if (value.fromMode !== undefined) {
@@ -1504,7 +1504,7 @@ const AUTHORED_TEST_KEYS = new Set<string>([
   'files',
   'exact',
   'count',
-  'atCursor',
+  'commandAt',
   'equalsExpected',
   'equalsExpectedNormalizingWhitespace',
   'notEquals',
@@ -1726,9 +1726,9 @@ function parseLessonTest(
       );
     }
 
-    if (value.atCursor !== undefined) {
+    if (value.commandAt !== undefined) {
       throw new Error(
-        `Config field ${field}.atCursor for ${lessonId} in ${path} must be defined per anyOfCommands entry, not at the test top level`
+        `Config field ${field}.commandAt for ${lessonId} in ${path} must be defined per anyOfCommands entry, not at the test top level`
       );
     }
 
@@ -1765,14 +1765,14 @@ function parseLessonTest(
     test.count = value.count;
   }
 
-  if (value.atCursor !== undefined) {
+  if (value.commandAt !== undefined) {
     if (value.command === undefined) {
       throw new Error(
-        `Config field ${field}.atCursor for ${lessonId} in ${path} requires ${field}.command`
+        `Config field ${field}.commandAt for ${lessonId} in ${path} requires ${field}.command`
       );
     }
 
-    test.atCursor = parseSingleCursorAt(value.atCursor, `${field}.atCursor`, lessonId, path);
+    test.commandAt = parseSingleCursorAt(value.commandAt, `${field}.commandAt`, lessonId, path);
   }
 
   if (value.open !== undefined) {
@@ -2132,9 +2132,9 @@ function parsePositionNumber(
 }
 
 /**
- * Parse a single `[line, column]` position for `atCursor`. Unlike `parseCursorAt`,
+ * Parse a single `[line, column]` position for `commandAt`. Unlike `parseCursorAt`,
  * this always expects exactly one position (no array-of-positions form), since
- * `atCursor` narrows one command invocation to one location.
+ * `commandAt` narrows one command invocation to one location.
  */
 function parseSingleCursorAt(
   value: unknown,

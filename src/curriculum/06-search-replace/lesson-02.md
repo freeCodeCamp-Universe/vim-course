@@ -104,7 +104,7 @@ Today, regEx is a standard tool across programming languagEs, hElping dEvElopErs
       "test": {
         "command": "%",
         // identify the closing delimiter as the command precondition
-        "atCursor": [1, 62],
+        "commandAt": [1, 62],
         // identify the opening delimiter as the postcondition
         "cursorAt": [1, 53]
       }

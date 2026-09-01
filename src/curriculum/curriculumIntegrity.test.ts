@@ -278,14 +278,14 @@ function satisfy(
       next = feedKeys(next, [':'], allowed);
     }
 
-    // `atCursor` is a precondition: the cursor must be at the target position
+    // `commandAt` is a precondition: the cursor must be at the target position
     // *before* the command runs, so move there first. The position may be
     // declared at the top-level test or embedded in the command matcher (where
     // it doubles as the engine's history constraint).
-    const commandAtCursor = typeof test.command === 'object' ? test.command.atCursor : undefined;
-    const atCursor = test.atCursor ?? commandAtCursor;
-    if (atCursor !== undefined) {
-      const [targetLine, targetCol] = atCursor;
+    const matcherCommandAt = typeof test.command === 'object' ? test.command.commandAt : undefined;
+    const commandAt = test.commandAt ?? matcherCommandAt;
+    if (commandAt !== undefined) {
+      const [targetLine, targetCol] = commandAt;
       if (targetLine !== null) {
         let limit = 500;
         while (!cursorReached(next, targetLine, null) && --limit > 0) {

@@ -144,7 +144,7 @@ Three performance measures reduce first-load latency:
 - `history: Action[]` — append-only log of every executed action; the checklist reads this
 - `undoStack`, `redoStack`, `register`
 
-`dispatch(state, key)` is a pure reducer. It routes by mode, applies the command, then runs `applyFilter()` to check `allowedCommands`. The result carries `{ state, actions }`. An `actionCursors` WeakMap records the cursor position at the moment each `Action` was produced, so checklist predicates can check `atCursor` without adding fields to `Action`.
+`dispatch(state, key)` is a pure reducer. It routes by mode, applies the command, then runs `applyFilter()` to check `allowedCommands`. The result carries `{ state, actions }`. An `actionCursors` WeakMap records the cursor position at the moment each `Action` was produced, so checklist predicates can check `commandAt` without adding fields to `Action`.
 
 ---
 

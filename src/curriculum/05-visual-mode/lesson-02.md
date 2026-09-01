@@ -114,22 +114,22 @@ As computing emerged, the metaphor was borrowed by text editors, where "clipboar
     {
       "label": "Toggle the case of `z` in the list in normal mode.",
       "hint": "You should move the cursor to `z` on the `z for Undo` line and press <kbd>Shift</kbd> + <kbd>`</kbd> (which produces `~`) in normal mode.",
-      "test": { "command": { "command": "~", "fromMode": "normal", "atCursor": [11, 3] } }
+      "test": { "command": { "command": "~", "fromMode": "normal", "commandAt": [11, 3] } }
     },
     {
       "label": "Toggle the case of `x` in the list in normal mode.",
       "hint": "You should move the cursor to `x` on the `x for Cut` line and press <kbd>Shift</kbd> + <kbd>`</kbd> (which produces `~`) in normal mode.",
-      "test": { "command": { "command": "~", "fromMode": "normal", "atCursor": [12, 3] } }
+      "test": { "command": { "command": "~", "fromMode": "normal", "commandAt": [12, 3] } }
     },
     {
       "label": "Toggle the case of `v` in the list in normal mode.",
       "hint": "You should move the cursor to `v` on the `v for Paste` line and press <kbd>Shift</kbd> + <kbd>`</kbd> (which produces `~`) in normal mode.",
-      "test": { "command": { "command": "~", "fromMode": "normal", "atCursor": [13, 3] } }
+      "test": { "command": { "command": "~", "fromMode": "normal", "commandAt": [13, 3] } }
     },
     {
       "label": "Toggle the case of `c` in the list in normal mode.",
       "hint": "You should move the cursor to `c` on the `c for Copy` line and press <kbd>Shift</kbd> + <kbd>`</kbd> (which produces `~`) in normal mode.",
-      "test": { "command": { "command": "~", "fromMode": "normal", "atCursor": [14, 3] } }
+      "test": { "command": { "command": "~", "fromMode": "normal", "commandAt": [14, 3] } }
     },
     {
       "label": "Save the file.",

@@ -24,7 +24,7 @@ import { snapshotOf } from './undoStack';
 
 /**
  * Record the pre-command cursor on each action via the side-channel WeakMap,
- * then append to history. The cursor tells checklist `atCursor` predicates
+ * then append to history. The cursor tells checklist `commandAt` predicates
  * where the learner was when the command ran, so the predicate can match
  * atomically. The Action objects themselves stay clean, so engine tests that
  * assert on history shapes are unaffected.

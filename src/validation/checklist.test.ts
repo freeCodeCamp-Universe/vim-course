@@ -401,9 +401,9 @@ describe('evaluateChecklist', () => {
       expect(passed(evaluateChecklist(lesson, context({ history: gg })))).toEqual([true]);
     });
 
-    it('should require the command to have been issued at the specified cursor position when atCursor is set', () => {
+    it('should require the command to have been issued at the specified cursor position when commandAt is set', () => {
       const lesson = lessonWith([
-        { label: 'yank line 3', test: { command: 'yy', atCursor: [3, null] } },
+        { label: 'yank line 3', test: { command: 'yy', commandAt: [3, null] } },
       ]);
 
       const onLine3 = actionAt({ type: 'edit', command: 'yy' }, { line: 2, col: 0 });
@@ -415,10 +415,10 @@ describe('evaluateChecklist', () => {
       expect(passed(evaluateChecklist(lesson, context({ history: noCursor })))).toEqual([false]);
     });
 
-    it('should not cross-satisfy two atCursor tests on different lines', () => {
+    it('should not cross-satisfy two commandAt tests on different lines', () => {
       const lesson = lessonWith([
-        { label: 'yank line 3', test: { command: 'yy', atCursor: [3, null] } },
-        { label: 'yank line 4', test: { command: 'yy', atCursor: [4, null] } },
+        { label: 'yank line 3', test: { command: 'yy', commandAt: [3, null] } },
+        { label: 'yank line 4', test: { command: 'yy', commandAt: [4, null] } },
       ]);
 
       const yyOnLine3 = actionAt({ type: 'edit', command: 'yy' }, { line: 2, col: 0 });
@@ -435,8 +435,8 @@ describe('evaluateChecklist', () => {
       ).toEqual([true, true]);
     });
 
-    it('should match atCursor with a specific column when both are constrained', () => {
-      const lesson = lessonWith([{ label: 'x at 2,5', test: { command: 'x', atCursor: [2, 5] } }]);
+    it('should match commandAt with a specific column when both are constrained', () => {
+      const lesson = lessonWith([{ label: 'x at 2,5', test: { command: 'x', commandAt: [2, 5] } }]);
 
       const rightSpot = actionAt({ type: 'edit', command: 'x' }, { line: 1, col: 4 });
       const wrongCol = actionAt({ type: 'edit', command: 'x' }, { line: 1, col: 0 });
@@ -445,9 +445,9 @@ describe('evaluateChecklist', () => {
       expect(passed(evaluateChecklist(lesson, context({ history: [wrongCol] })))).toEqual([false]);
     });
 
-    it('should latch an atCursor test once satisfied', () => {
+    it('should latch an commandAt test once satisfied', () => {
       const lesson = lessonWith([
-        { label: 'yank line 3', test: { command: 'yy', atCursor: [3, null] } },
+        { label: 'yank line 3', test: { command: 'yy', commandAt: [3, null] } },
       ]);
 
       const action = actionAt({ type: 'edit', command: 'yy' }, { line: 2, col: 0 });
