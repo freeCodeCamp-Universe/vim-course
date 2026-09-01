@@ -11,6 +11,18 @@ afterEach(() => {
 });
 
 describe('HeaderControls', () => {
+  it('should render a donate link with the correct href', () => {
+    render(<HeaderControls />);
+
+    const link = screen.getByRole('link', { name: /donate/i });
+    expect(link).toHaveAttribute(
+      'href',
+      'https://donate.freecodecamp.org?source=41478e19-73a0-4816-9a54-658b538fa1de&campaign=test-2026&medium=web'
+    );
+    expect(link).toHaveAttribute('target', '_blank');
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+  });
+
   it('should render the drawer, shortcuts, and settings controls', () => {
     render(<HeaderControls />);
 

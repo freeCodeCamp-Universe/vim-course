@@ -37,4 +37,24 @@ describe('Button', () => {
 
     expect(screen.getByRole('button', { name: 'Reset' })).toHaveClass(styles.borderless);
   });
+
+  it('should default the button type to "button"', () => {
+    render(<Button variant="primary">Submit</Button>);
+
+    expect(screen.getByRole('button', { name: 'Submit' })).toHaveAttribute('type', 'button');
+  });
+
+  it('should render a link when href is provided', () => {
+    render(
+      <Button variant="cta" href="https://example.com" target="_blank" rel="noopener noreferrer">
+        Donate
+      </Button>
+    );
+
+    const link = screen.getByRole('link', { name: 'Donate' });
+    expect(link).toHaveAttribute('href', 'https://example.com');
+    expect(link).toHaveAttribute('target', '_blank');
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(link).toHaveClass(styles.button, styles.cta);
+  });
 });

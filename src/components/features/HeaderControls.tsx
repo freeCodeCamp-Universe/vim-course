@@ -1,6 +1,7 @@
+import cfg from '../../../donation-config.json';
 import { GearIcon, KeyboardIcon, ListIcon } from '@/components/base/Icon';
+import { Button } from '@/components/base/Button/Button';
 import { useCourseChrome } from '@/stores/courseChrome';
-import { DonateButton } from './DonateButton';
 import styles from './HeaderControls.module.css';
 
 interface HeaderControlsProps {
@@ -36,7 +37,14 @@ export function HeaderControls({ showDrawer = true, showShortcuts = true }: Head
       <button type="button" className={styles.action} onClick={openSettings} aria-label="settings">
         <GearIcon />
       </button>
-      <DonateButton />
+      <Button
+        variant="cta"
+        href={`https://donate.freecodecamp.org?source=${cfg.donationId}&campaign=test-2026&medium=web`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Donate
+      </Button>
     </div>
   );
 }
