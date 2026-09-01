@@ -23,8 +23,7 @@ function isSymbolKey(resolved: string): boolean {
  * Renders an inline keyboard shortcut as a row of `<kbd>` chips joined by `+` separators,
  * except when the preceding key is a single non-ASCII symbol (⌥, ⌘) — those run
  * together without a separator, matching macOS convention. Resolves 'Alt' and 'Cmd'
- * to platform-specific labels. Hidden below 1024px; present only as a visual hint,
- * so the wrapper is `aria-hidden`.
+ * to platform-specific labels. Hidden below 768px on pointer devices.
  */
 export function KbdCombo({ keys, className, separateAll = false }: KbdComboProps) {
   const altLabel = useAltLabel();
@@ -43,11 +42,7 @@ export function KbdCombo({ keys, className, separateAll = false }: KbdComboProps
   const resolved = keys.map(resolveKey);
 
   return (
-    <span
-      className={`${styles.combo}${className ? ` ${className}` : ''}`}
-      aria-hidden="true"
-      data-testid="kbd-combo"
-    >
+    <span className={`${styles.combo}${className ? ` ${className}` : ''}`}>
       {resolved.map((label, index) => (
         <span key={keys[index]}>
           {index > 0 && (separateAll || !isSymbolKey(resolved[index - 1])) ? (

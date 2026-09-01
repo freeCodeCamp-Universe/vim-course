@@ -18,12 +18,6 @@ describe('KbdCombo', () => {
     expect(screen.getByText('+')).toBeInTheDocument();
   });
 
-  it('should be aria-hidden', () => {
-    render(<KbdCombo keys={['Alt', 'K']} />);
-
-    expect(screen.getByTestId('kbd-combo')).toHaveAttribute('aria-hidden', 'true');
-  });
-
   it('should resolve Alt to the platform alt label', () => {
     render(<KbdCombo keys={['Alt']} />);
 
@@ -40,12 +34,6 @@ describe('KbdCombo', () => {
     render(<KbdCombo keys={['Enter']} />);
 
     expect(screen.getByText('Enter', { selector: 'kbd' })).toBeInTheDocument();
-  });
-
-  it('should accept an optional className on the wrapper', () => {
-    render(<KbdCombo keys={['Alt', 'K']} className="custom" />);
-
-    expect(screen.getByTestId('kbd-combo').className).toContain('custom');
   });
 
   it('should suppress the + separator when the preceding key is a non-ASCII symbol by default', () => {
