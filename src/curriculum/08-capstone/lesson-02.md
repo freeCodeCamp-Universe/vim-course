@@ -269,6 +269,7 @@ The fierce troll pursued the savage archer. -
   "disallowedCommands": [":q", ":q!", ":wq", "@arrows"],
   "decorativeRanges": [
     { "file": "study.md", "lines": [1, 1] },
+    { "file": "study.md", "lines": [6, 6] },
     { "file": "study.md", "lines": [12, 12] }
   ],
   "checklist": [
