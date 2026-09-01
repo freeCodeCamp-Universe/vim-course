@@ -103,6 +103,12 @@
   padding-inline: var(--drawer-padding-inline);
 }
 
+/* Negate the global offset so the outline renders inside the element.
+   The panel's overflow: clip would otherwise clip the outside ring. */
+.body:focus-visible {
+  outline-offset: calc(var(--focus-ring-offset) * -1);
+}
+
 .body-bottom {
   min-block-size: var(--drawer-bottom-body-min);
 }
