@@ -46,7 +46,7 @@ Note that the search is case-sensitive. If you want to search for `foo` and `Foo
 /foo\c
 ```
 
-To move to the next occurrence, you can press <kbd>n</kbd> (lowercase). To move back to the previous occurrence, you can press <kbd>Shift</kbd> + <kbd>n</kbd> (uppercase).
+To move to the next occurrence, you can press <kbd>n</kbd>. To move back to the previous occurrence, you can press <kbd>Shift</kbd> + <kbd>n</kbd>.
 
 ---
 
