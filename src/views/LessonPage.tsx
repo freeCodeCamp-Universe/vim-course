@@ -8,6 +8,7 @@ import styles from './LessonPage.module.css';
 
 export interface LessonPageProps {
   lesson: LessonDefinition;
+  orderedLessonIds: string[];
 }
 
 /**
@@ -15,7 +16,7 @@ export interface LessonPageProps {
  * and owns the tab state shared between them. For prose lessons, also renders
  * a table-of-contents outline (drawer on mobile, toggleable sidebar on desktop).
  */
-export function LessonPage({ lesson }: LessonPageProps) {
+export function LessonPage({ lesson, orderedLessonIds }: LessonPageProps) {
   const prose = isProseLesson(lesson);
   const [tab, setTab] = useState<TabId>('instructions');
 
@@ -72,10 +73,10 @@ export function LessonPage({ lesson }: LessonPageProps) {
             onClose={closeOutline}
             triggerElement={outlineButtonRef.current}
           />
-          <LessonWorkspace lesson={lesson} tab={tab} onSelectTab={selectTab} />
+          <LessonWorkspace lesson={lesson} orderedLessonIds={orderedLessonIds} tab={tab} onSelectTab={selectTab} />
         </div>
       ) : (
-        <LessonWorkspace lesson={lesson} tab={tab} onSelectTab={selectTab} />
+        <LessonWorkspace lesson={lesson} orderedLessonIds={orderedLessonIds} tab={tab} onSelectTab={selectTab} />
       )}
     </div>
   );

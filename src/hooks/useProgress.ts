@@ -1,5 +1,4 @@
 import { useCallback, useMemo, useState } from 'react';
-import { getLessonReachability, type LessonReachability } from '@/curriculum/lessonOrder';
 import { type CompletedEntry, readProgress, writeProgress } from './progressStorage';
 
 export interface UseProgressResult {
@@ -7,8 +6,6 @@ export interface UseProgressResult {
   completed: string[];
   /** The id of the most recently completed lesson, determined by timestamp. */
   lastCompletedId: string | undefined;
-  /** Reachable / locked / frontier sets derived from `completed`. */
-  reachability: LessonReachability;
   /** Mark a lesson complete and persist it; a no-op if already complete. */
   markComplete: (lessonId: string) => void;
 }
@@ -46,5 +43,5 @@ export function useProgress(): UseProgressResult {
     setEntries(next);
   }, []);
 
-  return { completed, lastCompletedId, reachability: getLessonReachability(completed), markComplete };
+  return { completed, lastCompletedId, markComplete };
 }

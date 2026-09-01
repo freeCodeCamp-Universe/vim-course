@@ -16,6 +16,8 @@ if (!lesson) {
   // time; it narrows the type and fails loudly if the two ever drift.
   throw new Error(`No lesson found for id "${Astro.params.lessonId}"`);
 }
+
+const orderedLessonIds = loadCurriculum().modules.flatMap((module) => module.lessonIds);
 ---
 
 <CourseLayout title={lesson.title} currentLessonId={lesson.id}>
@@ -26,5 +28,5 @@ if (!lesson) {
     </svg>
     <span class="sr-only">Loading…</span>
   </div>
-  <LessonPage lesson={lesson} client:only="react" />
+  <LessonPage lesson={lesson} orderedLessonIds={orderedLessonIds} client:only="react" />
 </CourseLayout>

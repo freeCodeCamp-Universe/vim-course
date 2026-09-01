@@ -31,11 +31,13 @@ const prose: ProseLessonDefinition = {
   instructions: '## Modes\n\nVim has modes.',
 };
 
+const orderedIds = [workshop.id, prose.id, 'trailing-id'];
+
 function renderWorkspace(
   lesson: AuthoredLessonDefinition | ProseLessonDefinition,
   tab: 'instructions' | 'terminal' = 'instructions'
 ) {
-  return render(<LessonWorkspace lesson={lesson} tab={tab} onSelectTab={vi.fn()} />);
+  return render(<LessonWorkspace lesson={lesson} orderedLessonIds={orderedIds} tab={tab} onSelectTab={vi.fn()} />);
 }
 
 describe('LessonWorkspace', () => {
@@ -104,7 +106,7 @@ describe('LessonWorkspace', () => {
     // No announcement on initial render.
     expect(screen.queryByText('terminal', { exact: true })).not.toBeInTheDocument();
 
-    rerender(<LessonWorkspace lesson={workshop} tab="terminal" onSelectTab={vi.fn()} />);
+    rerender(<LessonWorkspace lesson={workshop} orderedLessonIds={orderedIds} tab="terminal" onSelectTab={vi.fn()} />);
 
     expect(screen.getByText('terminal', { exact: true })).toBeInTheDocument();
   });

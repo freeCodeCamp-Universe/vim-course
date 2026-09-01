@@ -11,13 +11,11 @@ afterEach(() => {
 });
 
 describe('useProgress', () => {
-  it('should start empty with every lesson reachable and the first as frontier when storage is absent', () => {
+  it('should start empty when storage is absent', () => {
     const { result } = renderHook(() => useProgress());
 
     expect(result.current.completed).toEqual([]);
     expect(result.current.lastCompletedId).toBeUndefined();
-    expect(result.current.reachability.frontierLessonId).toBe(orderedLessonIds[0]);
-    expect(result.current.reachability.reachableLessonIds).toEqual(orderedLessonIds);
   });
 
   it('should read completed ids persisted in v2 storage on mount', () => {
@@ -33,7 +31,6 @@ describe('useProgress', () => {
 
     expect(result.current.completed).toEqual([orderedLessonIds[0]]);
     expect(result.current.lastCompletedId).toBe(orderedLessonIds[0]);
-    expect(result.current.reachability.frontierLessonId).toBe(orderedLessonIds[1]);
   });
 
   it('should migrate v1 progress (plain string array) to entries, preserving order via index-based timestamps', () => {

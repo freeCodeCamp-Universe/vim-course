@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { orderedLessonIds } from '@/curriculum/lessonOrder';
 import { isProseLesson, type LessonDefinition } from '@/curriculum/types';
 import { useCourseShortcuts } from '@/hooks/useCourseShortcuts';
 import { useLesson } from '@/hooks/useLesson';
@@ -21,6 +20,8 @@ export type TabId = 'instructions' | 'terminal';
 
 export interface LessonWorkspaceProps {
   lesson: LessonDefinition;
+  /** Lesson IDs in course order, passed from the Astro layout at build time. */
+  orderedLessonIds: string[];
   /** Which panel is active. Owned by the parent (LessonPage). */
   tab: TabId;
   /** Called when the user switches panels via keyboard shortcut. */
@@ -35,11 +36,11 @@ export interface LessonWorkspaceProps {
  * plain Next control and no terminal, checklist, or Reset. On load, focus
  * lands on the lesson heading so the task is announced.
  */
-export function LessonWorkspace({ lesson, tab, onSelectTab }: LessonWorkspaceProps) {
+export function LessonWorkspace({ lesson, orderedLessonIds, tab, onSelectTab }: LessonWorkspaceProps) {
   const chrome = useCourseChrome();
   const { shortcutsEnabled } = useShortcutsPreference();
   const { focusInstructionsOnLoad } = useInitialFocusPreference();
-  const { completed, markComplete, reachability } = useProgress();
+  const { completed, markComplete } = useProgress();
   const { checklist, complete, feedback, onUpdate, viewRef, reportIncomplete, reset } =
     useLesson(lesson);
 
@@ -130,7 +131,7 @@ export function LessonWorkspace({ lesson, tab, onSelectTab }: LessonWorkspacePro
 
   useCourseShortcuts({
     currentLessonId: lesson.id,
-    reachableLessonIds: reachability.reachableLessonIds,
+    reachableLessonIds: orderedLessonIds,
     onNavigate: (lessonId) => {
       window.location.href = `/learn/${lessonId}`;
     },
