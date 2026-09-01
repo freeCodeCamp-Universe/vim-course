@@ -3,7 +3,7 @@
   --label-lh-code: 1.7;
   --label-lh-kbd: 2;
   --hint-lh: 1.6;
-  --hint-lh-kbd-code: 1.8;
+  --hint-lh-kbd-code: 2;
 
   color: var(--color-fg-primary);
 }

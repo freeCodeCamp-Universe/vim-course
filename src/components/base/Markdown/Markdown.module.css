@@ -1,6 +1,6 @@
 .prose {
   --prose-lh-base: var(--line-height-prose);
-  --prose-lh-code: 1.6;
+  --prose-lh-code: 1.7;
   --prose-lh-kbd: 2;
 
   font-family: var(--font-sans);
