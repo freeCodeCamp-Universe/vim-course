@@ -18,7 +18,7 @@
   flex-direction: column;
   block-size: 100%;
   min-block-size: 0;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-md);
   line-height: var(--terminal-line-height);
   background-color: var(--terminal-bg);
