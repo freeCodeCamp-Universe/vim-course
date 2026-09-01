@@ -6,6 +6,13 @@ import { renderMarkdown } from '@/components/base/Markdown/renderMarkdown';
 import { INITIAL_FOCUS_STORAGE_KEY } from '@/hooks/useInitialFocusPreference';
 import { LessonWorkspace } from './LessonWorkspace';
 
+vi.mock('@/curriculum/useCurriculumTree', () => ({
+  useCurriculumTree: () => ({
+    modules: [],
+    orderedLessonIds: ['w-1', 'r-1', 'trailing-id'],
+  }),
+}));
+
 const workshop: AuthoredLessonDefinition = {
   id: 'w-1',
   module: 1,
@@ -32,14 +39,21 @@ const prose: ProseLessonDefinition = {
   instructions: '## Modes\n\nVim has modes.',
 };
 
-const orderedIds = [workshop.id, prose.id, 'trailing-id'];
-
 function renderWorkspace(
   lesson: AuthoredLessonDefinition | ProseLessonDefinition,
   tab: 'instructions' | 'terminal' = 'instructions'
 ) {
   const instructionsHtml = renderMarkdown(lesson.instructions);
-  return render(<LessonWorkspace lesson={lesson} orderedLessonIds={orderedIds} instructionsHtml={instructionsHtml} tab={tab} onSelectTab={vi.fn()} />);
+  return render(
+    <LessonWorkspace
+      lesson={lesson}
+      nextLessonId="next-id"
+      isLastLesson={false}
+      instructionsHtml={instructionsHtml}
+      tab={tab}
+      onSelectTab={vi.fn()}
+    />
+  );
 }
 
 describe('LessonWorkspace', () => {
@@ -108,7 +122,16 @@ describe('LessonWorkspace', () => {
     // No announcement on initial render.
     expect(screen.queryByText('terminal', { exact: true })).not.toBeInTheDocument();
 
-    rerender(<LessonWorkspace lesson={workshop} orderedLessonIds={orderedIds} instructionsHtml={renderMarkdown(workshop.instructions)} tab="terminal" onSelectTab={vi.fn()} />);
+    rerender(
+      <LessonWorkspace
+        lesson={workshop}
+        nextLessonId="next-id"
+        isLastLesson={false}
+        instructionsHtml={renderMarkdown(workshop.instructions)}
+        tab="terminal"
+        onSelectTab={vi.fn()}
+      />
+    );
 
     expect(screen.getByText('terminal', { exact: true })).toBeInTheDocument();
   });

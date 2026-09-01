@@ -1,4 +1,4 @@
-import type { CurriculumTreeModule } from '@/components/features/CurriculumTree';
+import { useCurriculumTree } from '@/curriculum/useCurriculumTree';
 import { NavDrawer } from '@/components/features/NavDrawer';
 import { SettingsModal } from '@/components/features/SettingsModal';
 import { ShortcutsModal } from '@/components/features/ShortcutsModal';
@@ -6,7 +6,6 @@ import { useCourseChrome } from '@/stores/courseChrome';
 
 interface CourseOverlaysProps {
   currentLessonId?: string;
-  modules?: CurriculumTreeModule[];
 }
 
 /**
@@ -14,8 +13,13 @@ interface CourseOverlaysProps {
  * {@link CourseLayout}. It connects the two controlled dialogs to the shared
  * {@link courseChrome} store so the header buttons and a lesson's `Alt+K`
  * — which live in other islands — can open them across the island boundary.
+ *
+ * The curriculum tree for the nav drawer is loaded from a static JSON endpoint
+ * rather than inlined in every page's HTML. The drawer starts closed, so the
+ * async fetch is invisible to the user.
  */
-export function CourseOverlays({ currentLessonId, modules }: CourseOverlaysProps) {
+export function CourseOverlays({ currentLessonId }: CourseOverlaysProps) {
+  const tree = useCurriculumTree();
   const {
     drawerOpen,
     shortcutsOpen,
@@ -31,7 +35,7 @@ export function CourseOverlays({ currentLessonId, modules }: CourseOverlaysProps
       <NavDrawer
         open={drawerOpen}
         onClose={closeDrawer}
-        modules={modules ?? []}
+        modules={tree?.modules ?? []}
         currentLessonId={currentLessonId}
         triggerElement={triggerElement}
       />

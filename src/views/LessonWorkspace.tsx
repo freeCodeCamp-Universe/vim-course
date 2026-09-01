@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { navigate } from 'astro:transitions/client';
 import { isProseLesson, type LessonDefinition } from '@/curriculum/types';
+import { useCurriculumTree } from '@/curriculum/useCurriculumTree';
 import { useCourseShortcuts } from '@/hooks/useCourseShortcuts';
 import { useLesson } from '@/hooks/useLesson';
 import { useInitialFocusPreference } from '@/hooks/useInitialFocusPreference';
@@ -21,8 +22,10 @@ export type TabId = 'instructions' | 'terminal';
 
 export interface LessonWorkspaceProps {
   lesson: LessonDefinition;
-  /** Lesson IDs in course order, passed from the Astro layout at build time. */
-  orderedLessonIds: string[];
+  /** The next lesson in course order, computed at build time. Undefined on the last lesson. */
+  nextLessonId?: string;
+  /** Whether this is the final lesson in the course. */
+  isLastLesson: boolean;
   /** Pre-rendered instruction HTML, produced at build time by renderMarkdown. */
   instructionsHtml: string;
   /**
@@ -45,8 +48,9 @@ export interface LessonWorkspaceProps {
  * plain Next control and no terminal, checklist, or Reset. On load, focus
  * lands on the lesson heading so the task is announced.
  */
-export function LessonWorkspace({ lesson, orderedLessonIds, instructionsHtml, segmentHtmls, tab, onSelectTab }: LessonWorkspaceProps) {
+export function LessonWorkspace({ lesson, nextLessonId, isLastLesson, instructionsHtml, segmentHtmls, tab, onSelectTab }: LessonWorkspaceProps) {
   const chrome = useCourseChrome();
+  const tree = useCurriculumTree();
   const { shortcutsEnabled } = useShortcutsPreference();
   const { focusInstructionsOnLoad } = useInitialFocusPreference();
   const { completed, markComplete } = useProgress();
@@ -75,9 +79,6 @@ export function LessonWorkspace({ lesson, orderedLessonIds, instructionsHtml, se
     }
   }, [prose, focusInstructionsOnLoad, viewRef]);
 
-  const currentIndex = orderedLessonIds.indexOf(lesson.id);
-  const nextId = orderedLessonIds[currentIndex + 1];
-  const isCapstone = currentIndex === orderedLessonIds.length - 1;
   const isCompleted = completed.includes(lesson.id);
 
   // Lesson-to-lesson movement uses Astro's client router for an SPA-style
@@ -86,8 +87,8 @@ export function LessonWorkspace({ lesson, orderedLessonIds, instructionsHtml, se
   // before the navigation is dispatched, so the next page reads fresh progress.
   const advance = useCallback(() => {
     markComplete(lesson.id);
-    navigate(isCapstone || !nextId ? '/' : `/learn/${nextId}`);
-  }, [markComplete, lesson.id, isCapstone, nextId]);
+    navigate(isLastLesson || !nextLessonId ? '/' : `/learn/${nextLessonId}`);
+  }, [markComplete, lesson.id, isLastLesson, nextLessonId]);
 
   // Announce tab changes to screen readers, skipping the initial render.
   useEffect(() => {
@@ -135,12 +136,15 @@ export function LessonWorkspace({ lesson, orderedLessonIds, instructionsHtml, se
 
   const announceShortcut = useCallback((message: string) => {
     // Append a zero-width space to a repeated message so the polite region re-announces.
-    setShortcutNote((prev) => (prev === message ? `${message}\u200b` : message));
+    setShortcutNote((prev) => (prev === message ? `${message}​` : message));
   }, []);
 
+  // Keyboard shortcuts use the full ordered lesson list for Alt+N/Alt+P stepping.
+  // The list arrives from the static JSON endpoint; an empty array is a safe
+  // fallback while the fetch is in flight (shortcuts announce "no next lesson").
   useCourseShortcuts({
     currentLessonId: lesson.id,
-    reachableLessonIds: orderedLessonIds,
+    reachableLessonIds: tree?.orderedLessonIds ?? [],
     onNavigate: (lessonId) => {
       navigate(`/learn/${lessonId}`);
     },
@@ -196,7 +200,7 @@ export function LessonWorkspace({ lesson, orderedLessonIds, instructionsHtml, se
               <Markdown html={instructionsHtml} />
             )}
             <div className={styles.controls}>
-              <PrimaryAction complete={complete} isCapstone={isCapstone} onAdvance={advance} />
+              <PrimaryAction complete={complete} isCapstone={isLastLesson} onAdvance={advance} />
             </div>
           </div>
         </main>
@@ -232,7 +236,7 @@ export function LessonWorkspace({ lesson, orderedLessonIds, instructionsHtml, se
             <ResetButton onReset={reset} />
             <PrimaryAction
               complete={complete}
-              isCapstone={isCapstone}
+              isCapstone={isLastLesson}
               onAdvance={advance}
               onBlocked={reportIncomplete}
             />

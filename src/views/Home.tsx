@@ -1,18 +1,17 @@
 import { useMemo } from 'react';
+import { useCurriculumTree } from '@/curriculum/useCurriculumTree';
 import { Button } from '@/components/base/Button/Button';
 import { CurriculumNavigator } from '@/components/features/CurriculumNavigator';
-import type { CurriculumTreeModule } from '@/components/features/CurriculumTree';
 import { Progress } from '@/components/base/Progress/Progress';
 import { useProgress } from '@/hooks/useProgress';
 import styles from './Home.module.css';
 
-interface Props {
-  modules: CurriculumTreeModule[];
-  orderedLessonIds: string[];
-}
-
-export function Home({ modules, orderedLessonIds }: Props) {
+export function Home() {
+  const tree = useCurriculumTree();
   const { completed, lastCompletedId } = useProgress();
+
+  const orderedLessonIds = tree?.orderedLessonIds ?? [];
+  const modules = tree?.modules ?? [];
 
   const completedSet = useMemo(() => {
     const lessonIds = new Set(orderedLessonIds);
@@ -27,6 +26,10 @@ export function Home({ modules, orderedLessonIds }: Props) {
   //   - Last completed lesson no longer in curriculum: fall back to first uncompleted.
   //   - All available lessons done: undefined — button is hidden.
   const continueId = useMemo(() => {
+    if (orderedLessonIds.length === 0) {
+      return undefined;
+    }
+
     const completedIds = new Set(completed);
     const frontier = orderedLessonIds.find((id) => !completedIds.has(id));
 
@@ -46,7 +49,7 @@ export function Home({ modules, orderedLessonIds }: Props) {
 
   return (
     <div data-home-page>
-      <Progress completed={completedSet.size} total={orderedLessonIds.length} />
+      {tree && <Progress completed={completedSet.size} total={orderedLessonIds.length} />}
       {continueId !== undefined && (
         <div className={styles['cta-row']}>
           <Button variant="cta" href={`/learn/${continueId}`} className={styles['cta-button']}>
@@ -54,11 +57,13 @@ export function Home({ modules, orderedLessonIds }: Props) {
           </Button>
         </div>
       )}
-      <CurriculumNavigator
-        modules={modules}
-        variant="home"
-        lessonState={(id) => (completedSet.has(id) ? 'completed' : 'available')}
-      />
+      {modules.length > 0 && (
+        <CurriculumNavigator
+          modules={modules}
+          variant="home"
+          lessonState={(id) => (completedSet.has(id) ? 'completed' : 'available')}
+        />
+      )}
     </div>
   );
 }

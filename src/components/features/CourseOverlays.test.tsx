@@ -1,8 +1,12 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { courseChrome } from '@/stores/courseChrome';
 import { CourseOverlays } from './CourseOverlays';
+
+vi.mock('@/curriculum/useCurriculumTree', () => ({
+  useCurriculumTree: () => ({ modules: [], orderedLessonIds: [] }),
+}));
 
 afterEach(() => {
   localStorage.clear();

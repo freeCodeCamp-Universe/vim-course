@@ -20,6 +20,9 @@ if (!lesson) {
 }
 
 const orderedLessonIds = loadCurriculum().modules.flatMap((module) => module.lessonIds);
+const currentIndex = orderedLessonIds.indexOf(lesson.id);
+const nextLessonId = orderedLessonIds[currentIndex + 1];
+const isLastLesson = currentIndex === orderedLessonIds.length - 1;
 
 const instructionsHtml = renderMarkdown(lesson.instructions);
 
@@ -38,5 +41,5 @@ const segmentHtmls = isProseLesson(lesson) && lesson.instructionSegments
     </svg>
     <span class="sr-only">Loading…</span>
   </div>
-  <LessonPage lesson={lesson} orderedLessonIds={orderedLessonIds} instructionsHtml={instructionsHtml} segmentHtmls={segmentHtmls} client:only="react" />
+  <LessonPage lesson={lesson} nextLessonId={nextLessonId} isLastLesson={isLastLesson} instructionsHtml={instructionsHtml} segmentHtmls={segmentHtmls} client:only="react" />
 </CourseLayout>

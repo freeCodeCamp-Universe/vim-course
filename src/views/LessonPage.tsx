@@ -8,7 +8,10 @@ import styles from './LessonPage.module.css';
 
 export interface LessonPageProps {
   lesson: LessonDefinition;
-  orderedLessonIds: string[];
+  /** The next lesson in course order, computed at build time. Undefined on the last lesson. */
+  nextLessonId?: string;
+  /** Whether this is the final lesson in the course. */
+  isLastLesson: boolean;
   /** Pre-rendered instruction HTML, produced at build time by renderMarkdown. */
   instructionsHtml: string;
   /** Pre-rendered HTML per instruction segment (prose lessons with tab blocks). */
@@ -20,7 +23,7 @@ export interface LessonPageProps {
  * and owns the tab state shared between them. For prose lessons, also renders
  * a table-of-contents outline (drawer on mobile, toggleable sidebar on desktop).
  */
-export function LessonPage({ lesson, orderedLessonIds, instructionsHtml, segmentHtmls }: LessonPageProps) {
+export function LessonPage({ lesson, nextLessonId, isLastLesson, instructionsHtml, segmentHtmls }: LessonPageProps) {
   const prose = isProseLesson(lesson);
   const [tab, setTab] = useState<TabId>('instructions');
 
@@ -77,10 +80,10 @@ export function LessonPage({ lesson, orderedLessonIds, instructionsHtml, segment
             onClose={closeOutline}
             triggerElement={outlineButtonRef.current}
           />
-          <LessonWorkspace lesson={lesson} orderedLessonIds={orderedLessonIds} instructionsHtml={instructionsHtml} segmentHtmls={segmentHtmls} tab={tab} onSelectTab={selectTab} />
+          <LessonWorkspace lesson={lesson} nextLessonId={nextLessonId} isLastLesson={isLastLesson} instructionsHtml={instructionsHtml} segmentHtmls={segmentHtmls} tab={tab} onSelectTab={selectTab} />
         </div>
       ) : (
-        <LessonWorkspace lesson={lesson} orderedLessonIds={orderedLessonIds} instructionsHtml={instructionsHtml} segmentHtmls={segmentHtmls} tab={tab} onSelectTab={selectTab} />
+        <LessonWorkspace lesson={lesson} nextLessonId={nextLessonId} isLastLesson={isLastLesson} instructionsHtml={instructionsHtml} segmentHtmls={segmentHtmls} tab={tab} onSelectTab={selectTab} />
       )}
     </div>
   );
