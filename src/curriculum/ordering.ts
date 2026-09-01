@@ -61,7 +61,15 @@ export const curriculum: readonly OrderingModule[] = [
     module: 5,
     slug: 'visual-mode',
     title: 'Visual mode',
-    lessons: ['lesson-01.md', 'lesson-02.md', 'lesson-03.md', 'lesson-04.md', 'lesson-05.md'],
+    lessons: [
+      'lesson-01.md',
+      'lesson-02.md',
+      'lesson-03.md',
+      'lesson-04.md',
+      'lesson-05.md',
+      'lesson-06.md',
+      'lesson-07.md',
+    ],
   },
   {
     module: 6,

@@ -1,7 +1,7 @@
 ---
-id: 6a75e416116f97fc366586da
+id: 6a75e416116f97fc366586d7
 type: learn
-title: 'Complete the rearrangement'
+title: 'Line-wise selection'
 ---
 
 # --author-notes--
@@ -9,13 +9,16 @@ title: 'Complete the rearrangement'
 ## CAG
 
 **Concept:**
-`o` in visual mode jumps the cursor to the opposite end of the selection. This makes it easier to select and rearrange line-wise content from either end.
+
+- `V` selects whole lines at a time. `V` must be typed as uppercase; lowercase `v` is the character-wise selection from the previous lesson. When this lesson is authored, call this out for the learner the same way modules 02 and 04 do for `G` and `D`.
 
 **Activity:**
-Use `o` with `V`, `d`, and `p` to move the remaining two paragraphs into order, fix the bullet list order, delete the `## Clipboard` heading, and save.
+
+- Select two paragraphs at once with `V` and toggle the case of the selection with `~`.
 
 **Goal:**
-The learner uses `o` and the visual line editing flow to complete a multi-step rearrangement independently.
+
+The learner applies `~` to a line-wise selection, and understands the difference between `v` and `V`.
 
 ## Notes
 
@@ -23,32 +26,13 @@ The learner uses `o` and the visual line editing flow to complete a multi-step r
 
 # --instructions--
 
-There is one more command worth knowing before moving on: in visual mode, `o` moves the cursor to the opposite end of the selection, allowing you to extend the selection from the other side without canceling and restarting.
+The `v` command allows you to select text character by character, which may not be efficient in some cases.
 
-In character-wise visual mode, this applies to the start and end characters. In line-wise visual mode, it applies to the first and last selected lines.
+If you want to select entire lines, you can use uppercase `V` instead. The command also enters visual mode, but allows you to select whole lines. You can see a counter in the bottom-right corner of the terminal indicating how many lines are selected.
 
 ---
 
-Use visual mode and the commands you've learned to move the remaining paragraphs and bullet list into the following order:
-
-```
-## Final
-
-Before digital computers...
-
-As computing emerged...
-
-Without a mouse...
-
-Tesler joined Apple...
-
-- X for Cut
-- C for Copy
-- V for Paste
-- Z for Undo
-```
-
-When all content is under `## Final` and in the right order, delete the `## Clipboard` heading. Also, ensure that each paragraph appears only once.
+Use `V` to select the `## fINAL` and `## cLIPBOARD` headings, and then use `~` to toggle the case of the selection.
 
 Save the file when you're done.
 
@@ -59,13 +43,9 @@ Save the file when you're done.
 ```md
 # Cut and Paste
 
-## Final
+## fINAL
 
-Before digital computers, "cut and paste" was a literal, manual process used by manuscript editors. They used scissors to cut text blocks, held them on a physical clipboard, and applied glue to reposition them onto another sheet.
-
-As computing emerged, the metaphor was borrowed by text editors, where "clipboard" describes the temporary storage buffer.
-
-## Clipboard
+## cLIPBOARD
 
 Tesler joined Apple in 1980, bringing the concept with him. Working on the Lisa computer's interface, he established the now-universal keyboard shortcuts:
 
@@ -75,6 +55,10 @@ Without a mouse, early text editors like `ex` or `vi` required users to type spe
 - X for Cut: picked because the letter was already a standard symbol for deletion.
 - V for Paste: picked because it resembles an upside-down insertion wedge, used as an insertion mark in earlier editors.
 - C for Copy: picked because it's the first letter of the word "copy".
+
+Before digital computers, "cut and paste" was a literal, manual process used by manuscript editors. They used scissors to cut text blocks, held them on a physical clipboard, and applied glue to reposition them onto another sheet.
+
+As computing emerged, the metaphor was borrowed by text editors, where "clipboard" describes the temporary storage buffer.
 ```
 
 # --expected--
@@ -86,18 +70,20 @@ Without a mouse, early text editors like `ex` or `vi` required users to type spe
 
 ## Final
 
-Before digital computers, "cut and paste" was a literal, manual process used by manuscript editors. They used scissors to cut text blocks, held them on a physical clipboard, and applied glue to reposition them onto another sheet.
-
-As computing emerged, the metaphor was borrowed by text editors, where "clipboard" describes the temporary storage buffer.
-
-Without a mouse, early text editors like `ex` or `vi` required users to type specialized terminal commands to mark, delete, and move lines of text. To simplify this, computer scientist Larry Tesler and engineer Tim Mott implemented a modeless text entry system, where the users could simply click and drag the mouse to select a block of text, execute a single command to remove or duplicate it, and click an insertion point to instantly drop it into a new location.
+## Clipboard
 
 Tesler joined Apple in 1980, bringing the concept with him. Working on the Lisa computer's interface, he established the now-universal keyboard shortcuts:
 
-- X for Cut: picked because the letter was already a standard symbol for deletion.
-- C for Copy: picked because it's the first letter of the word "copy".
-- V for Paste: picked because it resembles an upside-down insertion wedge, used as an insertion mark in earlier editors.
+Without a mouse, early text editors like `ex` or `vi` required users to type specialized terminal commands to mark, delete, and move lines of text. To simplify this, computer scientist Larry Tesler and engineer Tim Mott implemented a modeless text entry system, where the users could simply click and drag the mouse to select a block of text, execute a single command to remove or duplicate it, and click an insertion point to instantly drop it into a new location.
+
 - Z for Undo: picked because it sits next to the other three keys on the keyboard.
+- X for Cut: picked because the letter was already a standard symbol for deletion.
+- V for Paste: picked because it resembles an upside-down insertion wedge, used as an insertion mark in earlier editors.
+- C for Copy: picked because it's the first letter of the word "copy".
+
+Before digital computers, "cut and paste" was a literal, manual process used by manuscript editors. They used scissors to cut text blocks, held them on a physical clipboard, and applied glue to reposition them onto another sheet.
+
+As computing emerged, the metaphor was borrowed by text editors, where "clipboard" describes the temporary storage buffer.
 ```
 
 # --config--
@@ -109,63 +95,23 @@ Tesler joined Apple in 1980, bringing the concept with him. Working on the Lisa 
   "cursor": [1, 1],
   "checklist": [
     {
-      "label": "The third paragraph should be `Without a mouse...`",
-      "hint": "You should paste `Without a mouse...` under the `As computing emerged...` paragraph.",
-      "test": {
-        "file": "cut-n-paste.md",
-        "contains": [
-          "/## Final(?:(?!## Clipboard)[\\s\\S])*As computing emerged(?:(?!## Clipboard)[\\s\\S])*Without a mouse/"
-        ]
-      }
+      "label": "Start visual line selection.",
+      "hint": "You should press <kbd>Shift</kbd> + <kbd>v</kbd> to start visual line selection. The `-- VISUAL LINE --` indicator should appear.",
+      "test": { "command": "V" }
     },
     {
-      "label": "The fourth paragraph should be `Tesler joined Apple...`",
-      "hint": "You should paste `Tesler joined Apple...` under the `Without a mouse...` paragraph.",
+      "label": "Select both headings and toggle their case.",
+      "hint": "You should select both `## fINAL` and `## cLIPBOARD` and press <kbd>Shift</kbd> + <kbd>`</kbd> (which produces `~`) to toggle their case.",
       "test": {
+        "command": "~",
         "file": "cut-n-paste.md",
-        "contains": [
-          "/## Final(?:(?!## Clipboard)[\\s\\S])*Without a mouse(?:(?!## Clipboard)[\\s\\S])*Tesler joined Apple/"
-        ]
+        "contains": ["## Final", "## Clipboard"],
+        "absent": ["## fINAL", "## cLIPBOARD"]
       }
-    },
-    {
-      "label": "The bullet list should be sorted and placed after the fourth paragraph.",
-      "hint": "You should rearrange the bullets into X, C, V, Z order below the `Tesler joined Apple...` paragraph.",
-      "test": {
-        "file": "cut-n-paste.md",
-        "contains": [
-          "/## Final(?:(?!## Clipboard)[\\s\\S])*Tesler joined Apple(?:(?!## Clipboard)[\\s\\S])*X for Cut(?:(?!## Clipboard)[\\s\\S])*C for Copy(?:(?!## Clipboard)[\\s\\S])*V for Paste(?:(?!## Clipboard)[\\s\\S])*Z for Undo/"
-        ]
-      }
-    },
-    {
-      "label": "Each prose paragraph and bullet item should appear only once.",
-      "hint": "You should remove any duplicate paragraphs or bullet items.",
-      "test": {
-        "file": "cut-n-paste.md",
-        "contains": [
-          "/## Final[\\s\\S]*?Before digital computers[\\s\\S]*?As computing emerged[\\s\\S]*?Without a mouse[\\s\\S]*?Tesler joined Apple[\\s\\S]*?- X for Cut[\\s\\S]*?- C for Copy[\\s\\S]*?- V for Paste[\\s\\S]*?- Z for Undo/"
-        ],
-        "occurrences": [
-          { "needle": "Before digital computers", "count": 1 },
-          { "needle": "As computing emerged", "count": 1 },
-          { "needle": "Without a mouse", "count": 1 },
-          { "needle": "Tesler joined Apple", "count": 1 },
-          { "needle": "- X for Cut", "count": 1 },
-          { "needle": "- C for Copy", "count": 1 },
-          { "needle": "- V for Paste", "count": 1 },
-          { "needle": "- Z for Undo", "count": 1 }
-        ]
-      }
-    },
-    {
-      "label": "The `## Clipboard` heading should be deleted.",
-      "hint": "You can delete `## Clipboard` by pressing <kbd>Shift</kbd> + <kbd>v</kbd> to select it and <kbd>d</kbd> to delete.",
-      "test": { "file": "cut-n-paste.md", "absent": ["## Clipboard"] }
     },
     {
       "label": "Save the file.",
-      "hint": "You should use `:w` to save.",
+      "hint": "You can use `:w` to save.",
       "test": { "file": "cut-n-paste.md", "saved": true }
     },
     {

@@ -19,7 +19,7 @@ Review.
 
 ## Notes
 
-Recap per lesson, from docs/curriculum/vim-course.curriculum.md:
+Recap per lesson, from docs/curriculum-outline.md:
 - **Recaps:** - Counts on motions and operators (`{n}j`, `{n}dd`). - Text object `iw` with `d`/`c`.
 
 # --instructions--

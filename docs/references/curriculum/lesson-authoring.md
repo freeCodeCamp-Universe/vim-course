@@ -312,12 +312,12 @@ Use `files` instead of `file` when one checklist item should require the same co
 
 | Field           | Meaning                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `command`       | A single command string (the object matcher form is only valid inside `anyOfCommands`). A specific keystroke or command was entered at some point. This is an existence check, not a count, unless `count` is set. Ignores characters typed in insert mode, so typing "A" never satisfies the normal-mode `A`.                                                                                                                                             |
-| `anyOfCommands` | A list of command matchers. The item ticks when any one matcher is satisfied. Use this for several equally-correct keystrokes with no end state that distinguishes them. Mutually exclusive with `command`; minimum two entries.                                                                                                                                                                                                                           |
-| `exact`         | Modifier for one command matcher. Flat alongside singular `command`, or nested inside an `anyOfCommands` entry. Never flat alongside `anyOfCommands`.                                                                                                                                                                                                                                                                                                      |
-| `count`         | Modifier for one command matcher. Flat alongside singular `command`, or nested inside an `anyOfCommands` entry. Never flat alongside `anyOfCommands`.                                                                                                                                                                                                                                                                                                      |
-| `atCursor`      | Modifier for one command matcher. Requires the command to have been issued while the cursor was at this `[line, column]` position (1-based, `null` for unconstrained axis). The check is atomic: the history entry must match both the command and the position, so two `yy` steps on different lines do not cross-satisfy each other. Flat alongside singular `command`, or nested inside an `anyOfCommands` entry. Never flat alongside `anyOfCommands`. |
-| `fromMode`      | Modifier for one command matcher. Requires the command to have been issued from the named Vim mode. Use it when a key's meaning depends on the mode it leaves, such as `{ "command": "Esc", "fromMode": "visual" }`.                                                                                                                                                                                                                                       |
+| `command`       | A specific keystroke or command was entered at some point. Accepts a plain string (`"G"`) or a command-matcher object (`{ "command": "G", "fromMode": "normal", "atCursor": [3, null] }`). Use the object form when you need `fromMode` — the loader rejects `fromMode` as a flat test field. This is an existence check, not a count, unless `count` is set. Ignores characters typed in insert mode, so typing "A" never satisfies the normal-mode `A`. |
+| `anyOfCommands` | A list of command matchers. The item ticks when any one matcher is satisfied. Use this for several equally-correct keystrokes with no end state that distinguishes them. Mutually exclusive with `command`; minimum two entries.                                                                                                                                                                                                                            |
+| `exact`         | Modifier for one command matcher. Flat alongside a string `command`, inside the command-matcher object, or nested inside an `anyOfCommands` entry. Never flat alongside `anyOfCommands`.                                                                                                                                                                                                                                                                   |
+| `count`         | Modifier for one command matcher. Flat alongside a string `command`, inside the command-matcher object, or nested inside an `anyOfCommands` entry. Never flat alongside `anyOfCommands`.                                                                                                                                                                                                                                                                   |
+| `atCursor`      | Modifier for one command matcher. Requires the command to have been issued while the cursor was at this `[line, column]` position (1-based, `null` for unconstrained axis). The check is atomic: the history entry must match both the command and the position, so two `yy` steps on different lines do not cross-satisfy each other. When `command` is a string, `atCursor` may be flat on the test object. When `command` is an object, `atCursor` must be inside the object — a flat `atCursor` is not applied to an object-form matcher. Never flat alongside `anyOfCommands`. |
+| `fromMode`      | Modifier for one command matcher. Requires the command to have been issued from the named Vim mode. **Must be inside the command-matcher object** — the loader rejects it as a flat test field. Use it when a key's meaning depends on the mode it leaves: `{ "command": { "command": "Esc", "fromMode": "visual" } }`.                                                                                                                                     |
 | `open`          | A specific file is the active buffer. Any route there counts.                                                                                                                                                                                                                                                                                                                                                                                              |
 | `cursorAt`      | Position(s) the cursor must reach, as `[line, column]` or `[[l,c], ...]`. Use `null` in either slot to leave that axis unconstrained (`[3, null]` means any column on line 3). An array of positions passes when every position has been visited. The label may use `{count}` and `{total}` for live progress.                                                                                                                                             |
 
@@ -459,16 +459,22 @@ A command matcher is:
 or:
 
 ```json
-{ "command": "<command>", "exact": true, "count": 7, "atCursor": [3, null] }
+{ "command": "<command>", "exact": true, "count": 7, "atCursor": [3, null], "fromMode": "normal" }
 ```
 
 A bare string is sugar for `{ "command": "..." }`.
 
-Singular `command` keeps the existing flat spelling:
+Singular `command` can be either a plain string (with `exact`, `count`, and `atCursor` flat on the test object) or an object (with all modifiers inside it). Use the object form when you need `fromMode` — the loader rejects `fromMode` as a flat test field:
 
 ```json
 { "command": "G", "count": 7 }
 ```
+
+```json
+{ "command": { "command": "~", "fromMode": "normal", "atCursor": [11, 3] } }
+```
+
+**Important:** when `command` is an object, flat modifiers on the test object are not applied to it. `atCursor` flat on the test only works when `command` is a string. Put all modifiers inside the object when using the object form.
 
 `anyOfCommands` is a list of command matchers and passes when any entry matches:
 
@@ -483,6 +489,8 @@ Matching behavior itself is unchanged. `:e` matches `:e notes.md`, `vim` matches
 Use `exact` when the lesson teaches one spelling among several that do the same thing (for example, `:set nonumber` exact so `:set nonu` does not complete it). Counts stay separate unless specified (`G` matches `7G` until a matcher requires `count`). `Esc` matches the engine's `Escape` token.
 
 Use `atCursor` when the lesson needs to verify the command was issued at a specific cursor position. The check is atomic: the same history entry must match both the command and the position. Without `atCursor`, `command` and `cursorAt` are independent session predicates that can be satisfied by different keystrokes, so a `yy` on line 1 plus a cursor visit to line 3 would satisfy both. `atCursor` prevents that: `{ "command": "yy", "atCursor": [3, null] }` requires `yy` to have been pressed while the cursor was on line 3. This scales to any number of same-command items on different lines.
+
+Use `fromMode` when a key's behavior depends on which mode issued it (for example, `~` in visual mode acts on a selection; in normal mode it toggles one character). Because `fromMode` must live inside the command object, pair it with `atCursor` inside the same object when both constraints apply.
 
 `anyOfCommands` is for session-predicate items with no distinguishing end state. Save, quit, and edit alternatives should keep using `saved`, `quit`, and content predicates.
 

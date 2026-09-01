@@ -42,20 +42,20 @@ Open `cut-n-paste.md` from the terminal. Then start visual mode on the first par
 ## cut-n-paste.md
 
 ```md
-# Cut and Paste
+# cUT AND pASTE
 
-## Final
+## fINAL
 
-## Clipboard
+## cLIPBOARD
 
 Tesler joined Apple in 1980, bringing the concept with him. Working on the Lisa computer's interface, he established the now-universal keyboard shortcuts:
 
 Without a mouse, early text editors like `ex` or `vi` required users to type specialized terminal commands to mark, delete, and move lines of text. To simplify this, computer scientist Larry Tesler and engineer Tim Mott implemented a modeless text entry system, where the users could simply click and drag the mouse to select a block of text, execute a single command to remove or duplicate it, and click an insertion point to instantly drop it into a new location.
 
-- Z for Undo: picked because it sits next to the other three keys on the keyboard.
-- X for Cut: picked because the letter was already a standard symbol for deletion.
-- V for Paste: picked because it resembles an upside-down insertion wedge, used as an insertion mark in earlier editors.
-- C for Copy: picked because it's the first letter of the word "copy".
+- z for Undo: picked because it sits next to the other three keys on the keyboard.
+- x for Cut: picked because the letter was already a standard symbol for deletion.
+- v for Paste: picked because it resembles an upside-down insertion wedge, used as an insertion mark in earlier editors.
+- c for Copy: picked because it's the first letter of the word "copy".
 
 Before digital computers, "cut and paste" was a literal, manual process used by manuscript editors. They used scissors to cut text blocks, held them on a physical clipboard, and applied glue to reposition them onto another sheet.
 
@@ -67,7 +67,7 @@ As computing emerged, the metaphor was borrowed by text editors, where "clipboar
 ```json
 {
   "start": "shell",
-  "cursor": [7, 1],
+  "cursor": [1, 1],
   "checklist": [
     {
       "label": "Open `cut-n-paste.md`.",
