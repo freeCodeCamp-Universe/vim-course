@@ -1,5 +1,6 @@
 .terminal {
   --terminal-line-height: 1.5rem;
+  --terminal-footer-height: 2rem;
   --terminal-bg: #15162b;
   --terminal-fg: #d9d9e3;
   --terminal-inactive-overlay: rgb(21 22 43 / 40%);
@@ -38,6 +39,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 1ch;
+  min-block-size: var(--terminal-footer-height);
   padding-inline-end: 2ch;
   white-space: pre;
 }
