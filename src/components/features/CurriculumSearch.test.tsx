@@ -49,7 +49,8 @@ describe('CurriculumSearch', () => {
     renderSearch();
 
     const input = screen.getByRole('searchbox');
-    // Test env is non-Mac, so the label is 'Alt'.
+    // Test env is non-Mac (jsdom), so getAltKeyName() returns 'Alt'.
+    // On macOS it returns 'AltGraph', matching the KeyboardEvent.key value for Option.
     expect(input).toHaveAttribute('aria-keyshortcuts', 'Alt+K');
   });
 

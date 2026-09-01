@@ -1,5 +1,10 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { getAltLabel, getCmdLabel, getPlatformModifier } from './usePlatformModifier';
+import {
+  getAltKeyName,
+  getAltLabel,
+  getCmdLabel,
+  getPlatformModifier,
+} from './usePlatformModifier';
 
 const originalPlatform = navigator.platform;
 
@@ -56,6 +61,35 @@ describe('getCmdLabel', () => {
     });
 
     expect(getCmdLabel()).toBe('⌘');
+  });
+});
+
+describe('getAltKeyName', () => {
+  it('should return AltGraph on macOS', () => {
+    Object.defineProperty(navigator, 'platform', {
+      configurable: true,
+      value: 'MacIntel',
+    });
+
+    expect(getAltKeyName()).toBe('AltGraph');
+  });
+
+  it('should return Alt on non-Apple platforms', () => {
+    Object.defineProperty(navigator, 'platform', {
+      configurable: true,
+      value: 'Linux x86_64',
+    });
+
+    expect(getAltKeyName()).toBe('Alt');
+  });
+
+  it('should return AltGraph on iPhone', () => {
+    Object.defineProperty(navigator, 'platform', {
+      configurable: true,
+      value: 'iPhone',
+    });
+
+    expect(getAltKeyName()).toBe('AltGraph');
   });
 });
 

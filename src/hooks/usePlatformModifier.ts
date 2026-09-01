@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 export type PlatformModifier = 'Cmd' | 'Ctrl';
 export type AltLabel = '⌥' | 'Alt';
-export type AltKeyName = 'Option' | 'Alt';
+export type AltKeyName = 'AltGraph' | 'Alt';
 export type CmdLabel = '⌘' | 'Ctrl';
 
 function isMacPlatform(): boolean {
@@ -55,7 +55,7 @@ export function useCmdLabel(): CmdLabel {
 }
 
 export function getAltKeyName(): AltKeyName {
-  return isMacPlatform() ? 'Option' : 'Alt';
+  return isMacPlatform() ? 'AltGraph' : 'Alt';
 }
 
 export function useAltKeyName(): AltKeyName {
