@@ -28,7 +28,7 @@ The learner deletes text at the scope the edit calls for — a word, a whole lin
 
 # --instructions--
 
-When a single character isn't the only thing to remove, Vim has scoped delete commands. And like `x` and `r`, these work directly from normal mode:
+When you need to remove more than a single character, you can use the scoped delete commands. Like `x` and `r`, these work directly from normal mode:
 
 - `dw` deletes from the cursor to the start of the next word, including the character the cursor is on.
 - `dd` deletes the current line entirely.
