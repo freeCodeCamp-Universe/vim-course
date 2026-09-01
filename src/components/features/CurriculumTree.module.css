@@ -99,17 +99,12 @@ a.drawer-lesson-row:hover {
 }
 
 .drawer-lesson[data-state='current'] .drawer-lesson-row,
-.drawer-lesson[data-state='completed-current'] .drawer-lesson-row {
-  color: var(--color-fg-primary);
-  background-color: var(--color-bg-tertiary);
-  border-inline-start-color: var(--color-focus);
-}
-
+.drawer-lesson[data-state='completed-current'] .drawer-lesson-row,
 .home-lesson[data-state='current'] .home-lesson-row,
 .home-lesson[data-state='completed-current'] .home-lesson-row {
   color: var(--color-fg-primary);
   background-color: var(--color-bg-tertiary);
-  border-inline-start-color: var(--color-focus);
+  border-inline-start-color: var(--color-current-indicator);
 }
 
 .home-lesson-title,

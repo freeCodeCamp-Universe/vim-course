@@ -57,7 +57,7 @@
   border-radius: var(--radius);
 
   /* Reserve space for the active border so the layout doesn't shift. */
-  border-inline-start: 2px solid transparent;
+  border-inline-start: 3px solid transparent;
 }
 
 .link:hover {
@@ -68,7 +68,7 @@
 .link-active {
   color: var(--color-fg-primary);
   background-color: var(--color-bg-tertiary);
-  border-inline-start-color: var(--color-focus);
+  border-inline-start-color: var(--color-current-indicator);
 }
 
 .link-active:hover {

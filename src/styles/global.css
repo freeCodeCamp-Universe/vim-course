@@ -86,6 +86,7 @@
   --color-success: var(--green40);
   --color-danger: var(--red15);
   --color-focus: var(--blue50);
+  --color-current-indicator: var(--blue30);
   --color-cursor-bg: #d9d9e3;
   --color-cursor-fg: #15162b;
 }
@@ -118,6 +119,7 @@
   --color-success: var(--green90);
   --color-danger: var(--red90);
   --color-focus: var(--blue90);
+  --color-current-indicator: var(--blue90);
   --color-cursor-bg: #292936;
   --color-cursor-fg: #eef0f5;
 }
