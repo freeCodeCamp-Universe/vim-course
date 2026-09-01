@@ -57,13 +57,18 @@ const documentTitle = title ? `${title} | Vim Course | freeCodeCamp.org` : 'Vim 
     </script>
     <style is:inline>
       /*
-       * Full-page loader shown on first paint, before the external stylesheet
-       * arrives. Once global.css loads it sets [data-page-loader] { display: none },
-       * which hides this overlay and reveals the now-styled content underneath.
+       * Full-page loader shown on first paint, before the React island mounts.
+       * CourseLayout.loader.css hides it via body:has([data-home-page]) and
+       * body:has([data-lesson-page]) once the island renders.
        *
        * Colors are hardcoded to match the design tokens in colors.css so the
        * loader looks correct without any external CSS.
        */
+      html {
+        block-size: 100vh;
+        overflow: hidden;
+      }
+
       [data-page-loader] {
         position: fixed;
         inset: 0;

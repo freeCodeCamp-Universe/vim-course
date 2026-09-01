@@ -26,5 +26,5 @@ if (!lesson) {
     </svg>
     <span class="sr-only">Loading…</span>
   </div>
-  <LessonPage lesson={lesson} client:load />
+  <LessonPage lesson={lesson} client:only="react" />
 </CourseLayout>

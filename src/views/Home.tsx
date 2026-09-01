@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Button } from '@/components/base/Button/Button';
 import { CurriculumNavigator } from '@/components/features/CurriculumNavigator';
 import type { CurriculumTreeModule } from '@/components/features/CurriculumTree';
@@ -13,13 +13,6 @@ interface Props {
 
 export function Home({ modules, orderedLessonIds }: Props) {
   const { completed, lastCompletedId } = useProgress();
-
-  // Suppress the CTA until the component mounts so the SSR-rendered HTML (which has
-  // no localStorage access) does not flash the wrong button before hydration corrects it.
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const completedSet = useMemo(() => {
     const lessonIds = new Set(orderedLessonIds);
@@ -52,9 +45,9 @@ export function Home({ modules, orderedLessonIds }: Props) {
   const hasStarted = lastCompletedId !== undefined;
 
   return (
-    <>
+    <div data-home-page>
       <Progress completed={completedSet.size} total={orderedLessonIds.length} />
-      {mounted && continueId !== undefined && (
+      {continueId !== undefined && (
         <div className={styles['cta-row']}>
           <Button variant="cta" href={`/learn/${continueId}`} className={styles['cta-button']}>
             {hasStarted ? 'Continue' : 'Start learning'}
@@ -66,6 +59,6 @@ export function Home({ modules, orderedLessonIds }: Props) {
         variant="home"
         lessonState={(id) => (completedSet.has(id) ? 'completed' : 'available')}
       />
-    </>
+    </div>
   );
 }

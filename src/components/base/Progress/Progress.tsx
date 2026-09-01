@@ -7,11 +7,11 @@ export interface ProgressProps {
 
 export function Progress({ completed, total }: ProgressProps) {
   return (
-    <p className={styles.progress} data-progress data-progress-total={total}>
-      <span aria-hidden="true" data-progress-visible>
+    <p className={styles.progress}>
+      <span aria-hidden="true">
         {completed}/{total} lessons completed
       </span>
-      <span className="sr-only" data-progress-sr>
+      <span className="sr-only">
         {completed} out of {total} lessons completed
       </span>
     </p>

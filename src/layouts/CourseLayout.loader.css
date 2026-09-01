@@ -19,6 +19,18 @@
   align-items: center;
 }
 
+/* Hide the full-page loader and unlock scrolling once the main React island has mounted. */
+body:has([data-home-page]) [data-page-loader],
+body:has([data-lesson-page]) [data-page-loader] {
+  display: none;
+}
+
+html:has([data-home-page]),
+html:has([data-lesson-page]) {
+  block-size: auto;
+  overflow: visible;
+}
+
 /* ------------------------------------------------------------------ *
  * Lesson loading state                                               *
  * ------------------------------------------------------------------ *

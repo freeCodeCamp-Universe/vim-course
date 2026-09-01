@@ -13,9 +13,6 @@ interface StoredProgress {
 }
 
 export function readProgress(): CompletedEntry[] {
-  if (typeof window === 'undefined') {
-    return [];
-  }
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw === null) {
