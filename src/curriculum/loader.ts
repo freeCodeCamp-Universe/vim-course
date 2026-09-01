@@ -231,17 +231,6 @@ function parseLesson(
   const sections = splitSections(body, path);
   const identity = { id, module: moduleNumber, lesson: lessonNumber, type, title, wip };
 
-  // A WIP lesson may be mid-authoring — an empty checklist, a missing section, a
-  // config not yet filled in — so it is exempt from content validation. Parse only
-  // its frontmatter identity and return a prose placeholder: it is hidden from the
-  // visible curriculum, and `loadFullCurriculum` no longer asserts against it.
-  if (wip) {
-    return {
-      ...identity,
-      instructions: sections.get('instructions') ?? '',
-    } satisfies ProseLessonDefinition;
-  }
-
   const instructions = requireSection(sections, 'instructions', path);
   assertSanitizedHtml(instructions, path);
 

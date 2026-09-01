@@ -88,20 +88,26 @@ Instructions go here.
 
 # --files--
 
-<!-- ## filename.md
+## lesson.md
 
 \`\`\`md
-file content here
-\`\`\` -->
+File content goes here.
+\`\`\`
 
 # --config--
 
 \`\`\`json
 {
-  "start": "vim",
+  "start": "shell",
   "cursor": [1, 1],
   "allowedCommands": [],
-  "checklist": []
+  "checklist": [
+    {
+      "label": "TODO: add a checklist item.",
+      "hint": "TODO: add a hint.",
+      "test": { "command": "Esc" }
+    }
+  ]
 }
 \`\`\`
 `;

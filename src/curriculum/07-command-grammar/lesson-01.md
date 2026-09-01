@@ -26,10 +26,10 @@ The learner repeats a motion or an editing command a precise number of times in 
 <!-- Content-Draft -->
 # --files--
 
-## filename.md
+## lesson.md
 
 ```md
-
+File content goes here.
 ```
 
 # --config--
@@ -39,6 +39,12 @@ The learner repeats a motion or an editing command a precise number of times in 
   "start": "shell",
   "cursor": [1, 1],
   "allowedCommands": [],
-  "checklist": []
+  "checklist": [
+    {
+      "label": "TODO: add a checklist item.",
+      "hint": "TODO: add a hint.",
+      "test": { "command": "Esc" }
+    }
+  ]
 }
 ```

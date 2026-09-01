@@ -26,10 +26,10 @@ The learner edits a word from anywhere inside it.
 <!-- Content-Draft -->
 # --files--
 
-## filename.md
+## lesson.md
 
 ```md
-
+File content goes here.
 ```
 
 # --config--
@@ -39,6 +39,12 @@ The learner edits a word from anywhere inside it.
   "start": "shell",
   "cursor": [1, 1],
   "allowedCommands": [],
-  "checklist": []
+  "checklist": [
+    {
+      "label": "TODO: add a checklist item.",
+      "hint": "TODO: add a hint.",
+      "test": { "command": "Esc" }
+    }
+  ]
 }
 ```
