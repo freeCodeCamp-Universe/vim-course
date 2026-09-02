@@ -30,8 +30,8 @@ The learner reaches either boundary of a file instantly, without scrolling.
 
 Vim has navigation commands to jump to the top or bottom of a file:
 
-- `gg` jumps to the **first** line.
-- `G` jumps to the **last** line.
+- `gg` jumps to the _first_ line.
+- `G` jumps to the _last_ line.
 
 Note that `G` must be uppercase. Lowercase `g` acts as a prefix waiting for a second key to form a command, like `gg` above.
 
