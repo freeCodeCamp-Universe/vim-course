@@ -19,7 +19,7 @@ import {
   type LessonFileState,
   type RequirementResult,
 } from '@/validation/checklist';
-import { isProseLesson, type CommandLimit, type LessonDefinition } from './types';
+import { isProseLesson, type ClientLessonDefinition, type CommandLimit } from './types';
 
 const SUBSTITUTE_COMMAND_LIMIT = '/^:%s\\/.*\\/.*\\/(?!.*n)[gi]*$/';
 
@@ -162,14 +162,14 @@ export interface FeedResult<TState> {
  */
 export interface LessonEngine<TState> {
   /** Build the pristine state for a lesson (buffer, filesystem, start mode). */
-  seed(lesson: LessonDefinition): TState;
+  seed(lesson: ClientLessonDefinition): TState;
   /** Advance the state by one input key, honoring an optional input filter. */
   feed(state: TState, key: string, allowedInput?: AllowedInput): FeedResult<TState>;
   /**
    * The input filter for a lesson, or undefined when every committed command is
    * allowed (any lesson that declares no restriction).
    */
-  allowedInput(lesson: LessonDefinition): AllowedInput | undefined;
+  allowedInput(lesson: ClientLessonDefinition): AllowedInput | undefined;
   /**
    * Per-checklist-item completion derived from the current state, one result per
    * `config.checklist` item, so the checklist tracks the learner live. The
@@ -179,7 +179,7 @@ export interface LessonEngine<TState> {
    */
   checkRequirements(
     state: TState,
-    lesson: LessonDefinition,
+    lesson: ClientLessonDefinition,
     visitedPositions?: ReadonlySet<string> | null
   ): RequirementResult[];
   /**
@@ -189,7 +189,7 @@ export interface LessonEngine<TState> {
    */
   explainIncomplete(
     state: TState,
-    lesson: LessonDefinition,
+    lesson: ClientLessonDefinition,
     visitedPositions?: ReadonlySet<string> | null
   ): string;
 }

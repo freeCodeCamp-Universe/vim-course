@@ -1,5 +1,5 @@
 import type { DecorationRange } from './decorations';
-import type { InstructionSegment } from './tabBlocks';
+import type { InstructionSegment, TabGroupSegment } from './tabBlocks';
 import type { Mode } from '@/engine';
 
 /**
@@ -606,13 +606,67 @@ export type LessonDefinition = AuthoredLessonDefinition | ProseLessonDefinition;
  * markdown declared a `# --config--` section, never by `type` — a `review`
  * lesson is free to carry an exercise.
  */
-export function isProseLesson(lesson: LessonDefinition): lesson is ProseLessonDefinition {
+export function isProseLesson(
+  lesson: LessonDefinition | ClientLessonDefinition,
+): lesson is ProseLessonDefinition | ClientProseLessonDefinition {
   return lesson.config === undefined;
 }
 
 /** Narrow to a lesson that carries files, a checklist, and engine state. */
-export function isAuthoredLesson(lesson: LessonDefinition): lesson is AuthoredLessonDefinition {
+export function isAuthoredLesson(
+  lesson: LessonDefinition | ClientLessonDefinition,
+): lesson is AuthoredLessonDefinition | ClientAuthoredLessonDefinition {
   return lesson.config !== undefined;
+}
+
+// ---------------------------------------------------------------------------
+// Client-side lesson types
+//
+// Stripped of raw markdown that the client never reads. Instructions are
+// pre-rendered to HTML at build time and passed as separate props;
+// `extractHeadings` runs at build time too, so its output travels as a prop
+// rather than being derived from the raw source at runtime.
+// ---------------------------------------------------------------------------
+
+/** A markdown instruction segment stripped of its source text. */
+export interface ClientMarkdownSegment {
+  kind: 'markdown';
+}
+
+export type ClientInstructionSegment = ClientMarkdownSegment | TabGroupSegment;
+
+export interface ClientProseLessonDefinition extends LessonIdentity {
+  instructionSegments?: ClientInstructionSegment[];
+  config?: never;
+  files?: never;
+}
+
+export interface ClientAuthoredLessonDefinition extends LessonIdentity {
+  files: Record<string, string>;
+  fileDecorations?: Record<string, DecorationRange[]>;
+  config: LessonConfig;
+}
+
+export type ClientLessonDefinition =
+  | ClientAuthoredLessonDefinition
+  | ClientProseLessonDefinition;
+
+/**
+ * Strip raw markdown from a lesson definition before serializing it to the
+ * client. Instructions are pre-rendered to HTML at build time and passed as
+ * separate props, so the raw source is dead weight in the page payload.
+ */
+export function toClientLesson(lesson: LessonDefinition): ClientLessonDefinition {
+  if (isProseLesson(lesson)) {
+    const { instructions, instructionSegments, ...rest } = lesson;
+    const clientSegments = instructionSegments?.map(
+      (seg): ClientInstructionSegment =>
+        seg.kind === 'markdown' ? { kind: 'markdown' } : seg,
+    );
+    return { ...rest, instructionSegments: clientSegments };
+  }
+  const { instructions, ...rest } = lesson;
+  return rest;
 }
 
 export interface ModuleDefinition {

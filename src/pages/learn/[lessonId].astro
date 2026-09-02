@@ -1,7 +1,8 @@
 ---
 import { getLessonById, loadCurriculum } from '@/curriculum/loader';
-import { isProseLesson } from '@/curriculum/types';
+import { isProseLesson, toClientLesson } from '@/curriculum/types';
 import { renderMarkdown } from '@/components/base/Markdown/renderMarkdown';
+import { extractHeadings } from '@/utils/extractHeadings';
 import CourseLayout from '@/layouts/CourseLayout.astro';
 import { LessonPage } from '@/views/LessonPage';
 import loaderStyles from '@/components/base/LoadingState/LoadingState.module.css';
@@ -31,6 +32,21 @@ const segmentHtmls = isProseLesson(lesson) && lesson.instructionSegments
       seg.kind === 'markdown' ? renderMarkdown(seg.content) : ''
     )
   : undefined;
+
+// Pre-compute headings for the table-of-contents so raw markdown is not
+// shipped to the client. Only prose lessons render an outline.
+const headings = isProseLesson(lesson)
+  ? extractHeadings(
+      lesson.instructionSegments
+        ? lesson.instructionSegments
+            .filter((s): s is { kind: 'markdown'; content: string } => s.kind === 'markdown')
+            .map((s) => s.content)
+            .join('\n')
+        : lesson.instructions
+    )
+  : [];
+
+const clientLesson = toClientLesson(lesson);
 ---
 
 <CourseLayout title={lesson.title} currentLessonId={lesson.id}>
@@ -41,5 +57,5 @@ const segmentHtmls = isProseLesson(lesson) && lesson.instructionSegments
     </svg>
     <span class="sr-only">Loading…</span>
   </div>
-  <LessonPage lesson={lesson} nextLessonId={nextLessonId} isLastLesson={isLastLesson} instructionsHtml={instructionsHtml} segmentHtmls={segmentHtmls} client:only="react" />
+  <LessonPage lesson={clientLesson} nextLessonId={nextLessonId} isLastLesson={isLastLesson} instructionsHtml={instructionsHtml} segmentHtmls={segmentHtmls} headings={headings} client:only="react" />
 </CourseLayout>

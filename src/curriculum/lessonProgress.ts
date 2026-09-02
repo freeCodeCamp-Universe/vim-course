@@ -1,6 +1,6 @@
 import type { RequirementResult } from '@/validation/checklist';
 import type { AllowedInput, LessonEngine } from '@/curriculum/lessonEngine';
-import { isProseLesson, type LessonDefinition } from '@/curriculum/types';
+import { isProseLesson, type ClientLessonDefinition } from '@/curriculum/types';
 
 export type ChecklistStatus = 'not-done' | 'completed' | 'error';
 
@@ -49,7 +49,7 @@ function interpolateLabel(template: string, count: number, total: number): strin
   return template.replace('{count}', String(count)).replace('{total}', String(total));
 }
 
-function initChecklist(lesson: LessonDefinition): ChecklistItem[] {
+function initChecklist(lesson: ClientLessonDefinition): ChecklistItem[] {
   if (isProseLesson(lesson)) {
     return [];
   }
@@ -230,7 +230,7 @@ function toProgress<TState>(
  * requirements, so its empty checklist counts as complete.
  */
 export function seedProgress<TState>(
-  lesson: LessonDefinition,
+  lesson: ClientLessonDefinition,
   engine: LessonEngine<TState>
 ): LessonProgress<TState> {
   const state = engine.seed(lesson);
@@ -245,7 +245,7 @@ export function seedProgress<TState>(
 /** Regrade the current state after an edit that did not come through a key. */
 export function regradeProgress<TState>(
   prev: LessonProgress<TState>,
-  lesson: LessonDefinition,
+  lesson: ClientLessonDefinition,
   engine: LessonEngine<TState>,
   visitedPositions?: ReadonlySet<string> | null
 ): LessonProgress<TState> {
@@ -265,7 +265,7 @@ export function regradeProgress<TState>(
 export function advanceProgress<TState>(
   prev: LessonProgress<TState>,
   key: string,
-  lesson: LessonDefinition,
+  lesson: ClientLessonDefinition,
   engine: LessonEngine<TState>,
   allowedInput?: AllowedInput,
   visitedPositions?: ReadonlySet<string> | null,
@@ -329,7 +329,7 @@ export interface LessonProgressController<TState> {
 }
 
 export function createLessonProgress<TState>(
-  lesson: LessonDefinition,
+  lesson: ClientLessonDefinition,
   engine: LessonEngine<TState>
 ): LessonProgressController<TState> {
   const allowedInput = engine.allowedInput(lesson);

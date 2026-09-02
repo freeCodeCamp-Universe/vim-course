@@ -1,11 +1,11 @@
 import type { RefObject } from 'react';
-import { isProseLesson, type LessonDefinition } from '@/curriculum/types';
+import { isProseLesson, type ClientLessonDefinition } from '@/curriculum/types';
 import type { TabId } from '@/views/LessonWorkspace';
 import { Button } from '@/components/base/Button/Button';
 import styles from './LessonToolbar.module.css';
 
 export interface LessonToolbarProps {
-  lesson: LessonDefinition;
+  lesson: ClientLessonDefinition;
   tab: TabId;
   onSelectTab: (tab: TabId) => void;
   outlineOpen: boolean;

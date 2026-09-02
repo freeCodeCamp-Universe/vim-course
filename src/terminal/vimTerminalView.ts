@@ -19,7 +19,7 @@ import {
   settleChecklistAttempts,
   type ChecklistItem,
 } from '@/curriculum/lessonProgress';
-import { isProseLesson, type DecorativeRange, type LessonDefinition } from '@/curriculum/types';
+import { isProseLesson, type ClientLessonDefinition, type DecorativeRange } from '@/curriculum/types';
 import { matchNeedle, parseNeedleRegex } from '@/curriculum/needle';
 import { createFrameLoop, type FrameLoop } from '@/animation/frameLoop';
 import { getScene } from '@/animation/scenes';
@@ -57,7 +57,7 @@ function targetLineValue(line: string, targetLine: string): string | null {
 }
 
 export interface VimTerminalViewOptions {
-  lesson: LessonDefinition;
+  lesson: ClientLessonDefinition;
   /** Called with a fresh snapshot after every advance, reset, and incomplete grade. */
   onUpdate: (snapshot: LessonSnapshot) => void;
   /** The engine to drive; defaults to Vim's. Injectable for tests. */

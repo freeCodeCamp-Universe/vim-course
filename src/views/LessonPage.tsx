@@ -1,13 +1,13 @@
 import { useCallback, useRef, useState } from 'react';
-import { isProseLesson, type LessonDefinition } from '@/curriculum/types';
-import { extractHeadings } from '@/utils/extractHeadings';
+import { isProseLesson, type ClientLessonDefinition } from '@/curriculum/types';
+import type { Heading } from '@/utils/extractHeadings';
 import { LessonToolbar } from '@/components/features/LessonToolbar';
 import { Outline } from '@/components/features/Outline';
 import { LessonWorkspace, type TabId } from './LessonWorkspace';
 import styles from './LessonPage.module.css';
 
 export interface LessonPageProps {
-  lesson: LessonDefinition;
+  lesson: ClientLessonDefinition;
   /** The next lesson in course order, computed at build time. Undefined on the last lesson. */
   nextLessonId?: string;
   /** Whether this is the final lesson in the course. */
@@ -16,6 +16,8 @@ export interface LessonPageProps {
   instructionsHtml: string;
   /** Pre-rendered HTML per instruction segment (prose lessons with tab blocks). */
   segmentHtmls?: string[];
+  /** Table-of-contents headings, pre-computed at build time from the raw markdown. */
+  headings: Heading[];
 }
 
 /**
@@ -23,25 +25,12 @@ export interface LessonPageProps {
  * and owns the tab state shared between them. For prose lessons, also renders
  * a table-of-contents outline (drawer on mobile, toggleable sidebar on desktop).
  */
-export function LessonPage({ lesson, nextLessonId, isLastLesson, instructionsHtml, segmentHtmls }: LessonPageProps) {
+export function LessonPage({ lesson, nextLessonId, isLastLesson, instructionsHtml, segmentHtmls, headings }: LessonPageProps) {
   const prose = isProseLesson(lesson);
   const [tab, setTab] = useState<TabId>('instructions');
 
   const [outlineOpen, setOutlineOpen] = useState(false);
   const outlineButtonRef = useRef<HTMLButtonElement | null>(null);
-
-  // isProseLesson narrows lesson to ProseLessonDefinition, giving access to
-  // instructionSegments. Re-call the guard here so TypeScript sees the narrowing.
-  const headings = isProseLesson(lesson)
-    ? extractHeadings(
-        lesson.instructionSegments
-          ? lesson.instructionSegments
-              .filter((s): s is { kind: 'markdown'; content: string } => s.kind === 'markdown')
-              .map((s) => s.content)
-              .join('\n')
-          : lesson.instructions
-      )
-    : [];
 
   const selectTab = useCallback((next: TabId) => {
     setTab(next);

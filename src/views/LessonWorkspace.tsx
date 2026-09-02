@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { navigate } from 'astro:transitions/client';
-import { isProseLesson, type LessonDefinition } from '@/curriculum/types';
+import { isProseLesson, type ClientLessonDefinition } from '@/curriculum/types';
 import { useCurriculumTree } from '@/curriculum/useCurriculumTree';
 import { useCourseShortcuts } from '@/hooks/useCourseShortcuts';
 import { useLesson } from '@/hooks/useLesson';
@@ -21,7 +21,7 @@ import styles from './LessonWorkspace.module.css';
 export type TabId = 'instructions' | 'terminal';
 
 export interface LessonWorkspaceProps {
-  lesson: LessonDefinition;
+  lesson: ClientLessonDefinition;
   /** The next lesson in course order, computed at build time. Undefined on the last lesson. */
   nextLessonId?: string;
   /** Whether this is the final lesson in the course. */

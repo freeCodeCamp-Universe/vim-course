@@ -3,6 +3,7 @@ import type { Mode, QuickfixList, Register } from '@/engine/types';
 import {
   isLatchingTest,
   type AuthoredLessonDefinition,
+  type ClientAuthoredLessonDefinition,
   type CommandMatcher,
   type CursorAtPosition,
   type LessonTest,
@@ -517,7 +518,7 @@ function testPasses(test: LessonTest, context: ChecklistContext): TestResult {
  * keystroke, since an edit can be undone and Vim can be reopened.
  */
 export function evaluateChecklist(
-  lesson: AuthoredLessonDefinition,
+  lesson: AuthoredLessonDefinition | ClientAuthoredLessonDefinition,
   context: ChecklistContext
 ): RequirementResult[] {
   return lesson.config.checklist.map((requirement) => {

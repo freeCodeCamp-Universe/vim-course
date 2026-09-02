@@ -4,11 +4,11 @@ import {
   type LessonSnapshot,
   type VimTerminalView,
 } from '@/terminal/vimTerminalView';
-import type { LessonDefinition } from '@/curriculum/types';
+import type { ClientLessonDefinition } from '@/curriculum/types';
 import styles from './VimTerminal.module.css';
 
 export interface VimTerminalProps {
-  lesson: LessonDefinition;
+  lesson: ClientLessonDefinition;
   /** Receives a fresh snapshot after every advance, reset, and incomplete grade. */
   onUpdate: (snapshot: LessonSnapshot) => void;
   /** Filled with the mounted view so the workspace can focus, reset, or grade it. */

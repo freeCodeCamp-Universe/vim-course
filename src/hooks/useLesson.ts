@@ -2,7 +2,7 @@ import { useCallback, useRef, useState, type RefObject } from 'react';
 import { vimLessonEngine } from '@/curriculum/lessonEngine';
 import { createLessonProgress, type ChecklistItem } from '@/curriculum/lessonProgress';
 import type { LessonSnapshot, VimTerminalView } from '@/terminal/vimTerminalView';
-import type { LessonDefinition } from '@/curriculum/types';
+import type { ClientLessonDefinition } from '@/curriculum/types';
 
 export interface UseLessonResult {
   /** One entry per checklist label, `not-done` until a validator flips it. */
@@ -29,7 +29,7 @@ export interface UseLessonResult {
 }
 
 /** The seed snapshot, computed synchronously so the sidebar never flashes empty. */
-function seedSnapshot(lesson: LessonDefinition): LessonSnapshot {
+function seedSnapshot(lesson: ClientLessonDefinition): LessonSnapshot {
   const progress = createLessonProgress(lesson, vimLessonEngine).seed();
   return {
     checklist: progress.checklist,
@@ -47,7 +47,7 @@ function seedSnapshot(lesson: LessonDefinition): LessonSnapshot {
  * two side-effecting controls — Reset and the too-early-advance grade — to the
  * mounted view through {@link viewRef}. It holds no engine state of its own.
  */
-export function useLesson(lesson: LessonDefinition): UseLessonResult {
+export function useLesson(lesson: ClientLessonDefinition): UseLessonResult {
   const [snapshot, setSnapshot] = useState<LessonSnapshot>(() => seedSnapshot(lesson));
   const [feedback, setFeedback] = useState<string | null>(null);
   const viewRef = useRef<VimTerminalView | null>(null);
