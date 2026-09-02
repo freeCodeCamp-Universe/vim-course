@@ -1,4 +1,5 @@
 .page {
+  flex: 1;
   max-inline-size: var(--measure-text);
   margin-inline: auto;
   padding-inline: var(--space-md);

@@ -136,6 +136,9 @@ html {
 
 body {
   margin: 0;
+  min-block-size: 100dvh;
+  display: flex;
+  flex-direction: column;
   font-family: var(--font-sans);
   line-height: var(--line-height-caption);
   background-color: var(--color-bg-secondary);
