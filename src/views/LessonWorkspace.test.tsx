@@ -43,17 +43,17 @@ function renderWorkspace(
   lesson: AuthoredLessonDefinition | ProseLessonDefinition,
   tab: 'instructions' | 'terminal' = 'instructions'
 ) {
-  const instructionsHtml = renderMarkdown(lesson.instructions);
-  return render(
+  const view = render(
     <LessonWorkspace
       lesson={lesson}
       nextLessonId="next-id"
       isLastLesson={false}
-      instructionsHtml={instructionsHtml}
+      instructionsHtml={renderMarkdown(lesson.instructions)}
       tab={tab}
       onSelectTab={vi.fn()}
     />
   );
+  return view;
 }
 
 describe('LessonWorkspace', () => {

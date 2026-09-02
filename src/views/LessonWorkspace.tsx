@@ -136,7 +136,7 @@ export function LessonWorkspace({ lesson, nextLessonId, isLastLesson, instructio
 
   const announceShortcut = useCallback((message: string) => {
     // Append a zero-width space to a repeated message so the polite region re-announces.
-    setShortcutNote((prev) => (prev === message ? `${message}​` : message));
+    setShortcutNote((prev) => (prev === message ? `${message}\u200b` : message));
   }, []);
 
   // Keyboard shortcuts use the full ordered lesson list for Alt+N/Alt+P stepping.

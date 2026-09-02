@@ -724,6 +724,8 @@ describe('createTerminalView', () => {
       expect(items[1]).toHaveAttribute('aria-setsize', '2');
 
       const grid = q.getByRole('list');
+      // Hidden lines are intentionally excluded from Testing Library's role queries.
+      // eslint-disable-next-line testing-library/no-node-access
       const hiddenLines = grid.querySelectorAll('[aria-hidden="true"]');
       expect(hiddenLines).toHaveLength(2);
     });
@@ -739,6 +741,8 @@ describe('createTerminalView', () => {
 
       const img = q.getByRole('img', { name: 'logo' });
       expect(img).toBeInTheDocument();
+      // The image container's children are presentational terminal lines without roles.
+      // eslint-disable-next-line testing-library/no-node-access
       expect(img.children).toHaveLength(2);
 
       const items = q.getAllByRole('listitem');

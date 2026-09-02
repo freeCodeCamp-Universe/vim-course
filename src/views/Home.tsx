@@ -6,12 +6,17 @@ import { Progress } from '@/components/base/Progress/Progress';
 import { useProgress } from '@/hooks/useProgress';
 import styles from './Home.module.css';
 
+// Stable empty arrays so the ?? fallback doesn't create a new reference each render,
+// which would invalidate downstream useMemo deps.
+const EMPTY_IDS: string[] = [];
+const EMPTY_MODULES: never[] = [];
+
 export function Home() {
   const tree = useCurriculumTree();
   const { completed, lastCompletedId } = useProgress();
 
-  const orderedLessonIds = tree?.orderedLessonIds ?? [];
-  const modules = tree?.modules ?? [];
+  const orderedLessonIds = tree?.orderedLessonIds ?? EMPTY_IDS;
+  const modules = tree?.modules ?? EMPTY_MODULES;
 
   const completedSet = useMemo(() => {
     const lessonIds = new Set(orderedLessonIds);
