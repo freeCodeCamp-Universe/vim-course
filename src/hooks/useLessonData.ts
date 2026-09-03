@@ -49,44 +49,44 @@ export function useLessonData(lessonId: string): UseLessonDataResult {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    if (cache.has(lessonId)) {
-      setData(cache.get(lessonId)!);
-      setLoading(false);
-      setError(false);
-      return;
-    }
-
     if (!tree) {
       return;
     }
 
-    const lesson = tree.modules.flatMap((m) => m.lessons).find((l) => l.id === lessonId);
-    if (!lesson || !lesson.dataFile) {
+    if (cache.has(lessonId)) {
+      setData(cache.get(lessonId)!);
       setLoading(false);
-      setError(true);
-      return;
-    }
-
-    setLoading(true);
-    setError(false);
-
-    fetchLesson(lessonId, lesson.dataFile)
-      .then((d) => {
-        setData(d);
-        setLoading(false);
-
-        // Prefetch the next lesson.
-        const ordered = tree.orderedLessonIds;
-        const idx = ordered.indexOf(lessonId);
-        const nextId = ordered[idx + 1];
-        if (nextId) {
-          prefetchLesson(nextId, tree);
-        }
-      })
-      .catch(() => {
+      setError(false);
+    } else {
+      const lesson = tree.modules.flatMap((m) => m.lessons).find((l) => l.id === lessonId);
+      if (!lesson || !lesson.dataFile) {
         setLoading(false);
         setError(true);
-      });
+        return;
+      }
+
+      setLoading(true);
+      setError(false);
+
+      fetchLesson(lessonId, lesson.dataFile)
+        .then((d) => {
+          setData(d);
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+          setError(true);
+        });
+    }
+
+    // Prefetch the next lesson regardless of whether the current one
+    // was served from cache or fetched fresh.
+    const ordered = tree.orderedLessonIds;
+    const idx = ordered.indexOf(lessonId);
+    const nextId = ordered[idx + 1];
+    if (nextId) {
+      prefetchLesson(nextId, tree);
+    }
   }, [lessonId, tree]);
 
   return { data, loading, error };

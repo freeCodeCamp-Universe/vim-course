@@ -6,8 +6,8 @@ The app uses React Router to navigate between two main pages: home and lessons. 
 
 `App.tsx` defines two routes:
 
-- `/` — `HomePage` — displays the course home page with progress and lesson list.
-- `/learn/:lessonId` — `LessonRoute` — loads and displays a lesson.
+- `/` renders `HomePage`, the course home page with progress and lesson list.
+- `/learn/:lessonId` renders `LessonRoute`, which loads and displays a lesson.
 
 ```tsx
 <BrowserRouter>
@@ -20,25 +20,75 @@ The app uses React Router to navigate between two main pages: home and lessons. 
 </BrowserRouter>
 ```
 
-## Lazy loading lesson data
+## Lesson data loading and prefetching
 
-`LessonRoute` loads lesson JSON dynamically via `useLessonData(lessonId)`. This hook:
+`LessonRoute` loads lesson JSON dynamically via `useLessonData(lessonId)` (`src/hooks/useLessonData.ts`). The hook returns `{ data, loading, error }` and combines in-memory caching with prefetching so sequential navigation is instant.
 
-1. Fetches `public/data/lessons/{lessonId}.{hash}.json` (built by the lesson-data prebuild)
-2. Caches the result in memory
-3. Returns `{ data, loading, error }`
+### Data files
 
-While loading, it renders a loading state. If the fetch fails, it shows "Lesson not found."
+Each lesson is a static JSON file at `/data/lessons/{lessonId}.{contentHash}.json`, produced at build time by `scripts/build-lesson-data.ts`. The 8-character content hash enables long-lived HTTP caching. Clients never construct these filenames directly; they look up the `dataFile` field for a lesson in the curriculum tree.
 
-Once data arrives, it passes the lesson to `LessonPage`.
+### Curriculum tree
+
+`/data/curriculum-tree.json` is the module/lesson index. It provides two things the data-loading layer needs:
+
+- **`modules[].lessons[].dataFile`**, the hashed filename for each lesson's JSON.
+- **`orderedLessonIds`**, a flat array of every lesson ID in course order, used to determine which lesson to prefetch next.
+
+The tree is preloaded via `<link rel="preload">` in `index.html` and fetched eagerly at module-evaluation time in `useCurriculumTree.ts` (before React mounts). It is cached in a module-level variable for the lifetime of the JS bundle.
+
+### In-memory cache
+
+Two module-level `Map` objects in `useLessonData.ts`:
+
+- **`cache`** (`Map<string, LessonData>`) stores resolved lesson data permanently (never evicted). A cache hit renders the lesson with no loading state.
+- **`pending`** (`Map<string, Promise<LessonData>>`) deduplicates in-flight requests. If a fetch is already running for a lesson ID, callers get the same promise. On resolution the entry moves to `cache` and is removed from `pending`.
+
+Because the app uses client-side routing, JS stays alive across navigations and the cache persists for the entire session.
+
+### Prefetch strategy
+
+The goal is that every sequential "next lesson" navigation is served from cache with no spinner. Prefetching happens in three places:
+
+1. **Home page** (`src/views/Home.tsx`). Prefetches the user's "continue" lesson (the next incomplete one) on load, so the first lesson visited from home is instant.
+2. **After every lesson change** (`useLessonData` effect). After the current lesson resolves or hits cache, the effect looks up the next ID in `orderedLessonIds` and calls `prefetchLesson()`. This runs on both fresh fetches and cache hits, so the chain continues across sequential navigation.
+3. **`prefetchLesson()` export.** Any component can call it. It no-ops if the lesson is already cached or in-flight, looks up the `dataFile` from the curriculum tree, and starts the fetch.
+
+### Loading flow (per lesson)
+
+```
+lessonId changes
+  │
+  ├─ tree not loaded yet → wait (effect re-runs when tree arrives)
+  │
+  ├─ cache hit → setData, setLoading(false)
+  │                │
+  │                └─ prefetch next lesson
+  │
+  └─ cache miss → setLoading(true), fetch lesson JSON
+                    │
+                    ├─ success → setData, setLoading(false)
+                    │              │
+                    │              └─ prefetch next lesson
+                    │
+                    └─ failure → setError(true)
+```
+
+### When a spinner still appears
+
+A loading spinner shows when the lesson is not in cache at navigation time. Common cases:
+
+- **First lesson of a session.** Nothing has been prefetched yet (unless the home page prefetch covered it).
+- **Non-sequential navigation.** Jumping ahead by more than one lesson, or navigating backward. Only the immediate next lesson is prefetched.
+- **Very fast navigation.** Advancing before the prefetch request completes (unlikely in practice; lesson JSONs are small).
 
 ## Shared layout
 
 `CourseLayout` is the root wrapper. It contains:
 
-- **Header** — title, theme toggle, keyboard hints
-- **Overlays** — nav drawer, shortcuts modal, settings modal (managed by `courseChrome` pub/sub store)
-- **Main content slot** — pages render here via React Router
+- **Header.** Title, theme toggle, keyboard hints.
+- **Overlays.** Nav drawer, shortcuts modal, settings modal (managed by the `courseChrome` pub/sub store).
+- **Main content slot.** Pages render here via React Router.
 
 Because `courseChrome` is a module-level store (not React Context), the overlays work across route changes without prop-drilling.
 
