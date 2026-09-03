@@ -13,6 +13,14 @@ function fail(message: string): never {
   process.exit(1);
 }
 
+function required(value: string | undefined): string {
+  if (value === undefined) {
+    fail('Validated module argument is unexpectedly missing');
+  }
+
+  return value;
+}
+
 function parseArgs(): { number: number; slug: string; title: string } {
   const args: Partial<Record<'number' | 'slug' | 'title', string>> = {};
   for (const arg of process.argv.slice(2)) {
@@ -23,11 +31,16 @@ function parseArgs(): { number: number; slug: string; title: string } {
     }
   }
 
-  if (!/^\d+$/.test(args.number ?? '') || !/^[a-z0-9-]+$/.test(args.slug ?? '') || !args.title) {
+  const { number, slug, title } = args;
+  if (!/^\d+$/.test(number ?? '') || !/^[a-z0-9-]+$/.test(slug ?? '') || !title) {
     fail('Usage: node scripts/add-module.ts --number=<N> --slug=<slug> --title="<title>"');
   }
 
-  return { number: Number(args.number), slug: args.slug, title: args.title };
+  return {
+    number: Number(required(number)),
+    slug: required(slug),
+    title: required(title),
+  };
 }
 
 function lessonBody(): string {
@@ -90,11 +103,9 @@ function main(): void {
   },`;
   const previous = entries.filter((entry) => Number(entry[1]) < number).at(-1);
   const next = entries.find((entry) => Number(entry[1]) > number);
-  const insertionIndex = next
-    ? next.index
-    : previous
-      ? previous.index + previous[0].length
-      : ordering.indexOf('];');
+  const insertionIndex =
+    next?.index ??
+    (previous?.index !== undefined ? previous.index + previous[0].length : ordering.indexOf('];'));
   const separator = insertionIndex === ordering.indexOf('];') || next ? '' : '\n';
   writeFileSync(
     orderingPath,

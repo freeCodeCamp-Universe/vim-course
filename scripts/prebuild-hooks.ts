@@ -31,7 +31,13 @@ export const load: LoadHook = async (url, context, next) => {
     const raw =
       typeof result.source === 'string'
         ? result.source
-        : Buffer.from(result.source).toString('utf-8');
+        : result.source instanceof ArrayBuffer
+          ? Buffer.from(result.source).toString('utf-8')
+          : Buffer.from(
+              result.source.buffer,
+              result.source.byteOffset,
+              result.source.byteLength
+            ).toString('utf-8');
 
     // Replace import.meta.env with process.env so Vite env reads work in Node.
     const patched1 = raw.replace(/import\.meta\.env/g, 'process.env');
