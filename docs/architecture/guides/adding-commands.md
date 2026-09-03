@@ -1,6 +1,6 @@
 # Adding an engine command
 
-How to implement a new key command in `src/engine/`. Read `docs/architecture.md` first for the layer overview and `EditorState` field descriptions.
+How to implement a new key command in `src/engine/`. Read the [architecture overview](../architecture.md) first for the layer overview and `EditorState` field descriptions.
 
 ---
 
@@ -12,7 +12,7 @@ Every normal-mode command is a handler registered in `normalModeRegistry` (`src/
 import './commands/myFamily';
 ```
 
-Also add a row to the source table in `docs/references/curriculum/commands.md`.
+Also add a row to the source table in [`commands.md`](../../curriculum/commands.md).
 
 ---
 

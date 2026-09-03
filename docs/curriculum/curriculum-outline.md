@@ -6,8 +6,8 @@ date: 2026-07-23
 
 # Curriculum: Practical Vim for Terminal Editing
 
-- [`projects/vim-course/docs/references/curriculum/commands.md`](references/curriculum/commands.md) for the full set of commands the terminal supports
-- [`projects/vim-course/docs/references/curriculum/lesson-authoring.md`](references/curriculum/lesson-authoring.md) for lesson file structure, config block, checklist rules, and seed continuity
+- [`commands.md`](commands.md) for the full set of commands the terminal supports
+- [`lesson-authoring.md`](lesson-authoring.md) for lesson file structure, config block, checklist rules, and seed continuity
 - [`projects/vim-course/docs/lesson-style-guide.md`](lesson-style-guide.md) for prose style, pedagogical conventions, and spaced repetition principles.
 
 ## Goal
