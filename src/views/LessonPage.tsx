@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { isProseLesson, type ClientLessonDefinition } from '@/curriculum/types';
 import type { Heading } from '@/utils/extractHeadings';
 import { LessonToolbar } from '@/components/features/LessonToolbar';
@@ -28,6 +28,10 @@ export interface LessonPageProps {
 export function LessonPage({ lesson, nextLessonId, isLastLesson, instructionsHtml, segmentHtmls, headings }: LessonPageProps) {
   const prose = isProseLesson(lesson);
   const [tab, setTab] = useState<TabId>('instructions');
+
+  useEffect(() => {
+    document.title = `${lesson.title} | Vim Course | freeCodeCamp.org`;
+  }, [lesson.title]);
 
   const [outlineOpen, setOutlineOpen] = useState(false);
   const outlineButtonRef = useRef<HTMLButtonElement | null>(null);

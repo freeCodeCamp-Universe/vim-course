@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useCurriculumTree } from '@/curriculum/useCurriculumTree';
 import { LoadingState } from '@/components/base/LoadingState/LoadingState';
 import { FccLogoIcon } from '@/components/base/Icon';
@@ -6,6 +7,10 @@ import styles from './HomePage.module.css';
 
 export function HomePage() {
   const tree = useCurriculumTree();
+
+  useEffect(() => {
+    document.title = 'Vim Course | freeCodeCamp.org';
+  }, []);
 
   if (!tree) {
     return <LoadingState label="Loading course" />;
