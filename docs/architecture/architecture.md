@@ -112,7 +112,7 @@ No async work in the keystroke loop. State is pure data, mutations are spread-ba
 
 **Action history** is append-only. The engine logs every keystroke; the checklist reads the full history to evaluate requirements.
 
-**Progress** persists to `localStorage` under `vim-course:progress` as `{ version: 1, completed: string[] }`. The browser back button or page reload restores it.
+**Progress** persists to `localStorage` under `vim-course:progress` as `{ completed: { id: string, completedAt: number }[] }`. The browser back button or page reload restores it.
 
 ## Testing
 

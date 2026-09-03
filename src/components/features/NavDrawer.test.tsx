@@ -28,7 +28,12 @@ const modules = [
 const STORAGE_KEY = 'vim-course:progress';
 
 function setProgress(completed: string[]) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 1, completed }));
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify({
+      completed: completed.map((id, index) => ({ id, completedAt: index })),
+    })
+  );
   progressStore.reset();
 }
 

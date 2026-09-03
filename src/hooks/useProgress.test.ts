@@ -22,11 +22,10 @@ describe('useProgress', () => {
     expect(result.current.lastCompletedId).toBeUndefined();
   });
 
-  it('should read completed ids persisted in v2 storage on mount', () => {
+  it('should read completed ids persisted in storage on mount', () => {
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({
-        version: 2,
         completed: [{ id: orderedLessonIds[0], completedAt: 1000 }],
       })
     );
@@ -38,26 +37,11 @@ describe('useProgress', () => {
     expect(result.current.lastCompletedId).toBe(orderedLessonIds[0]);
   });
 
-  it('should migrate v1 progress (plain string array) to entries, preserving order via index-based timestamps', () => {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ version: 1, completed: [orderedLessonIds[0], orderedLessonIds[2]] })
-    );
-    progressStore.reset();
-
-    const { result } = renderHook(() => useProgress());
-
-    expect(result.current.completed).toEqual([orderedLessonIds[0], orderedLessonIds[2]]);
-    // Index 1 (orderedLessonIds[2]) has a higher timestamp (2) than index 0 (orderedLessonIds[0] = 0)
-    expect(result.current.lastCompletedId).toBe(orderedLessonIds[2]);
-  });
-
   it('should return the most recently completed lesson by timestamp, not array position', () => {
     // Seed with an out-of-time-order array: l[1] completed last despite being first in array
     localStorage.setItem(
       STORAGE_KEY,
       JSON.stringify({
-        version: 2,
         completed: [
           { id: orderedLessonIds[1], completedAt: 2000 },
           { id: orderedLessonIds[0], completedAt: 1000 },
@@ -95,7 +79,6 @@ describe('useProgress', () => {
     act(() => result.current.markComplete(orderedLessonIds[0]));
 
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}');
-    expect(stored.version).toBe(2);
     expect(stored.completed[0]).toEqual({ id: orderedLessonIds[0], completedAt: 42000 });
   });
 
@@ -121,19 +104,7 @@ describe('useProgress', () => {
   });
 
   it('should fall back to empty progress when the stored shape is wrong', () => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 2, completed: 'nope' }));
-    progressStore.reset();
-
-    const { result } = renderHook(() => useProgress());
-
-    expect(result.current.completed).toEqual([]);
-  });
-
-  it('should fall back to empty progress when the stored version does not match', () => {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({ version: 99, completed: [orderedLessonIds[0]] })
-    );
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ completed: 'nope' }));
     progressStore.reset();
 
     const { result } = renderHook(() => useProgress());

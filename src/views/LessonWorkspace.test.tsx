@@ -99,7 +99,10 @@ describe('LessonWorkspace', () => {
   });
 
   it('should show a completed icon and status before a completed lesson title', () => {
-    localStorage.setItem('vim-course:progress', JSON.stringify({ version: 1, completed: ['w-1'] }));
+    localStorage.setItem(
+      'vim-course:progress',
+      JSON.stringify({ completed: [{ id: 'w-1', completedAt: 1000 }] })
+    );
     progressStore.reset();
     renderWorkspace(workshop);
 

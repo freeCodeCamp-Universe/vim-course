@@ -1,5 +1,4 @@
 const STORAGE_KEY = 'vim-course:progress';
-const STORAGE_VERSION = 2;
 
 export interface CompletedEntry {
   id: string;
@@ -8,7 +7,6 @@ export interface CompletedEntry {
 }
 
 interface StoredProgress {
-  version: 2;
   completed: CompletedEntry[];
 }
 
@@ -24,18 +22,9 @@ export function readProgress(): CompletedEntry[] {
       return [];
     }
 
-    const stored = parsed as { version?: unknown; completed?: unknown };
+    const stored = parsed as { completed?: unknown };
 
-    // Migrate v1: completed was a plain string[]. Assign index-based timestamps
-    // so relative order is preserved even though wall-clock times are unavailable.
-    if (stored.version === 1 && Array.isArray(stored.completed)) {
-      const ids = (stored.completed as unknown[]).filter(
-        (id): id is string => typeof id === 'string'
-      );
-      return ids.map((id, index) => ({ id, completedAt: index }));
-    }
-
-    if (stored.version !== STORAGE_VERSION || !Array.isArray(stored.completed)) {
+    if (!Array.isArray(stored.completed)) {
       return [];
     }
 
@@ -53,7 +42,7 @@ export function readProgress(): CompletedEntry[] {
 
 export function writeProgress(completed: CompletedEntry[]): void {
   try {
-    const payload: StoredProgress = { version: STORAGE_VERSION, completed };
+    const payload: StoredProgress = { completed };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
   } catch {
     // Persistence is best-effort: a full or unavailable store must not break the app.

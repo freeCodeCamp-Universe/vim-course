@@ -32,7 +32,7 @@ describe('Home', () => {
   it('should render completion state from the shared progress storage', () => {
     localStorage.setItem(
       'vim-course:progress',
-      JSON.stringify({ version: 2, completed: [{ id: 'l1', completedAt: 1000 }] })
+      JSON.stringify({ completed: [{ id: 'l1', completedAt: 1000 }] })
     );
     progressStore.reset();
 
@@ -56,7 +56,7 @@ describe('Home', () => {
   it('should show "Continue" linking to the lesson after the most recently completed one', () => {
     localStorage.setItem(
       'vim-course:progress',
-      JSON.stringify({ version: 2, completed: [{ id: 'l1', completedAt: 1000 }] })
+      JSON.stringify({ completed: [{ id: 'l1', completedAt: 1000 }] })
     );
     progressStore.reset();
 
@@ -71,7 +71,6 @@ describe('Home', () => {
     localStorage.setItem(
       'vim-course:progress',
       JSON.stringify({
-        version: 2,
         completed: [
           { id: 'l3', completedAt: 1000 },
           { id: 'l1', completedAt: 2000 },
@@ -92,7 +91,6 @@ describe('Home', () => {
     localStorage.setItem(
       'vim-course:progress',
       JSON.stringify({
-        version: 2,
         completed: [
           { id: 'l1', completedAt: 1000 },
           { id: 'l3', completedAt: 2000 },
@@ -111,7 +109,6 @@ describe('Home', () => {
     localStorage.setItem(
       'vim-course:progress',
       JSON.stringify({
-        version: 2,
         completed: [
           { id: 'l1', completedAt: 1000 },
           { id: 'l2', completedAt: 2000 },
@@ -132,7 +129,6 @@ describe('Home', () => {
     localStorage.setItem(
       'vim-course:progress',
       JSON.stringify({
-        version: 2,
         completed: [{ id: 'l-unknown', completedAt: 1000 }],
       })
     );
