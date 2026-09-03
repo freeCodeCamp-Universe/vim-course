@@ -64,10 +64,11 @@ export const ARROW_NAMES: Record<string, string> = {
  * them. A `:`-verb paired with an `open` target gets that path as its argument
  * (`:e` + `styles.css` → `:e styles.css`), since the test's own `open` field says
  * which file the command is meant to act on. `r` consumes the next key as its
- * replacement, so it is given one. Shell commands (`vim`, `vim <path>`) and
- * command-line commands both buffer until `Enter`, so they get one.
+ * replacement, so it is given one (`rChar`, defaulting to `'x'`). Shell commands
+ * (`vim`, `vim <path>`) and command-line commands both buffer until `Enter`, so
+ * they get one.
  */
-export function commandToKeys(command: string, open?: string): string[] {
+export function commandToKeys(command: string, open?: string, rChar?: string): string[] {
   if (command === 'Esc' || command === 'Escape') {
     return ['Escape'];
   }
@@ -81,7 +82,7 @@ export function commandToKeys(command: string, open?: string): string[] {
     return [command];
   }
   if (command === 'r') {
-    return ['r', 'x'];
+    return ['r', rChar ?? 'x'];
   }
 
   if (command.startsWith(':') || command.startsWith('/')) {
@@ -163,6 +164,52 @@ export function openFromExplorer(
 }
 
 /**
+ * Infer the character that `r` should replace the character under the cursor
+ * with, by comparing the test's `contains` and `absent` assertions for a
+ * single-character diff, then falling back to the `equals` field, then to `'x'`.
+ *
+ * Example: `absent: ["carriagg"]` + `contains: ["carriage"]` → `'e'` at the
+ * position where the two strings differ.
+ */
+export function deriveReplacementChar(test: LessonTest, state: EditorState): string {
+  const cursorCol = state.cursor.col;
+
+  if (test.contains !== undefined && test.absent !== undefined) {
+    for (const needle of test.contains) {
+      for (const anti of test.absent) {
+        if (typeof needle !== 'string' || typeof anti !== 'string') {
+          continue;
+        }
+        if (needle.length !== anti.length) {
+          continue;
+        }
+        let diffIdx = -1;
+        let diffs = 0;
+        for (let i = 0; i < needle.length; i++) {
+          if (needle[i] !== anti[i]) {
+            diffIdx = i;
+            diffs++;
+          }
+        }
+        if (diffs === 1 && diffIdx >= 0) {
+          return needle[diffIdx];
+        }
+      }
+    }
+  }
+
+  if (test.equals !== undefined) {
+    const expectedLines = test.equals.split('\n');
+    const expectedChar = expectedLines[state.cursor.line]?.[cursorCol];
+    if (expectedChar !== undefined) {
+      return expectedChar;
+    }
+  }
+
+  return 'x';
+}
+
+/**
  * Drive a lesson to satisfy one checklist requirement, returning the advanced
  * state. A `command` requirement types that command. Content requirements need
  * text no derivation can produce and are checked separately, by construction.
@@ -171,13 +218,17 @@ export function openFromExplorer(
  * `o`) is followed out of insert mode before the next requirement is driven —
  * otherwise the next command's keys would be typed as literal text. Mode-specific
  * commands prepare their required mode first.
+ *
+ * `options.rChar` overrides the replacement character fed after `r`, so the
+ * playthrough can supply the exact character rather than falling back to `'x'`.
  */
 export function satisfy(
   state: EditorState,
   lesson: AuthoredLessonDefinition,
   test: LessonTest,
   allowed?: AllowedInput,
-  evaluateWhen?: EvaluateWhen
+  evaluateWhen?: EvaluateWhen,
+  options?: { rChar?: string }
 ): EditorState {
   let next = state;
   const command = commandText(test);
@@ -263,7 +314,7 @@ export function satisfy(
     }
 
     const countKeys = test.count !== undefined ? [...String(test.count)] : [];
-    const keys = [...countKeys, ...commandToKeys(command, test.open)];
+    const keys = [...countKeys, ...commandToKeys(command, test.open, options?.rChar)];
 
     // When a `cursorReached` postcondition targets a single position, repeat the
     // command until the cursor arrives there (capped to avoid infinite loops).
