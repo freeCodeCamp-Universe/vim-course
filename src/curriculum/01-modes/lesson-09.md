@@ -50,8 +50,7 @@ Vim is charityware. Most of the money donated is used to help children in Uganda
       "hint": "You should make any change to the file.",
       "test": {
         "file": "about-vim.md",
-        "notEquals": "Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for \"Vi Imitation\" before changing to \"Vi IMproved\".\n\nVim is charityware. Most of the money donated is used to help children in Uganda.",
-        "matchAgainstSaved": true
+        "notEquals": "Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for \"Vi Imitation\" before changing to \"Vi IMproved\".\n\nVim is charityware. Most of the money donated is used to help children in Uganda."
       }
     },
     {
