@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router';
+import type { ReactElement } from 'react';
+import { Router } from 'wouter';
+import { memoryLocation } from 'wouter/memory-location';
 import { CurriculumNavigator } from './CurriculumNavigator';
 import type { CurriculumTreeModule } from '@/components/features/CurriculumTree';
 
@@ -23,10 +25,15 @@ const modules: CurriculumTreeModule[] = [
   },
 ];
 
+function renderWithRouter(ui: ReactElement) {
+  const { hook } = memoryLocation({ path: '/', record: true });
+  return render(<Router hook={hook}>{ui}</Router>);
+}
+
 describe('CurriculumNavigator', () => {
   it.each(['home', 'drawer'] as const)('should search the %s curriculum tree', async (variant) => {
     const user = userEvent.setup();
-    render(<MemoryRouter><CurriculumNavigator modules={modules} variant={variant} /></MemoryRouter>);
+    renderWithRouter(<CurriculumNavigator modules={modules} variant={variant} />);
 
     await user.type(screen.getByRole('searchbox'), 'word');
 
@@ -39,7 +46,7 @@ describe('CurriculumNavigator', () => {
 
   it('should show an empty result message when no lesson matches', async () => {
     const user = userEvent.setup();
-    render(<MemoryRouter><CurriculumNavigator modules={modules} variant="home" /></MemoryRouter>);
+    renderWithRouter(<CurriculumNavigator modules={modules} variant="home" />);
 
     await user.type(screen.getByRole('searchbox'), 'unknown');
 

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation } from 'wouter';
 import { isProseLesson, type ClientLessonDefinition } from '@/curriculum/types';
 import { useCurriculumTree } from '@/curriculum/useCurriculumTree';
 import { useCourseShortcuts } from '@/hooks/useCourseShortcuts';
@@ -57,7 +57,7 @@ export function LessonWorkspace({
   tab,
   onSelectTab,
 }: LessonWorkspaceProps) {
-  const navigate = useNavigate();
+  const [, navigate] = useLocation();
   const chrome = useCourseChrome();
   const tree = useCurriculumTree();
   const { shortcutsEnabled } = useShortcutsPreference();

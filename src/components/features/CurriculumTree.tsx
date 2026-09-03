@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link } from 'wouter';
 import { CheckCircleIcon, CircleIcon } from '@/components/base/Icon';
 import { renderInline } from '@/components/base/Markdown/renderInline';
 import styles from './CurriculumTree.module.css';
@@ -57,7 +57,7 @@ export function CurriculumTree({
                   data-state={state}
                 >
                   <Link
-                    to={`/learn/${lesson.id}`}
+                    href={`/learn/${lesson.id}`}
                     className={`${variantClass('lesson-row')} ${variant}-lesson-row`}
                     aria-current={isCurrentState(state) ? 'step' : undefined}
                     ref={isCurrentState(state) ? currentLessonRef : undefined}

@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router';
+import type { ReactElement } from 'react';
+import { Router } from 'wouter';
+import { memoryLocation } from 'wouter/memory-location';
 import { progressStore } from '@/stores/progressStore';
 import { NavDrawer } from './NavDrawer';
 
@@ -37,6 +39,11 @@ function setProgress(completed: string[]) {
   progressStore.reset();
 }
 
+function renderWithRouter(ui: ReactElement) {
+  const { hook } = memoryLocation({ path: '/', record: true });
+  return render(<Router hook={hook}>{ui}</Router>);
+}
+
 /** Harness with a real trigger so focus move/restore is observable. */
 function Harness({
   onClose,
@@ -64,7 +71,7 @@ afterEach(() => {
 
 describe('NavDrawer', () => {
   it('should render nothing while closed', () => {
-    render(<MemoryRouter><Harness /></MemoryRouter>);
+    renderWithRouter(<Harness />);
 
     expect(screen.queryByRole('dialog')).toBeNull();
   });
@@ -72,7 +79,7 @@ describe('NavDrawer', () => {
   it('should mark the open lesson as current and completed lessons, every row is a link', async () => {
     setProgress(['l1']);
     const user = userEvent.setup();
-    render(<MemoryRouter><Harness currentLessonId="l3" /></MemoryRouter>);
+    renderWithRouter(<Harness currentLessonId="l3" />);
 
     await user.click(screen.getByRole('button', { name: 'open lessons' }));
 
@@ -102,7 +109,7 @@ describe('NavDrawer', () => {
   it('should keep the open lesson current after it is completed', async () => {
     setProgress(['l1']);
     const user = userEvent.setup();
-    render(<MemoryRouter><Harness currentLessonId="l1" /></MemoryRouter>);
+    renderWithRouter(<Harness currentLessonId="l1" />);
 
     await user.click(screen.getByRole('button', { name: 'open lessons' }));
 
@@ -113,7 +120,7 @@ describe('NavDrawer', () => {
 
   it('should focus the current lesson link when the drawer opens', async () => {
     const user = userEvent.setup();
-    render(<MemoryRouter><Harness currentLessonId="l3" /></MemoryRouter>);
+    renderWithRouter(<Harness currentLessonId="l3" />);
 
     await user.click(screen.getByRole('button', { name: 'open lessons' }));
 
@@ -123,7 +130,7 @@ describe('NavDrawer', () => {
 
   it('should focus the close button when there is no current lesson', async () => {
     const user = userEvent.setup();
-    render(<MemoryRouter><Harness /></MemoryRouter>);
+    renderWithRouter(<Harness />);
 
     await user.click(screen.getByRole('button', { name: 'open lessons' }));
 
@@ -133,7 +140,7 @@ describe('NavDrawer', () => {
   it('should close when a reachable lesson is selected', async () => {
     const onClose = vi.fn();
     const user = userEvent.setup();
-    render(<MemoryRouter><Harness onClose={onClose} /></MemoryRouter>);
+    renderWithRouter(<Harness onClose={onClose} />);
 
     await user.click(screen.getByRole('button', { name: 'open lessons' }));
     await user.click(screen.getByRole('link', { name: /Enter insert mode/ }));
@@ -143,7 +150,7 @@ describe('NavDrawer', () => {
 
   it('should clear the search query when the drawer closes', async () => {
     const user = userEvent.setup();
-    render(<MemoryRouter><Harness /></MemoryRouter>);
+    renderWithRouter(<Harness />);
 
     await user.click(screen.getByRole('button', { name: 'open lessons' }));
     await user.type(screen.getByRole('searchbox'), 'word');

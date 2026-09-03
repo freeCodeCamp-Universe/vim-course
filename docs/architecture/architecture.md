@@ -4,7 +4,7 @@ The app is a React SPA with a Vim simulator engine. It's organized into four cor
 
 ```
 ┌─────────────────────────────────────────────────┐
-│  Views & Routing (React Router)                 │  Page routes + data loading
+│  Views & Routing (Wouter)                       │  Page routes + data loading
 ├─────────────────────────────────────────────────┤
 │  Components (React)                             │  UI + user interaction
 ├─────────────────────────────────────────────────┤
@@ -42,7 +42,7 @@ See [build-process](./guides/build-process.md) for the complete sequence.
 ```
 1. Browser loads /learn/{lessonId}
    ↓
-2. React mounts, React Router resolves path to <LessonRoute>
+2. React mounts, Wouter resolves path to <LessonRoute>
    ↓
 3. LessonRoute fetches lesson JSON via useLessonData(lessonId)
    - HTTP fetch to public/data/lessons/{id}.{hash}.json
@@ -135,6 +135,6 @@ All test files are co-located with source (e.g., `dispatch.test.ts` next to `dis
 - [Engine](./layers/engine.md) — reducer, EditorState, dispatch, command registry
 - [Terminal](./layers/terminal.md) — DOM grid rendering, bridge to engine
 - [Components](./layers/components.md) — base and feature components, design patterns
-- [Views & Routing](./layers/views-and-routing.md) — React Router, data loading, layouts
+- [Views & Routing](./layers/views-and-routing.md) — Wouter, data loading, layouts
 - [Curriculum](./layers/curriculum.md) — lesson parsing, file format, types
 - [Validation](./layers/validation.md) — checklist evaluation, test predicates

@@ -40,7 +40,7 @@ Runs `scripts/generate-spa-routes.ts`. Reads the curriculum tree from
 `dist/data/curriculum-tree.json` and copies `dist/index.html` into
 `dist/learn/{id}/index.html` for every lesson ID. This lets a static host
 resolve deep links (e.g., `/learn/103-deleting-text`) to a real file so
-React Router can take over once JS loads.
+Wouter can take over once JS loads.
 
 ## Requirements
 

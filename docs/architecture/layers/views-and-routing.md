@@ -1,6 +1,6 @@
 # Views and Routing
 
-The app uses React Router to navigate between two main pages: home and lessons. The router is wrapped in a shared layout that holds app-level chrome (header, nav drawer, modals).
+The app uses Wouter to navigate between two main pages: home and lessons. The shared layout holds app-level chrome (header, nav drawer, modals).
 
 ## Routing structure
 
@@ -10,14 +10,12 @@ The app uses React Router to navigate between two main pages: home and lessons. 
 - `/learn/:lessonId` renders `LessonRoute`, which loads and displays a lesson.
 
 ```tsx
-<BrowserRouter>
-  <CourseLayout>  {/* shared chrome: header, overlays */}
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/learn/:lessonId" element={<LessonRoute />} />
-    </Routes>
-  </CourseLayout>
-</BrowserRouter>
+<CourseLayout>  {/* shared chrome: header, overlays */}
+  <Switch>
+    <Route path="/" component={HomePage} />
+    <Route path="/learn/:lessonId" component={LessonRoute} />
+  </Switch>
+</CourseLayout>
 ```
 
 ## Lesson data loading and prefetching
@@ -88,9 +86,9 @@ A loading spinner shows when the lesson is not in cache at navigation time. Comm
 
 - **Header.** Title, theme toggle, keyboard hints.
 - **Overlays.** Nav drawer, shortcuts modal, settings modal (managed by the `courseChrome` pub/sub store).
-- **Main content slot.** Pages render here via React Router.
+- **Main content slot.** Pages render here via Wouter.
 
-Because `courseChrome` is a module-level store (not React Context), the overlays work across route changes without prop-drilling.
+Because `courseChrome` is a module-level store (not React Context), the overlays work across route changes without prop-drilling. Wouter uses the browser location by default, so production does not need a router provider.
 
 ## Key views
 
@@ -103,6 +101,6 @@ Because `courseChrome` is a module-level store (not React Context), the overlays
 
 ## Navigation
 
-Programmatic navigation uses React Router's `useNavigate()`. The `next` button and keyboard shortcuts (`Alt+N`, `Alt+P`) navigate using `navigate('/learn/:lessonId')`.
+Programmatic navigation uses Wouter's `useLocation()`. The `next` button and keyboard shortcuts (`Alt+N`, `Alt+P`) navigate using its setter, `navigate('/learn/:lessonId')`.
 
 Progress (checklist completion) is persisted to `localStorage` before navigation, so the browser back button or a reload preserves state.

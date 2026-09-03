@@ -1,7 +1,9 @@
 /* eslint-disable testing-library/no-node-access */
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import type { ReactElement } from 'react';
+import { Router } from 'wouter';
+import { memoryLocation } from 'wouter/memory-location';
 import { progressStore } from '@/stores/progressStore';
 import { Home } from './Home';
 
@@ -18,6 +20,11 @@ const modules = [
 ];
 
 const orderedLessonIds = ['l1', 'l2', 'l3'];
+
+function renderWithRouter(ui: ReactElement) {
+  const { hook } = memoryLocation({ path: '/', record: true });
+  return render(<Router hook={hook}>{ui}</Router>);
+}
 
 vi.mock('@/curriculum/useCurriculumTree', () => ({
   useCurriculumTree: () => ({ modules, orderedLessonIds }),
@@ -36,7 +43,7 @@ describe('Home', () => {
     );
     progressStore.reset();
 
-    render(<MemoryRouter><Home /></MemoryRouter>);
+    renderWithRouter(<Home />);
 
     const completedLink = screen.getByRole('link', { name: /Enter insert mode/ });
     const completedItem = completedLink.closest('[data-lesson-id]');
@@ -47,7 +54,7 @@ describe('Home', () => {
   });
 
   it('should show "Start learning" linking to the first lesson when no progress exists', () => {
-    render(<MemoryRouter><Home /></MemoryRouter>);
+    renderWithRouter(<Home />);
 
     const btn = screen.getByRole('link', { name: 'Start learning' });
     expect(btn).toHaveAttribute('href', '/learn/l1');
@@ -60,7 +67,7 @@ describe('Home', () => {
     );
     progressStore.reset();
 
-    render(<MemoryRouter><Home /></MemoryRouter>);
+    renderWithRouter(<Home />);
 
     const btn = screen.getByRole('link', { name: 'Continue' });
     expect(btn).toHaveAttribute('href', '/learn/l2');
@@ -79,7 +86,7 @@ describe('Home', () => {
     );
     progressStore.reset();
 
-    render(<MemoryRouter><Home /></MemoryRouter>);
+    renderWithRouter(<Home />);
 
     const btn = screen.getByRole('link', { name: 'Continue' });
     expect(btn).toHaveAttribute('href', '/learn/l2');
@@ -99,7 +106,7 @@ describe('Home', () => {
     );
     progressStore.reset();
 
-    render(<MemoryRouter><Home /></MemoryRouter>);
+    renderWithRouter(<Home />);
 
     const btn = screen.getByRole('link', { name: 'Continue' });
     expect(btn).toHaveAttribute('href', '/learn/l2');
@@ -118,7 +125,7 @@ describe('Home', () => {
     );
     progressStore.reset();
 
-    render(<MemoryRouter><Home /></MemoryRouter>);
+    renderWithRouter(<Home />);
 
     expect(screen.queryByRole('link', { name: 'Continue' })).toBeNull();
     expect(screen.queryByRole('link', { name: 'Start learning' })).toBeNull();
@@ -134,7 +141,7 @@ describe('Home', () => {
     );
     progressStore.reset();
 
-    render(<MemoryRouter><Home /></MemoryRouter>);
+    renderWithRouter(<Home />);
 
     const btn = screen.getByRole('link', { name: 'Continue' });
     expect(btn).toHaveAttribute('href', '/learn/l1');

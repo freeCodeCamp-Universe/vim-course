@@ -1,7 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router';
+import { Router } from 'wouter';
+import { memoryLocation } from 'wouter/memory-location';
 import type { ProseLessonDefinition, AuthoredLessonDefinition } from '@/curriculum/types';
 import { renderMarkdown } from '@/components/base/Markdown/renderMarkdown';
 import { INITIAL_FOCUS_STORAGE_KEY } from '@/hooks/useInitialFocusPreference';
@@ -45,8 +46,9 @@ function renderWorkspace(
   lesson: AuthoredLessonDefinition | ProseLessonDefinition,
   tab: 'instructions' | 'terminal' = 'instructions'
 ) {
+  const { hook } = memoryLocation({ path: '/', record: true });
   const view = render(
-    <MemoryRouter>
+    <Router hook={hook}>
       <LessonWorkspace
         lesson={lesson}
         nextLessonId="next-id"
@@ -55,9 +57,9 @@ function renderWorkspace(
         tab={tab}
         onSelectTab={vi.fn()}
       />
-    </MemoryRouter>
+    </Router>
   );
-  return view;
+  return { ...view, hook };
 }
 
 describe('LessonWorkspace', () => {
@@ -134,13 +136,13 @@ describe('LessonWorkspace', () => {
   });
 
   it('should announce the tab change when the tab prop changes', async () => {
-    const { rerender } = renderWorkspace(workshop, 'instructions');
+    const { rerender, hook } = renderWorkspace(workshop, 'instructions');
 
     // No announcement on initial render.
     expect(screen.queryByText('terminal', { exact: true })).not.toBeInTheDocument();
 
     rerender(
-      <MemoryRouter>
+      <Router hook={hook}>
         <LessonWorkspace
           lesson={workshop}
           nextLessonId="next-id"
@@ -149,7 +151,7 @@ describe('LessonWorkspace', () => {
           tab="terminal"
           onSelectTab={vi.fn()}
         />
-      </MemoryRouter>
+      </Router>
     );
 
     expect(screen.getByText('terminal', { exact: true })).toBeInTheDocument();

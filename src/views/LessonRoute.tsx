@@ -1,4 +1,4 @@
-import { useParams } from 'react-router';
+import { useParams } from 'wouter';
 import { LessonPage } from './LessonPage';
 import { useLessonData } from '@/hooks/useLessonData';
 import { LoadingState } from '@/components/base/LoadingState/LoadingState';

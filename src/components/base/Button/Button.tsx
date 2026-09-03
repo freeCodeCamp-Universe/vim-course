@@ -1,5 +1,5 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, Ref } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'wouter';
 import styles from './Button.module.css';
 
 export type ButtonVariant = 'primary' | 'danger' | 'cta';
@@ -41,7 +41,7 @@ export function Button(props: Props) {
     const { ref, children, href, ...linkRest } = rest as LinkProps & { ref?: Ref<HTMLAnchorElement> };
     if (href.startsWith('/')) {
       return (
-        <Link to={href} ref={ref} className={resolvedClassName} {...linkRest}>
+        <Link href={href} ref={ref} className={resolvedClassName} {...linkRest}>
           {children}
         </Link>
       );

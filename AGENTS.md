@@ -6,7 +6,7 @@ overrides these rules.
 ## Stack
 
 - Vite
-- React with React Router
+- React with Wouter
 - TypeScript
 - Vitest with React Testing Library
 - pnpm
