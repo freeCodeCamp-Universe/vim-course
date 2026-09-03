@@ -815,7 +815,18 @@ export function createVimTerminalView(options: VimTerminalViewOptions): VimTermi
   // have no other trigger. Guarded for jsdom where ResizeObserver is absent.
   let viewResizeObserver: ResizeObserver | null = null;
   if (typeof ResizeObserver !== 'undefined') {
+    // The element starts hidden so the first paint uses real measurements.
+    // Without this, `measureCols()` falls back to 80 on a detached element,
+    // centering content for the wrong width; the ResizeObserver corrects it
+    // a frame later, causing a visible shift. Hiding keeps the element in
+    // layout (no CLS) while deferring visibility to the first observation.
+    view.el.style.visibility = 'hidden';
+
     viewResizeObserver = new ResizeObserver(() => {
+      // Reveal on first observation — real measurements are now available.
+      if (view.el.style.visibility === 'hidden') {
+        view.el.style.visibility = '';
+      }
       // Skip when an animation loop is running — it drives its own repaints.
       if (!activeLoop) {
         render();

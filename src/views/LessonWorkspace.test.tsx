@@ -1,9 +1,11 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router';
 import type { ProseLessonDefinition, AuthoredLessonDefinition } from '@/curriculum/types';
 import { renderMarkdown } from '@/components/base/Markdown/renderMarkdown';
 import { INITIAL_FOCUS_STORAGE_KEY } from '@/hooks/useInitialFocusPreference';
+import { progressStore } from '@/stores/progressStore';
 import { LessonWorkspace } from './LessonWorkspace';
 
 vi.mock('@/curriculum/useCurriculumTree', () => ({
@@ -44,14 +46,16 @@ function renderWorkspace(
   tab: 'instructions' | 'terminal' = 'instructions'
 ) {
   const view = render(
-    <LessonWorkspace
-      lesson={lesson}
-      nextLessonId="next-id"
-      isLastLesson={false}
-      instructionsHtml={renderMarkdown(lesson.instructions)}
-      tab={tab}
-      onSelectTab={vi.fn()}
-    />
+    <MemoryRouter>
+      <LessonWorkspace
+        lesson={lesson}
+        nextLessonId="next-id"
+        isLastLesson={false}
+        instructionsHtml={renderMarkdown(lesson.instructions)}
+        tab={tab}
+        onSelectTab={vi.fn()}
+      />
+    </MemoryRouter>
   );
   return view;
 }
@@ -59,9 +63,12 @@ function renderWorkspace(
 describe('LessonWorkspace', () => {
   afterEach(() => {
     localStorage.clear();
+    progressStore.reset();
   });
 
   it('should focus the terminal on load for interactive lessons', () => {
+    vi.useFakeTimers();
+
     // The terminal view's focus() method checks offsetParent to avoid focusing
     // a collapsed tab panel. jsdom returns null for offsetParent (no layout),
     // so mock it to simulate the desktop side-by-side layout.
@@ -76,17 +83,24 @@ describe('LessonWorkspace', () => {
     try {
       renderWorkspace(workshop);
 
+      // Focus is deferred to the next macrotask so the browser can finish layout
+      // after dynamically mounting the terminal DOM (not needed under Astro where
+      // React hydrated pre-existing server-rendered elements).
+      vi.runAllTimers();
+
       expect(screen.getByRole('application', { name: 'vim terminal' })).toHaveFocus();
       expect(screen.queryByText('completed')).not.toBeInTheDocument();
     } finally {
       if (original) {
         Object.defineProperty(HTMLElement.prototype, 'offsetParent', original);
       }
+      vi.useRealTimers();
     }
   });
 
   it('should show a completed icon and status before a completed lesson title', () => {
     localStorage.setItem('vim-course:progress', JSON.stringify({ version: 1, completed: ['w-1'] }));
+    progressStore.reset();
     renderWorkspace(workshop);
 
     const heading = screen.getByRole('heading', { level: 1, name: /Delete a character/ });
@@ -123,14 +137,16 @@ describe('LessonWorkspace', () => {
     expect(screen.queryByText('terminal', { exact: true })).not.toBeInTheDocument();
 
     rerender(
-      <LessonWorkspace
-        lesson={workshop}
-        nextLessonId="next-id"
-        isLastLesson={false}
-        instructionsHtml={renderMarkdown(workshop.instructions)}
-        tab="terminal"
-        onSelectTab={vi.fn()}
-      />
+      <MemoryRouter>
+        <LessonWorkspace
+          lesson={workshop}
+          nextLessonId="next-id"
+          isLastLesson={false}
+          instructionsHtml={renderMarkdown(workshop.instructions)}
+          tab="terminal"
+          onSelectTab={vi.fn()}
+        />
+      </MemoryRouter>
     );
 
     expect(screen.getByText('terminal', { exact: true })).toBeInTheDocument();
@@ -155,11 +171,17 @@ describe('LessonWorkspace', () => {
   });
 
   it('should focus the instructions panel on load when the preference is enabled', () => {
+    vi.useFakeTimers();
     localStorage.setItem(INITIAL_FOCUS_STORAGE_KEY, 'true');
 
-    renderWorkspace(workshop);
+    try {
+      renderWorkspace(workshop);
+      vi.runAllTimers();
 
-    const instructions = screen.getByRole('region', { name: /Delete a character/i });
-    expect(instructions).toHaveFocus();
+      const instructions = screen.getByRole('region', { name: /Delete a character/i });
+      expect(instructions).toHaveFocus();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });

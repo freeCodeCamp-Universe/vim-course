@@ -31,7 +31,7 @@ You can also go to a specific line number in a file. To do that, you place a num
 
 However, by default, Vim doesn't show line numbers. If you'd like to see them, you can turn them on with `:set number`, and turn them off again with `:set nonumber`.
 
-The `:set` commands are command-line commands, so you need to press `Enter` after typing them.
+The `:set` commands are command-line commands, so you need to press <kbd>Enter</kbd> after typing them.
 
 ---
 

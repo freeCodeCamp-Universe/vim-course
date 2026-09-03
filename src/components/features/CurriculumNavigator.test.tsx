@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router';
 import { CurriculumNavigator } from './CurriculumNavigator';
 import type { CurriculumTreeModule } from '@/components/features/CurriculumTree';
 
@@ -25,7 +26,7 @@ const modules: CurriculumTreeModule[] = [
 describe('CurriculumNavigator', () => {
   it.each(['home', 'drawer'] as const)('should search the %s curriculum tree', async (variant) => {
     const user = userEvent.setup();
-    render(<CurriculumNavigator modules={modules} variant={variant} />);
+    render(<MemoryRouter><CurriculumNavigator modules={modules} variant={variant} /></MemoryRouter>);
 
     await user.type(screen.getByRole('searchbox'), 'word');
 
@@ -38,7 +39,7 @@ describe('CurriculumNavigator', () => {
 
   it('should show an empty result message when no lesson matches', async () => {
     const user = userEvent.setup();
-    render(<CurriculumNavigator modules={modules} variant="home" />);
+    render(<MemoryRouter><CurriculumNavigator modules={modules} variant="home" /></MemoryRouter>);
 
     await user.type(screen.getByRole('searchbox'), 'unknown');
 

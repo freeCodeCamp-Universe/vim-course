@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useState } from 'react';
-import { type CompletedEntry, readProgress, writeProgress } from './progressStorage';
+import { useMemo, useSyncExternalStore } from 'react';
+import { progressStore } from '@/stores/progressStore';
 
 export interface UseProgressResult {
   /** Completed lesson ids in the order they were persisted. */
@@ -11,15 +11,17 @@ export interface UseProgressResult {
 }
 
 /**
- * Reads and persists completed-lesson entries in a single localStorage key. State is
- * read synchronously on mount so the overview renders on first paint with no
- * loading state; absent, malformed, or wrong-version storage falls back to empty
- * progress without throwing. The hook is policy-agnostic: how a lesson becomes
- * complete (a workshop passing, a lab submit, a reading opening) is the caller's
- * decision — it persists whatever ids are marked.
+ * Subscribes to the shared progress store so every consumer sees the same
+ * completed-lesson state and re-renders together when a lesson is marked
+ * complete. Reads localStorage synchronously on first access so the overview
+ * renders on first paint with no loading state.
  */
 export function useProgress(): UseProgressResult {
-  const [entries, setEntries] = useState<CompletedEntry[]>(readProgress);
+  const entries = useSyncExternalStore(
+    progressStore.subscribe,
+    progressStore.getEntries,
+    progressStore.getEntries
+  );
 
   const completed = useMemo(() => entries.map((e) => e.id), [entries]);
 
@@ -30,18 +32,5 @@ export function useProgress(): UseProgressResult {
     return entries.reduce((max, e) => (e.completedAt > max.completedAt ? e : max)).id;
   }, [entries]);
 
-  // Read-modify-write against storage rather than the in-memory copy, so a
-  // completion appends to whatever another tab may have written since this page
-  // loaded. Called once per lesson completion, right before navigation.
-  const markComplete = useCallback((lessonId: string) => {
-    const current = readProgress();
-    if (current.some((e) => e.id === lessonId)) {
-      return;
-    }
-    const next = [...current, { id: lessonId, completedAt: Date.now() }];
-    writeProgress(next);
-    setEntries(next);
-  }, []);
-
-  return { completed, lastCompletedId, markComplete };
+  return { completed, lastCompletedId, markComplete: progressStore.markComplete };
 }

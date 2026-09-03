@@ -1,12 +1,18 @@
-/// <reference types="vitest/config" />
-import { getViteConfig } from 'astro/config';
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-// `getViteConfig` loads astro.config.mjs and merges Astro's resolved Vite config —
-// the React integration's JSX transform and the tsconfig `@/*` alias included — so
-// the React and plain-DOM tests resolve and transform exactly as they did under the
-// old vite.config.ts. jsdom stays: Astro only forbids rendering `.astro` components
-// in a client environment, and no test renders one (they hold no logic to test).
-export default getViteConfig({
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+export default defineConfig({
+  plugins: [react()],
+  envPrefix: ['VITE_', 'SHOW_'],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+    },
+  },
   test: {
     globals: true,
     environment: 'jsdom',

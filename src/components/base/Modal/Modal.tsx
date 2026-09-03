@@ -26,10 +26,9 @@ export interface ModalProps {
   keepMounted?: boolean;
   /**
    * The element to restore focus to when the modal closes. When provided,
-   * overrides the default `document.activeElement` capture. Use this when the
-   * modal is rendered in a different React root (Astro island) from the element
-   * that triggered it, since `document.activeElement` may have shifted by the
-   * time the modal's layout effect runs.
+   * overrides the default `document.activeElement` capture. Useful when
+   * `document.activeElement` may have shifted by the time the modal's layout
+   * effect runs.
    */
   triggerElement?: HTMLElement | null;
   /**

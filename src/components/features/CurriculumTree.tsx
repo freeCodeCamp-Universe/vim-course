@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import { CheckCircleIcon, CircleIcon } from '@/components/base/Icon';
 import { renderInline } from '@/components/base/Markdown/renderInline';
 import styles from './CurriculumTree.module.css';
@@ -5,6 +6,8 @@ import styles from './CurriculumTree.module.css';
 export interface CurriculumTreeLesson {
   id: string;
   title: string;
+  /** Hashed lesson JSON filename, present on all server-provided entries. */
+  dataFile?: string;
 }
 
 export interface CurriculumTreeModule {
@@ -53,8 +56,8 @@ export function CurriculumTree({
                   data-lesson-id={lesson.id}
                   data-state={state}
                 >
-                  <a
-                    href={`/learn/${lesson.id}`}
+                  <Link
+                    to={`/learn/${lesson.id}`}
                     className={`${variantClass('lesson-row')} ${variant}-lesson-row`}
                     aria-current={isCurrentState(state) ? 'step' : undefined}
                     ref={isCurrentState(state) ? currentLessonRef : undefined}
@@ -75,7 +78,7 @@ export function CurriculumTree({
                     <span className={variantClass('lesson-title')}>
                       {renderInline(lesson.title)}
                     </span>
-                  </a>
+                  </Link>
                 </li>
               );
             })}

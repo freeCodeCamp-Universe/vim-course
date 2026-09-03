@@ -9,8 +9,8 @@ export interface MarkdownProps {
 
 /**
  * Renders pre-built HTML inside a styled prose container. The HTML is produced
- * at build time by {@link renderMarkdown} in the `.astro` page frontmatter, so
- * this component does not import `marked` and adds zero parsing to the client
+ * at build time by {@link renderMarkdown} in the prebuild script, so this
+ * component does not import `marked` and adds zero parsing to the client
  * bundle. The only client-side behavior is the copy-to-clipboard button for
  * fenced code blocks.
  */

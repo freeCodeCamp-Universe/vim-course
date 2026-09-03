@@ -14,7 +14,7 @@ export interface NavDrawerProps {
   open: boolean;
   /** Close the drawer; the parent flips `open` to false. */
   onClose: () => void;
-  /** Module/lesson view-model. Passed from the server-side Astro layout at build time. */
+  /** Module/lesson view-model from the curriculum tree. */
   modules: CurriculumTreeModule[];
   /** Lesson currently open, used for the drawer's current indicator. */
   currentLessonId?: string;

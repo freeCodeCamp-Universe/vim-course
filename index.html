@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vim Course | freeCodeCamp.org</title>
+    <script>
+      // Pre-paint theme stamp. Runs before the stylesheet applies so a light-theme
+      // learner never sees a dark flash. The key is duplicated from THEME_STORAGE_KEY
+      // in src/hooks/useTheme.ts because inline scripts cannot import.
+      try {
+        const stored = localStorage.getItem('vim-course:theme');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.dataset.theme = stored;
+        } else {
+          // No stored preference; check system theme.
+          document.documentElement.dataset.theme = window.matchMedia(
+            '(prefers-color-scheme: light)'
+          ).matches
+            ? 'light'
+            : 'dark';
+        }
+      } catch {
+        // Storage unavailable; check system theme as fallback.
+        document.documentElement.dataset.theme = window.matchMedia('(prefers-color-scheme: light)')
+          .matches
+          ? 'light'
+          : 'dark';
+      }
+      try {
+        if (localStorage.getItem('vim-course:animationsEnabled') === 'false') {
+          document.documentElement.setAttribute('data-reduced-motion', '');
+        }
+      } catch {
+        // Storage unavailable; skip reduced-motion stamping.
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" />
+    <link rel="preload" href="/data/curriculum-tree.json" as="fetch" crossorigin />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

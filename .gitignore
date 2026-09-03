@@ -1,13 +1,13 @@
 # Node
 node_modules/
 
-# Astro
-.astro/
-
 # Vite / build output
 dist/
 build/
 .vite/
+
+# Generated lesson data (rebuilt by build-lesson-data.ts)
+/public/data/
 
 # pnpm cache
 .pnpm-store/

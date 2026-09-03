@@ -1,12 +1,16 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { act, renderHook } from '@testing-library/react';
 import { orderedLessonIds } from '@/curriculum/lessonOrder';
+import { progressStore } from '@/stores/progressStore';
 import { useProgress } from './useProgress';
 
 const STORAGE_KEY = 'vim-course:progress';
 
 afterEach(() => {
-  localStorage.clear();
+  act(() => {
+    localStorage.clear();
+    progressStore.reset();
+  });
   vi.useRealTimers();
 });
 
@@ -26,6 +30,7 @@ describe('useProgress', () => {
         completed: [{ id: orderedLessonIds[0], completedAt: 1000 }],
       })
     );
+    progressStore.reset();
 
     const { result } = renderHook(() => useProgress());
 
@@ -38,6 +43,7 @@ describe('useProgress', () => {
       STORAGE_KEY,
       JSON.stringify({ version: 1, completed: [orderedLessonIds[0], orderedLessonIds[2]] })
     );
+    progressStore.reset();
 
     const { result } = renderHook(() => useProgress());
 
@@ -58,6 +64,7 @@ describe('useProgress', () => {
         ],
       })
     );
+    progressStore.reset();
 
     const { result } = renderHook(() => useProgress());
 
@@ -106,6 +113,7 @@ describe('useProgress', () => {
 
   it('should fall back to empty progress when storage is malformed JSON', () => {
     localStorage.setItem(STORAGE_KEY, '{not valid json');
+    progressStore.reset();
 
     const { result } = renderHook(() => useProgress());
 
@@ -114,6 +122,7 @@ describe('useProgress', () => {
 
   it('should fall back to empty progress when the stored shape is wrong', () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 2, completed: 'nope' }));
+    progressStore.reset();
 
     const { result } = renderHook(() => useProgress());
 
@@ -125,9 +134,23 @@ describe('useProgress', () => {
       STORAGE_KEY,
       JSON.stringify({ version: 99, completed: [orderedLessonIds[0]] })
     );
+    progressStore.reset();
 
     const { result } = renderHook(() => useProgress());
 
     expect(result.current.completed).toEqual([]);
+  });
+
+  it('should update all consumers when one marks a lesson complete', () => {
+    const { result: consumer1 } = renderHook(() => useProgress());
+    const { result: consumer2 } = renderHook(() => useProgress());
+
+    expect(consumer1.current.completed).toEqual([]);
+    expect(consumer2.current.completed).toEqual([]);
+
+    act(() => consumer1.current.markComplete(orderedLessonIds[0]));
+
+    expect(consumer1.current.completed).toEqual([orderedLessonIds[0]]);
+    expect(consumer2.current.completed).toEqual([orderedLessonIds[0]]);
   });
 });

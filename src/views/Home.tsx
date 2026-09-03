@@ -1,8 +1,10 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useCurriculumTree } from '@/curriculum/useCurriculumTree';
 import { Button } from '@/components/base/Button/Button';
+import { LoadingState } from '@/components/base/LoadingState/LoadingState';
 import { CurriculumNavigator } from '@/components/features/CurriculumNavigator';
 import { Progress } from '@/components/base/Progress/Progress';
+import { prefetchLesson } from '@/hooks/useLessonData';
 import { useProgress } from '@/hooks/useProgress';
 import styles from './Home.module.css';
 
@@ -50,10 +52,20 @@ export function Home() {
     return orderedLessonIds[idx + 1] ?? frontier;
   }, [lastCompletedId, completed, orderedLessonIds]);
 
+  useEffect(() => {
+    if (continueId && tree) {
+      prefetchLesson(continueId, tree);
+    }
+  }, [continueId, tree]);
+
+  if (!tree) {
+    return <LoadingState label="Loading course" className={styles.loading} />;
+  }
+
   const hasStarted = lastCompletedId !== undefined;
 
   return (
-    <div data-home-page>
+    <div>
       {tree && <Progress completed={completedSet.size} total={orderedLessonIds.length} />}
       {continueId !== undefined && (
         <div className={styles['cta-row']}>

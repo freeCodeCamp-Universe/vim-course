@@ -126,11 +126,6 @@ a.drawer-lesson-row:hover {
   color: var(--color-fg-primary);
 }
 
-.home-marker-available,
-.drawer-marker-available {
-  color: var(--color-fg-tertiary);
-}
-
 /* Both icons are always in the DOM; CSS toggles visibility based on data-state.
    Default (available/current): show circle, hide checkmark. */
 .home-lesson .home-marker-completed,

@@ -1,7 +1,7 @@
 /*
- * LessonPage is the root island rendered as a body flex item. The body is
- * locked to the viewport via `body:has([data-lesson-page])` in global.css,
- * making the body a flex column: header + this wrapper.
+ * LessonPage is rendered as a flex item of #root. The root element is locked
+ * to the viewport via `#root:has([data-lesson-page])` in global.css, making
+ * it a flex column: header + this wrapper.
  */
 .wrapper {
   flex: 1;

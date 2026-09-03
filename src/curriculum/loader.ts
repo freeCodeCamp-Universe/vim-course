@@ -1,5 +1,5 @@
 import { curriculum as defaultOrdering } from './ordering';
-import { SHOW_UPCOMING_LESSONS } from 'astro:env/client';
+const SHOW_UPCOMING_LESSONS = import.meta.env.SHOW_UPCOMING_LESSONS === 'true';
 import { expandCommandGroups } from './commandGroups';
 import { extractDecorations, type DecorationRange } from './decorations';
 import { normalizeWhitespace } from './whitespace';

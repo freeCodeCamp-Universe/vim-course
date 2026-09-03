@@ -11,11 +11,12 @@
 }
 
 .container {
-  min-block-size: 100dvh;
   display: grid;
   place-items: center;
   padding: var(--space-xl);
-  background: var(--color-bg-primary);
+  flex: 1;
+  min-block-size: 0;
+  background: var(--color-bg-secondary);
   animation: fade-in var(--transition-base) ease-out both;
   animation-delay: 150ms;
 }

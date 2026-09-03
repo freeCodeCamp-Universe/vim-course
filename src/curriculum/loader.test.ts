@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { orderedLessonIds } from './lessonOrder';
+import { moduleSlugs, orderedLessonIds } from './lessonOrder';
 import {
   buildCurriculum,
   getLessonById,
@@ -2043,16 +2043,7 @@ describe('loadCurriculum', () => {
   it('should load the authored vim-course lessons and modules in order', () => {
     const curriculum = loadCurriculum();
 
-    expect(curriculum.modules.map((module) => module.slug)).toEqual([
-      'modes',
-      'navigation',
-      'opening-files',
-      'editing',
-      'visual-mode',
-      'search-replace',
-      'command-grammar',
-      'capstone',
-    ]);
+    expect(curriculum.modules.map((module) => module.slug)).toEqual(moduleSlugs);
     expect(curriculum.modules[0].title).toBe('Modes, insert, save, quit');
     expect(curriculum.lessons.map((lesson) => lesson.id)).toEqual(orderedLessonIds);
   });

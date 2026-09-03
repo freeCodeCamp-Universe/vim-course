@@ -2,11 +2,10 @@ import { useSyncExternalStore } from 'react';
 
 /**
  * App-global chrome that lives above the routes: the lesson nav drawer, the
- * keyboard-shortcuts modal, and settings modal. Under Astro the header, the overlays, and the lesson
- * workspace are three separate islands, so React Context (which only spans one
- * island) can no longer carry this shared state. This is a tiny module-level
- * store all of them import instead: the header buttons and a lesson's `Alt+K`
- * write to it, and the overlay island reads it to open and close.
+ * keyboard-shortcuts modal, and settings modal. A tiny module-level store that
+ * the header buttons and a lesson's `Alt+K` write to, and the overlay
+ * components read to open and close. Could become React Context now that the
+ * app is a single tree, but the external store still works fine.
  */
 interface ChromeState {
   /** Whether the lesson nav drawer is currently open. */
@@ -27,11 +26,9 @@ function set(next: Partial<ChromeState>): void {
   }
 }
 
-// The element that had focus when an overlay opened. Captured synchronously in
-// the caller's island so the correct element is available even when the overlay
-// renders in a separate Astro island (separate React root) where
-// document.activeElement may have shifted by the time the modal's layout effect
-// runs.
+// The element that had focus when an overlay opened. Captured synchronously so
+// the correct element is available even when document.activeElement may have
+// shifted by the time the modal's layout effect runs.
 let triggerElement: HTMLElement | null = null;
 
 function openOverlay(key: keyof ChromeState): void {

@@ -3,7 +3,8 @@
   --label-lh-code: 1.7;
   --label-lh-kbd: 2;
   --hint-lh: 1.6;
-  --hint-lh-kbd-code: 2;
+  --hint-lh-code: 1.8;
+  --hint-lh-kbd: 2.1;
 
   color: var(--color-fg-primary);
 }
@@ -68,7 +69,10 @@
   line-height: var(--hint-lh);
 }
 
-.hint:has(kbd),
-.hint:has(code) {
-  line-height: var(--hint-lh-kbd-code);
+.hint:has(kbd) {
+  line-height: var(--hint-lh-kbd);
+}
+
+.hint:has(code):not(:has(kbd)) {
+  line-height: var(--hint-lh-code);
 }

@@ -1,10 +1,10 @@
 /**
  * Renders a markdown string to HTML using the course's custom marked renderer.
  *
- * This is a pure function with no DOM or React dependency, so it runs both at
- * build time (in `.astro` frontmatter) and in the browser. Extracting it from
- * the React `Markdown` component lets lesson instructions be pre-rendered at
- * build time, removing `marked` from the client bundle.
+ * This is a pure function with no DOM or React dependency, so it runs at build
+ * time in the prebuild script. Extracting it from the React `Markdown`
+ * component lets lesson instructions be pre-rendered, removing `marked` from
+ * the client bundle.
  */
 import { marked } from 'marked';
 import { slugify } from '@/utils/extractHeadings';

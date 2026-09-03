@@ -2,6 +2,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router';
 import {
   CurriculumTree,
   type CurriculumTreeLessonState,
@@ -26,7 +27,7 @@ const modules: CurriculumTreeModule[] = [
 
 describe('CurriculumTree', () => {
   it('should render the same curriculum structure for the home variant', () => {
-    render(<CurriculumTree modules={modules} variant="home" />);
+    render(<MemoryRouter><CurriculumTree modules={modules} variant="home" /></MemoryRouter>);
 
     expect(screen.getByRole('heading', { name: /Modes and quitting/ }).tagName).toBe('H2');
     expect(screen.getByRole('heading', { name: /Moving around/ }).tagName).toBe('H2');
@@ -39,7 +40,7 @@ describe('CurriculumTree', () => {
   });
 
   it('should number modules sequentially when no display numbers are provided', () => {
-    render(<CurriculumTree modules={modules} variant="home" />);
+    render(<MemoryRouter><CurriculumTree modules={modules} variant="home" /></MemoryRouter>);
 
     const headings = screen.getAllByRole('heading');
 
@@ -54,7 +55,7 @@ describe('CurriculumTree', () => {
       l3: 'available',
     };
 
-    render(<CurriculumTree modules={modules} variant="drawer" lessonState={(id) => states[id]} />);
+    render(<MemoryRouter><CurriculumTree modules={modules} variant="drawer" lessonState={(id) => states[id]} /></MemoryRouter>);
 
     expect(screen.getByRole('heading', { name: /Modes and quitting/ }).tagName).toBe('H3');
 
@@ -77,7 +78,7 @@ describe('CurriculumTree', () => {
   it('should call the lesson click handler when a lesson is selected', async () => {
     const onLessonClick = vi.fn();
     const user = userEvent.setup();
-    render(<CurriculumTree modules={modules} variant="drawer" onLessonClick={onLessonClick} />);
+    render(<MemoryRouter><CurriculumTree modules={modules} variant="drawer" onLessonClick={onLessonClick} /></MemoryRouter>);
 
     await user.click(screen.getByRole('link', { name: /Save and quit/ }));
 

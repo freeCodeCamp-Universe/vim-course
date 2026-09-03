@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { navigate } from 'astro:transitions/client';
+import { useNavigate } from 'react-router';
 import { isProseLesson, type ClientLessonDefinition } from '@/curriculum/types';
 import { useCurriculumTree } from '@/curriculum/useCurriculumTree';
 import { useCourseShortcuts } from '@/hooks/useCourseShortcuts';
@@ -48,7 +48,16 @@ export interface LessonWorkspaceProps {
  * plain Next control and no terminal, checklist, or Reset. On load, focus
  * lands on the lesson heading so the task is announced.
  */
-export function LessonWorkspace({ lesson, nextLessonId, isLastLesson, instructionsHtml, segmentHtmls, tab, onSelectTab }: LessonWorkspaceProps) {
+export function LessonWorkspace({
+  lesson,
+  nextLessonId,
+  isLastLesson,
+  instructionsHtml,
+  segmentHtmls,
+  tab,
+  onSelectTab,
+}: LessonWorkspaceProps) {
+  const navigate = useNavigate();
   const chrome = useCourseChrome();
   const tree = useCurriculumTree();
   const { shortcutsEnabled } = useShortcutsPreference();
@@ -69,26 +78,46 @@ export function LessonWorkspace({ lesson, nextLessonId, isLastLesson, instructio
   // Prose lessons leave focus unmanaged (the page heading gets browser default focus).
   // The preference lets screen reader users land on the instructions panel so they
   // hear the task before engaging the terminal.
+  //
+  // Focus is deferred by two animation frames. Under Astro, React hydrated
+  // pre-existing server-rendered DOM and element.focus() worked synchronously in
+  // the effect. With client-side routing the entire subtree is created dynamically
+  // after an async data fetch, and the browser needs at least one full
+  // render-and-paint cycle to finalize layout before it will honor a programmatic
+  // focus call on the new elements. A double-rAF guarantees the first paint has
+  // completed: the outer callback fires after the current frame's paint, and the
+  // inner callback fires after the next, by which point layout is stable.
   useEffect(() => {
-    if (!prose) {
-      if (focusInstructionsOnLoad) {
-        instructionsRef.current?.focus();
-      } else {
-        viewRef.current?.focus();
-      }
+    if (prose) {
+      return;
     }
+
+    let cancelled = false;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (cancelled) {
+          return;
+        }
+        if (focusInstructionsOnLoad) {
+          instructionsRef.current?.focus();
+        } else {
+          viewRef.current?.focus();
+        }
+      });
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [prose, focusInstructionsOnLoad, viewRef]);
 
   const isCompleted = completed.includes(lesson.id);
 
-  // Lesson-to-lesson movement uses Astro's client router for an SPA-style
-  // transition: the next page's HTML is fetched in the background and the DOM is
-  // swapped without a full page reload. markComplete persists synchronously
-  // before the navigation is dispatched, so the next page reads fresh progress.
+  // markComplete persists synchronously before the navigation so the next page
+  // reads fresh progress.
   const advance = useCallback(() => {
     markComplete(lesson.id);
     navigate(isLastLesson || !nextLessonId ? '/' : `/learn/${nextLessonId}`);
-  }, [markComplete, lesson.id, isLastLesson, nextLessonId]);
+  }, [markComplete, lesson.id, isLastLesson, nextLessonId, navigate]);
 
   // Announce tab changes to screen readers, skipping the initial render.
   useEffect(() => {

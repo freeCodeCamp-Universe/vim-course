@@ -4,11 +4,11 @@ import { describe, expect, it } from 'vitest';
 import { THEME_STORAGE_KEY } from '@/hooks/useTheme';
 import { ANIMATIONS_STORAGE_KEY, REDUCED_MOTION_ATTRIBUTE } from '@/hooks/useAnimationsPreference';
 
-const layoutSource = readFileSync(resolve(process.cwd(), 'src/layouts/CourseLayout.astro'), 'utf8');
+const layoutSource = readFileSync(resolve(process.cwd(), 'index.html'), 'utf8');
 
-describe('CourseLayout pre-paint theme script', () => {
+describe('index.html pre-paint theme script', () => {
   it('should stamp the theme with a blocking inline script', () => {
-    expect(layoutSource).toContain('is:inline');
+    expect(layoutSource).toContain('<script>');
     expect(layoutSource).toContain('documentElement.dataset.theme');
   });
 

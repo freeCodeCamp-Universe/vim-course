@@ -1,4 +1,5 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, Ref } from 'react';
+import { Link } from 'react-router';
 import styles from './Button.module.css';
 
 export type ButtonVariant = 'primary' | 'danger' | 'cta';
@@ -37,8 +38,15 @@ export function Button(props: Props) {
   const resolvedClassName = buildClassName(variant, borderless, className);
 
   if (rest.href !== undefined) {
-    const { ref, children, ...linkRest } = rest as LinkProps & { ref?: Ref<HTMLAnchorElement> };
-    return <a {...linkRest} ref={ref} className={resolvedClassName}>{children}</a>;
+    const { ref, children, href, ...linkRest } = rest as LinkProps & { ref?: Ref<HTMLAnchorElement> };
+    if (href.startsWith('/')) {
+      return (
+        <Link to={href} ref={ref} className={resolvedClassName} {...linkRest}>
+          {children}
+        </Link>
+      );
+    }
+    return <a href={href} {...linkRest} ref={ref} className={resolvedClassName}>{children}</a>;
   }
 
   const { ref, type = 'button', ...buttonRest } = rest as ButtonProps & {

@@ -5,8 +5,8 @@ overrides these rules.
 
 ## Stack
 
-- Astro
-- React
+- Vite
+- React with React Router
 - TypeScript
 - Vitest with React Testing Library
 - pnpm
@@ -40,18 +40,16 @@ from the project root (`projects/vim-course/`).
 `add-module` and `add-lesson` call `sync-curriculum-doc` automatically, so you do
 not need to run it separately after using them.
 
-### Astro islands and `.astro` files
+### App structure
 
-- `.astro` files hold markup and **zero logic**. All behavior lives in `.tsx` islands or plain
-  `.ts` modules, tested with React Testing Library / `@testing-library/dom`. Do not put a
-  `<script>`/`querySelector` behind `.astro` markup. An interactive component is a whole island.
-  **One exception:** read-only `localStorage` decoration (e.g., stamping completion markers on a
-  static list) may use a bundled `<script>` that imports a tested `.ts` module, following [Astro's
-  client-side scripts pattern](https://docs.astro.build/en/guides/client-side-scripts/). The markup
-  must work fully without JS; the script only enhances appearance.
-- Islands that read browser-only APIs at render (`localStorage`, `document`) use `client:only="react"`. Islands without that dependency use `client:load`.
-- Cross-island state uses the module-level store `src/stores/courseChrome.ts`, not React Context
-  (Context only spans a single island).
+- The app is a single-page React application. `index.html` is the entry point;
+  `src/main.tsx` mounts the React tree. React Router handles client-side routing
+  (`src/App.tsx`).
+- Lesson data is pre-built by `scripts/build-lesson-data.ts` into static JSON files
+  under `public/data/`. The client fetches them at runtime via `useLessonData`.
+- `src/stores/courseChrome.ts` is a module-level store (with `useSyncExternalStore`)
+  for app-global chrome state (drawer, modals). It could become React Context but
+  works as-is.
 
 ## Code Style
 
@@ -75,13 +73,7 @@ not need to run it separately after using them.
 
 ## Styling
 
-- Use CSS modules (`.module.css`) for all component and page styles. `.astro` files and React
-  islands each import their own module. Do not use Astro scoped `<style>` blocks.
-- A CSS module cannot be shared across the `.astro`/island boundary (Astro's server pipeline and
-  the island's client pipeline hash the same file to different values). Keep separate modules.
-  CSS custom-property overrides on a parent element still cascade into island children. Only if a
-  single class truly must appear in both pipelines should it go in `src/styles/global.css` as a
-  plain class.
+- Use CSS modules (`.module.css`) for all component and page styles.
 - Never use inline styles or `!important`.
 - Keep colors accessible with sufficient contrast.
 - Use logical properties, not physical ones, so styles work in RTL locales: `padding-inline`,

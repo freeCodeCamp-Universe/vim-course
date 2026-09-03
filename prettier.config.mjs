@@ -1,5 +1,3 @@
-import * as prettierPluginAstro from 'prettier-plugin-astro';
-
 export default {
   semi: true,
   singleQuote: true,
@@ -8,5 +6,4 @@ export default {
   printWidth: 100,
   bracketSpacing: true,
   arrowParens: 'always',
-  plugins: [prettierPluginAstro],
 };
