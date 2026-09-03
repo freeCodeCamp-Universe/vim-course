@@ -19,7 +19,7 @@ export default defineConfig({
               '--import',
               'tsx/esm',
               '--import',
-              './scripts/prebuild-register.mjs',
+              './scripts/prebuild-register.ts',
               'scripts/build-lesson-data.ts',
             ],
             { stdio: 'inherit' }

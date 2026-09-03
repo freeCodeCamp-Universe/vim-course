@@ -19,10 +19,12 @@
  *     without error. buildCurriculum() receives its markdownByPath map as an argument
  *     and never reads the module-level `markdownModules`, so the empty replacement is safe.
  *
- * Usage: node --import tsx/esm --import ./scripts/prebuild-register.mjs scripts/build-lesson-data.ts
+ * Usage: node --import tsx/esm --import ./scripts/prebuild-register.ts scripts/build-lesson-data.ts
  */
 
-export async function load(url, context, next) {
+import type { LoadHook } from 'node:module';
+
+export const load: LoadHook = async (url, context, next) => {
   const result = await next(url, context);
 
   if (url.includes('/src/curriculum/loader') && result.source != null) {
@@ -41,4 +43,4 @@ export async function load(url, context, next) {
   }
 
   return result;
-}
+};

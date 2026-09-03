@@ -1,8 +1,8 @@
 /**
  * Prebuild script: generates static lesson JSON files and the curriculum tree.
  *
- * Run via: tsx --import ./scripts/prebuild-hooks.mjs scripts/build-lesson-data.ts
- * (see prebuild-hooks.mjs for why the hooks are needed)
+ * Run via: node --import tsx/esm --import ./scripts/prebuild-register.ts scripts/build-lesson-data.ts
+ * (see prebuild-hooks.ts for why the hooks are needed)
  *
  * Output:
  *   public/data/lessons/{id}.{hash}.json  — one file per lesson, content-hashed

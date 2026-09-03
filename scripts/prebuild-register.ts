@@ -6,9 +6,9 @@
  * exporting hooks from this file is the old `--loader` API and is ignored
  * when used with `--import`.
  *
- * Usage: node --import tsx/esm --import ./scripts/prebuild-register.mjs script.ts
+ * Usage: node --import tsx/esm --import ./scripts/prebuild-register.ts script.ts
  */
 
 import { register } from 'node:module';
 
-register(new URL('./prebuild-hooks.mjs', import.meta.url).href, import.meta.url);
+register(new URL('./prebuild-hooks.ts', import.meta.url).href, import.meta.url);
