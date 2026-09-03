@@ -29,6 +29,7 @@ export interface Decoration {
  * container).
  */
 export type LineRole = 'content' | 'decorative' | { role: 'img'; label: string };
+export type TerminalLineClassName = keyof typeof styles;
 
 export interface TerminalViewModel {
   /** The rows to render. One string per visible line; the sole source of text. */
@@ -92,6 +93,8 @@ export interface TerminalViewModel {
    * `role="img"` container with the given label.
    */
   lineRoles?: LineRole[];
+  /** Optional CSS-module class, parallel to `lines`, for special presentation rows. */
+  lineClassNames?: (TerminalLineClassName | undefined)[];
 }
 
 export interface TerminalViewOptions {
@@ -312,11 +315,14 @@ function buildLine(
   cursorStyle: 'block' | 'bar',
   visitedCols: ReadonlySet<string> | null,
   lineRole: LineRole,
+  lineClassName: TerminalLineClassName | undefined,
   contentPosition: number,
   contentCount: number
 ): HTMLDivElement {
   const line = document.createElement('div');
-  line.className = styles.line;
+  line.className = [styles.line, lineClassName ? styles[lineClassName] : '']
+    .filter(Boolean)
+    .join(' ');
 
   if (lineRole === 'content') {
     line.setAttribute('role', 'listitem');
@@ -633,6 +639,7 @@ export function createTerminalView(options: TerminalViewOptions): TerminalView {
           model.cursorStyle,
           model.visited,
           roles?.[index] ?? 'content',
+          model.lineClassNames?.[index],
           contentPositions[index],
           contentCount
         )

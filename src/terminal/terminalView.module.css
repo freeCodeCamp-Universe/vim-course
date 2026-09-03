@@ -117,6 +117,10 @@
   min-block-size: var(--terminal-line-height);
 }
 
+.shell-logo {
+  font-size: var(--text-md);
+}
+
 /*
  * Line numbers sit beside the text rather than in it, so a selection range and
  * the cursor column keep counting from the text's first character. The gap

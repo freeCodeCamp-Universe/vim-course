@@ -600,6 +600,7 @@ describe('createVimTerminalView', () => {
     // eslint-disable-next-line testing-library/no-node-access -- aria-hidden elements are excluded from RTL queries by design
     const hidden = grid.querySelectorAll('[aria-hidden="true"]');
     expect(hidden.length).toBeGreaterThanOrEqual(5);
+    expect(hidden[0]).toHaveClass(styles['shell-logo']);
   });
 
   it('should hide splash screen content from assistive tech', () => {

@@ -27,6 +27,7 @@ import {
   createTerminalView,
   type Decoration,
   type LineRole,
+  type TerminalLineClassName,
   type TerminalRange,
   type TerminalViewModel,
 } from './terminalView';
@@ -416,14 +417,16 @@ function toModel(
 
   // Compute per-line accessibility roles. Animations and splash use
   // contentHidden (the whole grid is aria-hidden), so lineRoles only matter
-  // for shell mode (logo is a described image) and normal mode (tilde rows
+  // for shell mode (logo rows are decorative) and normal mode (tilde rows
   // below end-of-file are decorative).
   let lineRoles: LineRole[] | undefined;
+  let lineClassNames: (TerminalLineClassName | undefined)[] | undefined;
   if (!isAnimation && !state.splashVisible && !qf) {
     if (state.mode === 'shell') {
       lineRoles = lines.map((_, i): LineRole =>
         i < SHELL_LOGO_ART_COUNT ? 'decorative' : 'content'
       );
+      lineClassNames = lines.map((_, i) => (i < SHELL_LOGO_ART_COUNT ? 'shell-logo' : undefined));
     } else {
       const activeFile = state.files.get(state.activeFilePath);
       const hasTildes = activeFile && !activeFile.onDisk && lines.length > state.buffer.length;
@@ -464,6 +467,7 @@ function toModel(
   return {
     lines,
     lineRoles,
+    lineClassNames,
     gutter: terminalGutter(state, lines.length),
     cursor,
     cursorStyle: 'block',

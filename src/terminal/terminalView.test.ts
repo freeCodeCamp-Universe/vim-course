@@ -744,7 +744,6 @@ describe('createTerminalView', () => {
       // The image container's children are presentational terminal lines without roles.
       // eslint-disable-next-line testing-library/no-node-access
       expect(img.children).toHaveLength(2);
-
       const items = q.getAllByRole('listitem');
       expect(items).toHaveLength(1);
       expect(items[0]).toHaveAttribute('aria-setsize', '1');
@@ -763,6 +762,23 @@ describe('createTerminalView', () => {
       expect(imgs).toHaveLength(2);
       expect(imgs[0]).toHaveAttribute('aria-label', 'first');
       expect(imgs[1]).toHaveAttribute('aria-label', 'second');
+    });
+
+    it('should apply a presentation class to individual lines', () => {
+      const { view, q } = mount();
+      view.update(
+        model({
+          lines: ['logo', 'content'],
+          lineRoles: ['decorative', 'content'],
+          lineClassNames: ['shell-logo', undefined],
+        })
+      );
+
+      const grid = q.getByRole('list');
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(grid.children[0]).toHaveClass(styles['shell-logo']);
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(grid.children[1]).not.toHaveClass(styles['shell-logo']);
     });
   });
 
