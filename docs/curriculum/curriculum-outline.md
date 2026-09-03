@@ -12,7 +12,7 @@ date: 2026-07-23
 
 ## Goal
 
-Teach the small subset of Vim needed to make quick, confident edits in a terminal: find and open a file, move around it, edit it, save, and quit. The learner already has a daily-driver editor elsewhere; this course targets terminal-editing survival, not Vim mastery or its full command surface. Out of scope: `f`/`t`, marks, registers, macros, visual block, splits/windows, multi-buffer management, `H`/`M`/`L`, and anything not in the committed command set.
+Teach the small subset of Vim needed to make quick, confident edits in a terminal: find and open a file, move around it, edit it, save, and quit. The learner already has a daily-driver editor elsewhere; this course only targets terminal-editing survival.
 
 ## Writing curriculum entries
 
@@ -42,11 +42,11 @@ Followed by the complete lesson markdown in a fenced block (` ````markdown ... `
 
 ### 01. Modes, insert, save, quit (`modes`)
 
-The learner's first contact with Vim: what it is, how to launch it, normal mode vs. insert mode, the four ways into insert mode, and the save/quit commands that end a session. Everything later in the course assumes this round trip is second nature.
+The learner's first contact with Vim: what it is, how to launch it, normal mode vs. insert mode, the four ways into insert mode, and the save/quit commands that end a session.
 
 Lessons, in teaching order:
 
-#### 1. **What is Vim, and starting it** — type: `learn`
+#### 1. **What is Vim?** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586b2 -->
 
@@ -61,7 +61,7 @@ Source: [file](../../src/curriculum/01-modes/lesson-01.md)
 - **Activity:** Read why Vim is worth learning, then in the terminal type `vim` and press `Enter` to open the file.
 - **Goal:** The learner understands why Vim is worth learning, and performs the exact keystrokes that get them from a bare terminal into Vim.
 
-#### 2. **Opening a file from inside Vim: `:e`** — type: `learn`
+#### 2. **Opening a file with `:e`** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586b3 -->
 
@@ -75,7 +75,7 @@ Source: [file](../../src/curriculum/01-modes/lesson-02.md)
 - **Activity:** Start Vim with `vim` (a recap from the previous lesson), then use `:e about-vim.md` to open the file.
 - **Goal:** The learner opens a specific file from inside a running Vim session, without quitting back to the shell first.
 
-#### 3. **Opening a file directly: `vim <filename>`** — type: `learn`
+#### 3. **Opening a file directly** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586b4 -->
 
@@ -89,7 +89,7 @@ Source: [file](../../src/curriculum/01-modes/lesson-03.md)
 - **Activity:** Type `vim about-vim.md` and press `Enter` to open the file directly.
 - **Goal:** The learner opens a specific file by name in one step, instead of opening Vim bare and then running `:e`.
 
-#### 4. **Modes: entering and leaving insert mode** — type: `learn`
+#### 4. **Entering insert mode** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586b5 -->
 
@@ -104,7 +104,7 @@ Source: [file](../../src/curriculum/01-modes/lesson-04.md)
 - **Activity:** Open `about-vim.md` with `vim about-vim.md` (a recap from the previous lesson), press <kbd>i</kbd>, notice the `--INSERT--` indicator appear at the bottom of the screen, then press <kbd>Esc</kbd> and notice it disappear.
 - **Goal:** The learner reliably switches into and out of insert mode and knows how to confirm their current mode from the status line.
 
-#### 5. **More ways in: a and A** — type: `learn`
+#### 5. **The `a` and `A` commands** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586b6 -->
 
@@ -117,7 +117,6 @@ Source: [file](../../src/curriculum/01-modes/lesson-05.md)
   - `A` jumps to the end of the line and enters insert mode there, regardless of the cursor's column; it only works as a command from normal mode, so `Esc` is required before using it.
 - **Activity:** Open `about-vim.md` with `vim about-vim.md` (a recap from earlier lessons). Press <kbd>i</kbd> again to reinforce last lesson, then <kbd>Esc</kbd>. Press <kbd>a</kbd> and notice the one-column difference from <kbd>i</kbd>, then <kbd>Esc</kbd>. Press <kbd>A</kbd> and notice it jumps to the end of the line regardless of cursor position.
 - **Goal:** The learner distinguishes `i`'s and `a`'s cursor placement and knows `A` always targets the end of the line.
-- **Checklist note:** Only one `Return to normal mode` item, at the end. Requiring `a` and then `A` already proves the learner left each prior insert session, because both only register as commands from normal mode (a capital "A" typed in insert mode records an insert action, which `command` matching skips). Two identical `Esc` items would both tick on the first `Esc`, since `command` is an existence check.
 
 #### 6. **Saving with `:w`** — type: `learn`
 
@@ -147,7 +146,7 @@ Source: [file](../../src/curriculum/01-modes/lesson-07.md)
 - **Activity:** Add a new line below the current one with `o`, save it with `:w`, then quit with `:q`.
 - **Goal:** The learner adds a new line without manually positioning the cursor first, reinforces saving, and closes a session with no unsaved changes.
 
-#### 8. **`O` and force quit with `:q!`** — type: `learn`
+#### 8. **The `O` command and force quitting** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586b9 -->
 
@@ -161,7 +160,7 @@ Source: [file](../../src/curriculum/01-modes/lesson-08.md)
 - **Activity:** Add a line above with `O`, leave it unsaved, try `:q` and see `E37`, then force-quit with `:q!`.
 - **Goal:** The learner practices `O`, sees that Vim protects unsaved work by default, and knows how to override that protection deliberately.
 
-#### 9. **Save and quit together** — type: `learn`
+#### 9. **Saving and quitting together** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586ba -->
 
@@ -190,8 +189,6 @@ Source: [file](../../src/curriculum/01-modes/lesson-10.md)
 Status: ✅
 Source: [file](../../src/curriculum/01-modes/lesson-11.md)
 
-(Authored as `type: review` with no `# --config--` section, which is what makes it prose: instructions only, no terminal or checklist.)
-
 - **Concept:** None new.
 - **Activity:** Review.
 - **Goal:** Review.
@@ -207,11 +204,11 @@ Source: [file](../../src/curriculum/01-modes/lesson-11.md)
 
 ### 02. Navigation (`navigation`)
 
-Efficient movement once a file is longer than one screen: character-, word-, line-, and file-level motions, all composable with counts later in the course.
+Efficient movement once a file is longer than one screen: character-, word-, line-, and file-level motions.
 
 Lessons, in teaching order:
 
-#### 1. **Moving with h, j, k, l** — type: `learn`
+#### 1. **Moving up, down, left, right** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586be -->
 
@@ -226,9 +223,8 @@ Source: [file](../../src/curriculum/02-navigation/lesson-01.md)
   - Vim's steep learning curve is well known enough that beginners' frustration with it became a running joke online — a Stack Overflow question about how to exit Vim was viewed more than two million times and turned into a meme for a while.
 - **Activity:** Open this module's working file with `vim <filename>` (a recap from module 01), then move through it using only `h`/`j`/`k`/`l`.
 - **Goal:** The learner understands why `hjkl` exists and moves through a file without touching the arrow keys, while knowing the arrow keys still work.
-- **Checklist note:** Seed the cursor mid-file (`[3, 5]`), not top-left. `k` and `h` cannot move from `[1, 1]`, and the engine records a blocked motion anyway, so a top-left seed would tick "move up" and "move left" without the cursor ever moving. Since `reopenVim` now honors `config.cursor` for `start: "shell"` lessons, the seed actually takes effect.
 
-#### 2. **Word jumps: w and b** — type: `learn`
+#### 2. **Jumping across words** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586bf -->
 
@@ -243,7 +239,7 @@ Source: [file](../../src/curriculum/02-navigation/lesson-02.md)
 - **Activity:** With `editor-history.md` already open, move down to the last paragraph with `j`, jump forward through the rest of that line's words with `w` to reach the target word, then jump back with `b` to reach "IMproved".
 - **Goal:** The learner covers a line efficiently in both directions, not just forward, and combines the move with last lesson's `j`.
 
-#### 3. **Line start and end: 0 and $** — type: `learn`
+#### 3. **Jumping to line start and line end** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586c0 -->
 
@@ -267,7 +263,7 @@ Source: [file](../../src/curriculum/02-navigation/lesson-04.md)
 - **Activity:** Trace key waypoints on each letter.
 - **Goal:** The learner builds muscle memory for hjkl.
 
-#### 5. **Practice: navigate and edit** — type: `practice`
+#### 5. **Practice: Navigating and editing 1** — type: `practice`
 
 <!-- lesson: 6a75e416116f97fc366586c1 -->
 
@@ -278,7 +274,7 @@ Source: [file](../../src/curriculum/02-navigation/lesson-05.md)
 - **Activity:** Starting from the end of the file, navigate up to the end of the second paragraph using any combination of this module's motions, append a sentence, then save.
 - **Goal:** The learner practices this module's navigation alongside module 01's editing and save commands, on a file where reaching the right spot matters as much as the edit itself.
 
-#### 6. **Top and bottom of file: gg and G** — type: `learn`
+#### 6. **Jumping to the top and bottom of a file** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586c2 -->
 
@@ -293,7 +289,7 @@ Source: [file](../../src/curriculum/02-navigation/lesson-06.md)
 - **Activity:** From the middle of the working file, jump to the top with `gg`, then to the bottom with `G`.
 - **Goal:** The learner reaches either boundary of a file instantly, without scrolling.
 
-#### 7. **Go to a specific line** — type: `learn`
+#### 7. **Showing line numbers and going to a specific line** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586c3 -->
 
@@ -307,7 +303,7 @@ Source: [file](../../src/curriculum/02-navigation/lesson-07.md)
 - **Activity:** Turn on line numbers with `:set number`, jump directly to a specific line number given in the instructions, then turn the line numbers off again with `:set nonumber`.
 - **Goal:** The learner makes line numbers visible, navigates directly to a known line number while seeing where the cursor lands, and knows how to turn the display back off.
 
-#### 8. **Practice: reach the target** — type: `practice`
+#### 8. **Practice: Navigating and editing 2** — type: `practice`
 
 <!-- lesson: 6a75e416116f97fc366586c4 -->
 
@@ -324,8 +320,6 @@ Source: [file](../../src/curriculum/02-navigation/lesson-08.md)
 
 Status: ✅
 Source: [file](../../src/curriculum/02-navigation/lesson-09.md)
-
-(Authored as `type: review` with no `# --config--` section, which is what makes it prose: instructions only, no terminal or checklist.)
 
 - **Concept:** None new.
 - **Activity:** Review.
@@ -354,7 +348,7 @@ The course's first real task on an unfamiliar terminal: finding and opening a fi
 
 Lessons, in teaching order:
 
-#### 1. **Open a known file** — type: `learn`
+#### 1. **Opening a known file** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586c7 -->
 
@@ -396,7 +390,7 @@ Source: [file](../../src/curriculum/03-opening-files/lesson-03.md)
 - **Activity:** From the empty `exclamation.md` buffer (recap of last lesson's mistaken guess), open the directory listing with `:Explore`, move to `exclamation-point.md` with `j`/`k`, and open it with <kbd>Enter</kbd>. Then browse into the `letters` subdirectory and open `G.md`.
 - **Goal:** The learner finds and opens files whose exact names or locations they didn't already know, instead of guessing at `:e`.
 
-#### 4. **Practice: find the right file and fix it** — type: `practice`
+#### 4. **Practice: Finding and fixing files** — type: `practice`
 
 <!-- lesson: 6a75e416116f97fc366586ca -->
 
@@ -414,8 +408,6 @@ Source: [file](../../src/curriculum/03-opening-files/lesson-04.md)
 Status: ✅
 Source: [file](../../src/curriculum/03-opening-files/lesson-05.md)
 
-(Authored as `type: review` with no `# --config--` section, which is what makes it prose: instructions only, no terminal or checklist.)
-
 - **Concept:** None new.
 - **Activity:** Review.
 - **Goal:** Review.
@@ -432,7 +424,7 @@ The core editing vocabulary: deleting, replacing, copying, pasting, undoing, and
 
 Lessons, in teaching order:
 
-#### 1. **Single-character fixes** — type: `learn`
+#### 1. **Making single-character changes** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586cd -->
 
@@ -460,7 +452,7 @@ Source: [file](../../src/curriculum/04-editing/lesson-02.md)
 - **Activity:** Fix `enter.md` by removing a duplicate word with `dw`, deleting a stray line with `dd`, and trimming trailing text with `D`. Leave `return.md` untouched.
 - **Goal:** The learner deletes text at the scope the edit calls for — a word, a whole line, or the rest of a line — and sees that delete commands combine with motions.
 
-#### 3. **Practice: single characters and scoped deletes** — type: `practice`
+#### 3. **Practice: Cleaning up a file** — type: `practice`
 
 <!-- lesson: 6a75e416116f97fc366586cf -->
 
@@ -471,7 +463,7 @@ Source: [file](../../src/curriculum/04-editing/lesson-03.md)
 - **Activity:** Edit a small file into its expected end state (delete a stray block of lines with `dd`, remove a duplicated word with `dw`, fix two pairs of swapped letters with `r`, trim trailing text with `D`, and strip out several stray characters with `x`).
 - **Goal:** The learner performs a realistic edit combining single-character fixes with deletes at different scopes.
 
-#### 4. **Copy and paste** — type: `learn`
+#### 4. **Copying and pasting** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586d0 -->
 
@@ -484,7 +476,7 @@ Source: [file](../../src/curriculum/04-editing/lesson-04.md)
 - **Activity:** Starting from `abc.md`, yank a line, switch to a new running file (`keyboard-history.md`, already started with the opening sentence) with `:e`, jump to its last line with `G`, and paste. Repeat for a second line, then save. A `qwerty.md` file is introduced alongside it, readable but off-limits to edit or copy from yet.
 - **Goal:** The learner moves text between files using yank, switch, jump-to-end, and paste.
 
-#### 5. **Undo and redo** — type: `learn`
+#### 5. **Undoing and redoing** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586d1 -->
 
@@ -497,7 +489,7 @@ Source: [file](../../src/curriculum/04-editing/lesson-05.md)
 - **Activity:** Copy the one paragraph in `qwerty.md` into `keyboard-history.md` with `yy`/`p`. Undo that paste with `u`, then bring it back with `Ctrl-r`.
 - **Goal:** The learner practices moving text between files again, and recovers from an undo without fear.
 
-#### 6. **Change a word/line** — type: `learn`
+#### 6. **Deleting and entering insert mode** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586d2 -->
 
@@ -510,7 +502,7 @@ Source: [file](../../src/curriculum/04-editing/lesson-06.md)
 - **Activity:** `abc.md` and `qwerty.md` have already been copied into `keyboard-history.md`, so they're no longer needed on their own. Get a `cw` rep in `abc.md`, then clear the rest with `dd`. `qwerty.md` is a single line, so a `cc` rep there empties the whole file in one motion.
 - **Goal:** The learner edits in place without a separate delete-then-insert step.
 
-#### 7. **Practice: writing a history page** — type: `practice`
+#### 7. **Practice: Filling in a draft** — type: `practice`
 
 <!-- lesson: 6a75e416116f97fc366586d3 -->
 
@@ -528,8 +520,6 @@ Source: [file](../../src/curriculum/04-editing/lesson-07.md)
 Status: ✅
 Source: [file](../../src/curriculum/04-editing/lesson-08.md)
 
-(Authored as `type: review` with no `# --config--` section, which is what makes it prose: instructions only, no terminal or checklist.)
-
 - **Concept:** None new.
 - **Activity:** Review.
 - **Goal:** Review.
@@ -542,11 +532,11 @@ Source: [file](../../src/curriculum/04-editing/lesson-08.md)
 
 ### 05. Visual mode (`visual-mode`)
 
-Selecting an arbitrary range first, then acting on exactly that range, instead of relying on a fixed-scope command.
+Selecting an arbitrary range first, then acting on exactly that range.
 
 Lessons, in teaching order:
 
-#### 1. **Character-wise selection: try it out** — type: `learn`
+#### 1. **Visual mode and character-wise selection** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586d6 -->
 
@@ -572,7 +562,7 @@ Source: [file](../../src/curriculum/05-visual-mode/lesson-02.md)
 - **Goal:**
   - Learners understand how to change the case of text in Vim.
 
-#### 3. **Line-wise selection: move the first paragraph** — type: `learn`
+#### 3. **Line-wise selection** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586d7 -->
 
@@ -597,7 +587,7 @@ Source: [file](../../src/curriculum/05-visual-mode/lesson-04.md)
 - **Activity:** Move two paragraphs at once from `## Clipboard` to `## Final` using `V`, `d`, and `p`.
 - **Goal:** The learner applies `V` + `d` + `p` to move a line-wise selection to a new location.
 
-#### 5. **Using o to complete the rearrangement** — type: `learn`
+#### 5. **Complete the rearrangement** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586da -->
 
@@ -608,7 +598,7 @@ Source: [file](../../src/curriculum/05-visual-mode/lesson-05.md)
 - **Activity:** Use `o` with `V`, `d`, and `p` to move the remaining two paragraphs into order, fix the bullet list order, delete the `## Clipboard` heading, and save.
 - **Goal:** The learner uses `o` and the visual line editing flow to complete a multi-step rearrangement independently.
 
-#### 6. **Practice: Rearranging keyboard shortcuts** — type: `practice`
+#### 6. **Practice: Completing a DNA strand** — type: `practice`
 
 <!-- lesson: 6a75e416116f97fc366586e4 -->
 
@@ -641,7 +631,7 @@ Finding text by content instead of position, and changing many occurrences at on
 
 Lessons, in teaching order:
 
-#### 1. **Search forward, and repeating it** — type: `learn`
+#### 1. **Searching forward and repeating it** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586db -->
 
@@ -655,7 +645,7 @@ Source: [file](../../src/curriculum/06-search-replace/lesson-01.md)
 - **Activity:** Search for a given term and land on it, then use `n`/`N` to step through further occurrences.
 - **Goal:** The learner finds text by content instead of scrolling to it, and moves between repeated matches without re-typing the search.
 
-#### 2. **Jump to matching bracket** — type: `learn`
+#### 2. **Jumping to matching bracket** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586dc -->
 
@@ -682,7 +672,7 @@ Source: [file](../../src/curriculum/06-search-replace/lesson-03.md)
 - **Activity:** Use `v%` to select and move the parenthesized `☆` text, then use `c%` to replace `{must}` with `can`.
 - **Goal:** The learner can navigate to and edit text enclosed by matching parentheses and braces.
 
-#### 4. **Current-line substitute** — type: `learn`
+#### 4. **Substituting text on a specific line** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586dd -->
 
@@ -711,7 +701,7 @@ Source: [file](../../src/curriculum/06-search-replace/lesson-05.md)
 - **Activity:** The file contains a `☆` symbol that the learner must use in a substitute command. They yank the symbol with `yl`, type `:s/`, paste it with `Ctrl-r`, complete the command to replace all `☆` symbols on the second paragraph with `*`, and save.
 - **Goal:** The learner discovers how to yank a character and paste it into the command line, solving the practical problem of typing symbols not on the keyboard.
 
-#### 6. **Global substitute** — type: `learn`
+#### 6. **Substituting text in every line** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586de -->
 
@@ -726,7 +716,7 @@ Source: [file](../../src/curriculum/06-search-replace/lesson-06.md)
 - **Activity:** The file uses placeholder symbols in place of `*` and the word "star". Run two `:%s` commands to restore both, then use `:%s//gn` to verify each symbol is gone.
 - **Goal:** The learner performs a global find-and-replace in one command, repeats it for a second term, and confirms completeness with a count-only query.
 
-#### 7. **Checkpoint: search and substitution** — type: `practice`
+#### 7. **Practice: Decrypting a message** — type: `practice`
 
 <!-- lesson: 6a75e416116f97fc366586df -->
 
@@ -737,7 +727,7 @@ Source: [file](../../src/curriculum/06-search-replace/lesson-07.md)
 - **Activity:** Decrypt a ciphered message by choosing the right substitution tool for each cipher character based on how often it appears.
 - **Goal:** The learner chooses the right substitution tool for each part of the task without being told which to use.
 
-#### 8. **Cross-file search with `:vimgrep` and `:cnext`** — type: `learn`
+#### 8. **Searching and editing across multiple files** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586e0 -->
 
@@ -751,7 +741,7 @@ Source: [file](../../src/curriculum/06-search-replace/lesson-08.md)
 - **Activity:** Run `:vimgrep fork *.md` to search for the term `fork` across all five files. Navigate through the matches with `:cnext` and `:cprev` to explore the results without making any changes.
 - **Goal:** The learner searches across multiple files in one command and navigates through the matches using the quickfix list.
 
-#### 9. **Multi-file fixes with `:cprev`** — type: `learn`
+#### 9. **Navigating the quickfix list** — type: `learn`
 
 <!-- lesson: 6a75e416116f97fc366586e1 -->
 
@@ -777,7 +767,7 @@ Source: [file](../../src/curriculum/06-search-replace/lesson-10.md)
 - **Activity:** Open the reference file and copy the incorrect symbol, run `:vimgrep 𐂐 *.md` to find every occurrence, replace the matches with `|`, and save the changed files.
 - **Goal:** The learner can search across multiple files, apply a consistent replacement, and save the resulting edits.
 
-#### 11. **Practice: search-driven edit and substitution** — type: `practice`
+#### 11. **Batch replacing across files with `:cdo`** — type: `practice`
 
 <!-- lesson: 6a75e416116f97fc366586e2 -->
 
@@ -789,7 +779,7 @@ Source: [file](../../src/curriculum/06-search-replace/lesson-11.md)
 - **Activity:** Run `:vimgrep /fork/ *.md` to collect all occurrences of `fork`, then use `:cdo s/fork/pipe/g | update` to replace and save every instance across all files in one command.
 - **Goal:** The learner batch-fixes a consistent error across multiple files using `:cdo`, seeing how it replaces the manual `:cnext`/`:cprev` loop from the previous lesson.
 
-#### 12. **Practice: searching and editing across multiple files** — type: `practice`
+#### 12. **Practice: Searching and editing across multiple files** — type: `practice`
 
 <!-- lesson: 6a7b8d5f1e5aa0cf31e40357 -->
 
@@ -874,11 +864,7 @@ Source: [file](../../src/curriculum/07-command-grammar/lesson-04.md)
 
 ### 08. Capstone (`capstone`)
 
-The closing module: a read-only command reference, then one multi-step lab synthesizing the entire course as an escape room, then a recap that closes the loop and explains the riddle. All three live here as lessons in one module rather than as separate modules.
-
-**Engine requirement — not yet implemented:** `:w` (and `:wq`) must refuse to write when the `## Answer` content doesn't yet match the expected value, on top of (not instead of) the existing `E37` dirty-buffer refusal on `:q`. Today `:w` always succeeds unconditionally and `:q`'s only gate is dirty-vs-saved, with no awareness of content — so the escape-room lesson needs new logic in `projects/vim-course/src/engine/commands/ex.ts` (near the existing `E37` handling in `filesystem.ts`) that intercepts `:w`/`:wq`, evaluates the buffer against the answer test, and refuses the write (with its own status message, not `E37`) when it doesn't match. Once the write is accepted, the buffer goes clean and `:q` succeeds through its existing dirty-check unmodified — no change needed there. This is the load-bearing mechanic for lesson 2 and must exist before that lesson can be built.
-
-Lessons, in teaching order:
+The closing module: a read-only command reference, then one multi-step lab synthesizing the entire course as an escape room, then a recap that closes the loop and explains the puzzles.
 
 #### 1. **Command reference** — type: `review`
 
@@ -891,7 +877,7 @@ Source: [file](../../src/curriculum/08-capstone/lesson-01.md)
 - **Activity:** None (read-only).
 - **Goal:** The learner has a single page to return to going into the escape room, and after.
 
-#### 2. **Escape room: solve the riddle to leave** — type: `practice`
+#### 2. **Capstone challenge** — type: `practice`
 
 <!-- lesson: 6a75e416116f97fc366586ea -->
 
@@ -901,10 +887,8 @@ Source: [file](../../src/curriculum/08-capstone/lesson-02.md)
 - **Concept:** No new commands — this capstone synthesizes file navigation, search, yank and paste, editing, and saving in a puzzle-driven task.
 - **Activity:** The learner explores Maren's study and solves three independent puzzles: a rune crossword whose odd word is STORM, a potion formula whose diagonal extraction is LAUREL, and a Sylvan translation puzzle whose pooled initials identify CRANE. They enter the three keys in order in `study.md`.
 - **Goal:** The learner chooses and composes previously learned Vim commands to complete a realistic multi-file challenge, then saves the final password without being guided through a prescribed command sequence.
-- **Puzzle assets (draft):** Two clue files establish the target coordinates in `manual.md`. The learner counts to get the numbers; the object itself signals which axis.
-  - `keyboard.md` — a keyboard diagram, no labels. Three keys are lit: Ctrl (bottom-left), G and J (home row). Lit keys = `█`, unlit keys = `⠿`. The learner counts the lit keys to get the line number (3, if the answer sits on line 3 — TBD pending answer word selection).
 
-#### 3. **Course recap and the riddle explained** — type: `review` — 📝
+#### 3. **Capstone walkthrough** — type: `review`
 
 <!-- lesson: 6a7dbe380cec0eb56fe6a538 -->
 
@@ -923,8 +907,6 @@ Explains how the capstone puzzles could have been solved, including the final ke
 
 Status: ✅
 Source: [file](../../src/curriculum/08-capstone/lesson-04.md)
-
-Provides next steps for continuing to learn Vim after completing the course.
 
 - **Concept:** None new.
 - **Activity:** Review.

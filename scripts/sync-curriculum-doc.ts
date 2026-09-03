@@ -263,17 +263,25 @@ function sourceLine(lessonPath: string): string {
  * Rewrite one `#### N.` lesson block: set its Status and Source lines, and (when
  * author-notes carry C/A/G) broadcast those sections over the doc's. The merge is
  * per-section: sections author-notes provide are replaced; doc-only sections
- * (e.g. Checklist note) are preserved in place. The heading and any prose before
- * the first `- **Label:**` (e.g. a review's "Authored as..." note) are kept.
+ * (e.g. Checklist note) are preserved in place. The title in the heading is
+ * refreshed from frontmatter, while any heading suffix and prose before the
+ * first `- **Label:**` (e.g. a review's "Authored as..." note) are kept.
  */
 function rewriteBlockLines(
   id: string,
   blockLines: string[],
+  title: string | null,
   status: string,
   source: string,
   cagSections: CagSection[] | null
 ): string[] {
-  const heading = blockLines[0];
+  const heading =
+    title === null
+      ? blockLines[0]
+      : blockLines[0].replace(
+          /^#### (\d+)\.\s+\*\*(.*?)\*\*/,
+          (_match, position: string) => `#### ${position}. **${title}**`
+        );
   const rest = blockLines.slice(1);
 
   // Drop the existing anchor/Status/Source lines and the blank lines around them;
@@ -557,6 +565,7 @@ function rewriteModuleSection(
         return rewriteBlockLines(
           id,
           block.lines,
+          lesson.title,
           statusLine(module, id),
           sourceLine(lesson.path),
           lesson.cag
@@ -609,7 +618,14 @@ function rewriteModuleSection(
     const heading = renumberHeading(match.lines[0], position);
     const renumbered = [heading, ...match.lines.slice(1)];
     outBlocks.push(
-      rewriteBlockLines(id, renumbered, statusLine(module, id), sourceLine(lesson.path), lesson.cag)
+      rewriteBlockLines(
+        id,
+        renumbered,
+        lesson.title,
+        statusLine(module, id),
+        sourceLine(lesson.path),
+        lesson.cag
+      )
     );
   });
 
