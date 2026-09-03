@@ -205,7 +205,7 @@ kbd {
   font-size: var(--text-xs);
   line-height: 0.9;
   padding-inline: 0.5rem;
-  padding-block: 0.2rem;
+  padding-block: 0.1rem;
   margin-inline: 0.05rem;
   color: var(--color-fg-primary);
   background-color: var(--color-bg-secondary);
