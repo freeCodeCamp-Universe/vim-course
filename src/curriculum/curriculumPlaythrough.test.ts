@@ -4,7 +4,9 @@ import { vimLessonEngine } from './lessonEngine';
 import { loadFullCurriculum } from './loader';
 import { isProseLesson, type AuthoredLessonDefinition } from './types';
 import {
+  collectFileEquals,
   commandText,
+  deriveFileContent,
   deriveReplacementChar,
   feedKeys,
   name,
@@ -49,18 +51,20 @@ const authored = lessons.filter(
  * - Phase 1 (Drive): run every checklist command through the engine. For `r`,
  *   derive the replacement character from the test's content assertions rather
  *   than hard-coding `'x'`. Insert-mode commands escape immediately; the
- *   assertion is checked on the resulting state.
+ *   assertion is checked on the resulting state. Register-only items (no command)
+ *   navigate to the target character and yank it.
  *
  * - Phase 2 (Check): record which items pass from the drive alone. These are
  *   end-to-end verified — the command ran and produced the expected content.
  *
- * - Phase 3 (Inject): for items that still need it, write the lesson's
- *   declared `equals` content directly into the virtual filesystem. This
- *   covers fill-in-the-blank items and any command whose output could not be
- *   derived (e.g., `c%` with insert text).
+ * - Phase 3 (Inject): for items that still need it, write expected file content
+ *   into the virtual filesystem. Sources, in priority order:
+ *   a. `equals` or `equalsByFile` from any item in the checklist (cross-item lookup)
+ *   b. Content derived from `contains` patterns + seed (placeholder replacement)
+ *   c. `notEquals`-only: append a blank line so the file differs from the original
  *
  * - Phase 4 (Verify): enter the shell (so `quit` requirements see shell mode)
- *   and assert every non-KNOWN_UNDERIVABLE, non-deferred requirement passes.
+ *   and assert every non-KNOWN_UNDERIVABLE requirement passes.
  */
 describe('curriculum playthrough', () => {
   it('should complete every requirement when played through', () => {
@@ -76,6 +80,7 @@ describe('curriculum playthrough', () => {
       //
       // Multi-position cursorReached (arrays of positions) uses visitedPositions
       // instead of the live cursor. We build that set here as we navigate.
+      const fileEquals = collectFileEquals(lesson);
       const passedAfterDrive = new Set<number>();
       const visitedPositions = new Set<string>();
 
@@ -113,7 +118,7 @@ describe('curriculum playthrough', () => {
         } else {
           const cmd = commandText(test);
           const rChar = cmd === 'r' ? deriveReplacementChar(test, state) : undefined;
-          state = satisfy(state, lesson, test, allowed, evaluateWhen, { rChar });
+          state = satisfy(state, lesson, test, allowed, evaluateWhen, { rChar, fileEquals });
           recordCursor(state);
         }
 
@@ -126,8 +131,9 @@ describe('curriculum playthrough', () => {
       }
 
       // Phase 3: Inject declared end states for items that still need it.
-      // Track which items we inject so Phase 4 knows to assert on them.
-      const injected = new Set<number>();
+      // fileEquals is pre-computed before Phase 1 (also used by satisfy for
+      // insert-mode text derivation).
+      const injectedFiles = new Set<string>();
 
       for (const [index, requirement] of lesson.config.checklist.entries()) {
         if (passedAfterDrive.has(index)) {
@@ -139,53 +145,74 @@ describe('curriculum playthrough', () => {
           continue;
         }
 
-        if (test.equals !== undefined && test.file !== undefined) {
-          const expectedLines = test.equals.split('\n');
-          state = {
-            ...state,
-            files: setVirtualFile(state.files, test.file, (file) => ({
-              ...file,
-              contents: expectedLines,
-              saved: expectedLines,
-              dirty: false,
-              written: true,
-            })),
-          };
-          injected.add(index);
-        } else if (test.notEquals !== undefined && test.equals === undefined && test.file !== undefined) {
-          // The requirement only checks that the file differs from its original
-          // content (no specific target). Append a blank line so the content
-          // diverges from the notEquals value, which is the original seed.
-          state = {
-            ...state,
-            files: setVirtualFile(state.files, test.file, (file) => ({
-              ...file,
-              contents: [...file.contents, ''],
-            })),
-          };
-          injected.add(index);
+        // Determine which files this item targets.
+        const targetFiles = test.files ?? (test.file !== undefined ? [test.file] : []);
+        for (const file of targetFiles) {
+          if (injectedFiles.has(file)) {
+            continue;
+          }
+
+          const content = fileEquals[file];
+          if (content !== undefined) {
+            const expectedLines = content.split('\n');
+            state = {
+              ...state,
+              files: setVirtualFile(state.files, file, (f) => ({
+                ...f,
+                contents: expectedLines,
+                saved: expectedLines,
+                dirty: false,
+                written: true,
+              })),
+            };
+            injectedFiles.add(file);
+            continue;
+          }
+
+          // Try deriving content from contains patterns + seed.
+          const derived = deriveFileContent(lesson, file);
+          if (derived !== undefined) {
+            const expectedLines = derived.split('\n');
+            state = {
+              ...state,
+              files: setVirtualFile(state.files, file, (f) => ({
+                ...f,
+                contents: expectedLines,
+                saved: expectedLines,
+                dirty: false,
+                written: true,
+              })),
+            };
+            injectedFiles.add(file);
+            continue;
+          }
+
+          // notEquals-only: the requirement only checks that the file differs
+          // from its original content. Append a blank line.
+          if (test.notEquals !== undefined && test.equals === undefined) {
+            state = {
+              ...state,
+              files: setVirtualFile(state.files, file, (f) => ({
+                ...f,
+                contents: [...f.contents, ''],
+              })),
+            };
+            injectedFiles.add(file);
+          }
         }
       }
 
       // Phase 4: Enter the shell and verify every requirement passes.
-      // Items that were latched during Phase 1/2 (passed when the cursor was in
-      // position, or the command was in history at that moment) are already
-      // verified — skip them if Phase 4 re-evaluates them as failing (e.g., the
-      // cursor has since moved away from a cursorReached target).
-      // Deferred results (wrong file active for an evaluateWhen.fileOpen gate)
-      // are also skipped — injection guaranteed their content is correct.
+      // Items that were latched during Phase 1/2 are already verified and
+      // skipped here (the cursor may have moved away from a cursorReached
+      // target, so re-evaluation could show a false failure).
       const finalState = enterShell(state);
       const finalResults = vimLessonEngine.checkRequirements(finalState, lesson, visitedPositions);
 
       for (const [index, result] of finalResults.entries()) {
-        // Already verified during Phase 1/2 drive (latched): skip. The
-        // cursorReached position may have moved away, but the item was
-        // satisfied when it counted.
         if (passedAfterDrive.has(index)) {
           continue;
         }
-        // Deferred: the gate condition (e.g. fileOpen) was not met in Phase 4.
-        // The item was either latched or injected earlier, so it is covered.
         if (result.deferred) {
           continue;
         }
@@ -194,13 +221,7 @@ describe('curriculum playthrough', () => {
         if (KNOWN_UNDERIVABLE.has(key)) {
           continue;
         }
-        // Not latched, not deferred, not underivable — only assert if Phase 3
-        // actually injected content for this item. Items with no command and no
-        // equals (e.g. multi-step paste exercises) were not injected and cannot
-        // be verified by the playthrough.
-        if (!injected.has(index)) {
-          continue;
-        }
+
         expect(
           result.passed,
           `${name(lesson)} "${requirement.label}"`
