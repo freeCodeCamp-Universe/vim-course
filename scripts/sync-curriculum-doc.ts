@@ -26,7 +26,7 @@ import process from 'node:process';
 const projectRoot = resolve(import.meta.dirname, '..');
 const orderingPath = join(projectRoot, 'src', 'curriculum', 'ordering.ts');
 const curriculumRoot = join(projectRoot, 'src', 'curriculum');
-const docPath = join(projectRoot, 'docs', 'curriculum-outline.md');
+const docPath = join(projectRoot, 'docs', 'curriculum', 'curriculum-outline.md');
 
 const CAG_LABELS = new Set(['Concept', 'Activity', 'Goal']);
 
@@ -856,7 +856,7 @@ function main(): void {
     if (check) {
       if (orderingChanged || lessonsChanged) {
         globalThis.console.error(
-          'Code-side curriculum sources are out of sync. Run: tsx scripts/sync-curriculum-doc.ts --source=doc'
+          'Code-side curriculum sources are out of sync. Run: pnpm sync-curriculum-doc --source=doc'
         );
         process.exit(1);
       }
@@ -892,7 +892,7 @@ function main(): void {
 
   if (check) {
     globalThis.console.error(
-      'Curriculum doc is out of sync. Run: tsx scripts/sync-curriculum-doc.ts --source=curriculum'
+      'Curriculum doc is out of sync. Run: pnpm sync-curriculum-doc --source=curriculum'
     );
     process.exit(1);
   }

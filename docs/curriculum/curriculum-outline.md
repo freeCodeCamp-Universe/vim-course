@@ -51,7 +51,7 @@ Lessons, in teaching order:
 <!-- lesson: 6a75e416116f97fc366586b2 -->
 
 Status: ✅
-Source: [file](../src/curriculum/01-modes/lesson-01.md)
+Source: [file](../../src/curriculum/01-modes/lesson-01.md)
 
 - **Concept:**
   - Vim is a text editor you run entirely from the keyboard, no mouse needed.
@@ -66,7 +66,7 @@ Source: [file](../src/curriculum/01-modes/lesson-01.md)
 <!-- lesson: 6a75e416116f97fc366586b3 -->
 
 Status: ✅
-Source: [file](../src/curriculum/01-modes/lesson-02.md)
+Source: [file](../../src/curriculum/01-modes/lesson-02.md)
 
 - **Concept:**
   - Bare `vim` (lesson 1) lands on an empty welcome screen, not tied to any file.
@@ -80,7 +80,7 @@ Source: [file](../src/curriculum/01-modes/lesson-02.md)
 <!-- lesson: 6a75e416116f97fc366586b4 -->
 
 Status: ✅
-Source: [file](../src/curriculum/01-modes/lesson-03.md)
+Source: [file](../../src/curriculum/01-modes/lesson-03.md)
 
 - **Concept:**
   - Recap: `:e <filename>` (lesson 2) opens a file from inside a running Vim session.
@@ -94,7 +94,7 @@ Source: [file](../src/curriculum/01-modes/lesson-03.md)
 <!-- lesson: 6a75e416116f97fc366586b5 -->
 
 Status: ✅
-Source: [file](../src/curriculum/01-modes/lesson-04.md)
+Source: [file](../../src/curriculum/01-modes/lesson-04.md)
 
 - **Concept:**
   - Vim starts in normal mode, where keys are commands, not text.
@@ -109,7 +109,7 @@ Source: [file](../src/curriculum/01-modes/lesson-04.md)
 <!-- lesson: 6a75e416116f97fc366586b6 -->
 
 Status: ✅
-Source: [file](../src/curriculum/01-modes/lesson-05.md)
+Source: [file](../../src/curriculum/01-modes/lesson-05.md)
 
 - **Concept:**
   - Recap: `i` enters insert mode just before the cursor.
@@ -124,7 +124,7 @@ Source: [file](../src/curriculum/01-modes/lesson-05.md)
 <!-- lesson: 6a75e416116f97fc366586b7 -->
 
 Status: ✅
-Source: [file](../src/curriculum/01-modes/lesson-06.md)
+Source: [file](../../src/curriculum/01-modes/lesson-06.md)
 
 - **Concept:**
   - The colon opens command-line mode, where file operations live.
@@ -138,7 +138,7 @@ Source: [file](../src/curriculum/01-modes/lesson-06.md)
 <!-- lesson: 6a75e416116f97fc366586b8 -->
 
 Status: ✅
-Source: [file](../src/curriculum/01-modes/lesson-07.md)
+Source: [file](../../src/curriculum/01-modes/lesson-07.md)
 
 - **Concept:**
   - `o` opens a new line below the current one and enters insert mode there.
@@ -152,7 +152,7 @@ Source: [file](../src/curriculum/01-modes/lesson-07.md)
 <!-- lesson: 6a75e416116f97fc366586b9 -->
 
 Status: ✅
-Source: [file](../src/curriculum/01-modes/lesson-08.md)
+Source: [file](../../src/curriculum/01-modes/lesson-08.md)
 
 - **Concept:**
   - `O` opens a new line above the current one, mirroring `o` from last lesson.
@@ -166,7 +166,7 @@ Source: [file](../src/curriculum/01-modes/lesson-08.md)
 <!-- lesson: 6a75e416116f97fc366586ba -->
 
 Status: ✅
-Source: [file](../src/curriculum/01-modes/lesson-09.md)
+Source: [file](../../src/curriculum/01-modes/lesson-09.md)
 
 - **Concept:** `:wq` combines writing and quitting, the single most common way to end an editing session.
 - **Activity:** Make an edit and close it out with `:wq`.
@@ -177,7 +177,7 @@ Source: [file](../src/curriculum/01-modes/lesson-09.md)
 <!-- lesson: 6a75e416116f97fc366586bb -->
 
 Status: ✅
-Source: [file](../src/curriculum/01-modes/lesson-10.md)
+Source: [file](../../src/curriculum/01-modes/lesson-10.md)
 
 - **Concept:** None new — combine opening a file, an insert-family command, saving, and quitting freely, without being told which command to use at each step.
 - **Activity:** Starting from a bare terminal, open a file, finish the incomplete last sentence by replacing the blank with the phrase given in the instructions, then save and quit.
@@ -188,7 +188,7 @@ Source: [file](../src/curriculum/01-modes/lesson-10.md)
 <!-- lesson: 6a75e416116f97fc366586bc -->
 
 Status: ✅
-Source: [file](../src/curriculum/01-modes/lesson-11.md)
+Source: [file](../../src/curriculum/01-modes/lesson-11.md)
 
 (Authored as `type: review` with no `# --config--` section, which is what makes it prose: instructions only, no terminal or checklist.)
 
@@ -216,7 +216,7 @@ Lessons, in teaching order:
 <!-- lesson: 6a75e416116f97fc366586be -->
 
 Status: ✅
-Source: [file](../src/curriculum/02-navigation/lesson-01.md)
+Source: [file](../../src/curriculum/02-navigation/lesson-01.md)
 
 - **Concept:**
   - `h`/`j`/`k`/`l` move left/down/up/right, the home-row equivalent of arrow keys.
@@ -233,7 +233,7 @@ Source: [file](../src/curriculum/02-navigation/lesson-01.md)
 <!-- lesson: 6a75e416116f97fc366586bf -->
 
 Status: ✅
-Source: [file](../src/curriculum/02-navigation/lesson-02.md)
+Source: [file](../../src/curriculum/02-navigation/lesson-02.md)
 
 - **Concept:**
   - `w` jumps to the start of the next word.
@@ -248,7 +248,7 @@ Source: [file](../src/curriculum/02-navigation/lesson-02.md)
 <!-- lesson: 6a75e416116f97fc366586c0 -->
 
 Status: ✅
-Source: [file](../src/curriculum/02-navigation/lesson-03.md)
+Source: [file](../../src/curriculum/02-navigation/lesson-03.md)
 
 - **Concept:**
   - `0` jumps to the very start of the line, `$` to the end.
@@ -261,7 +261,7 @@ Source: [file](../src/curriculum/02-navigation/lesson-03.md)
 <!-- lesson: 6a771dc4c7ad8347b685c80c -->
 
 Status: ✅
-Source: [file](../src/curriculum/02-navigation/lesson-04.md)
+Source: [file](../../src/curriculum/02-navigation/lesson-04.md)
 
 - **Concept:** Use hjkl to navigate the cursor to specific positions on an ASCII-art "VIM" logo.
 - **Activity:** Trace key waypoints on each letter.
@@ -272,7 +272,7 @@ Source: [file](../src/curriculum/02-navigation/lesson-04.md)
 <!-- lesson: 6a75e416116f97fc366586c1 -->
 
 Status: ✅
-Source: [file](../src/curriculum/02-navigation/lesson-05.md)
+Source: [file](../../src/curriculum/02-navigation/lesson-05.md)
 
 - **Concept:** None new — combine `hjkl`/`w`/`b`/`0`/`$` with module 01's insert-family and save commands to reach and edit a specific spot in a file.
 - **Activity:** Starting from the end of the file, navigate up to the end of the second paragraph using any combination of this module's motions, append a sentence, then save.
@@ -283,7 +283,7 @@ Source: [file](../src/curriculum/02-navigation/lesson-05.md)
 <!-- lesson: 6a75e416116f97fc366586c2 -->
 
 Status: ✅
-Source: [file](../src/curriculum/02-navigation/lesson-06.md)
+Source: [file](../../src/curriculum/02-navigation/lesson-06.md)
 
 - **Concept:**
   - `gg` jumps to line 1, regardless of the current position.
@@ -298,7 +298,7 @@ Source: [file](../src/curriculum/02-navigation/lesson-06.md)
 <!-- lesson: 6a75e416116f97fc366586c3 -->
 
 Status: ✅
-Source: [file](../src/curriculum/02-navigation/lesson-07.md)
+Source: [file](../../src/curriculum/02-navigation/lesson-07.md)
 
 - **Concept:**
   - Prefixing `G` with a number jumps to that exact line, the same count mechanic used elsewhere in Vim.
@@ -312,7 +312,7 @@ Source: [file](../src/curriculum/02-navigation/lesson-07.md)
 <!-- lesson: 6a75e416116f97fc366586c4 -->
 
 Status: ✅
-Source: [file](../src/curriculum/02-navigation/lesson-08.md)
+Source: [file](../../src/curriculum/02-navigation/lesson-08.md)
 
 - **Concept:** None new — combine any of this module's motions freely (`hjkl`/`w`/`b`/`0`/`$`/`gg`/`G`/`{n}G`) to reach four blanks in a file, then clear each placeholder with `Backspace` (already available in insert mode, not a new command) before typing the answer.
 - **Activity:** Starting from a bare terminal, open a file categorizing four types of editors by how they work, navigate to each blank, delete the placeholder, and type in the matching name.
@@ -323,7 +323,7 @@ Source: [file](../src/curriculum/02-navigation/lesson-08.md)
 <!-- lesson: 6a75e416116f97fc366586c5 -->
 
 Status: ✅
-Source: [file](../src/curriculum/02-navigation/lesson-09.md)
+Source: [file](../../src/curriculum/02-navigation/lesson-09.md)
 
 (Authored as `type: review` with no `# --config--` section, which is what makes it prose: instructions only, no terminal or checklist.)
 
@@ -342,7 +342,7 @@ Source: [file](../src/curriculum/02-navigation/lesson-09.md)
 <!-- lesson: 6a8f2e7c4b1d3a9e5f0c8d72 -->
 
 Status: 🚧
-Source: [file](../src/curriculum/02-navigation/lesson-10.md)
+Source: [file](../../src/curriculum/02-navigation/lesson-10.md)
 
 - **Concept:** None new.
 - **Activity:** Practice.
@@ -359,7 +359,7 @@ Lessons, in teaching order:
 <!-- lesson: 6a75e416116f97fc366586c7 -->
 
 Status: ✅
-Source: [file](../src/curriculum/03-opening-files/lesson-01.md)
+Source: [file](../../src/curriculum/03-opening-files/lesson-01.md)
 
 - **Concept:**
   - Recap: a known file can be opened with `vim <filename>` from the shell or with `:e <filename>` from inside a running Vim session (module 01).
@@ -373,7 +373,7 @@ Source: [file](../src/curriculum/03-opening-files/lesson-01.md)
 <!-- lesson: 6a75e416116f97fc366586c8 -->
 
 Status: ✅
-Source: [file](../src/curriculum/03-opening-files/lesson-02.md)
+Source: [file](../../src/curriculum/03-opening-files/lesson-02.md)
 
 - **Concept:**
   - Opening a filename that doesn't exist creates a new, empty buffer under that name instead of producing an error, as if starting a fresh file from scratch — there's just nothing on disk yet to load into it.
@@ -386,7 +386,7 @@ Source: [file](../src/curriculum/03-opening-files/lesson-02.md)
 <!-- lesson: 6a75e416116f97fc366586c9 -->
 
 Status: ✅
-Source: [file](../src/curriculum/03-opening-files/lesson-03.md)
+Source: [file](../../src/curriculum/03-opening-files/lesson-03.md)
 
 - **Concept:**
   - `:Explore` opens a read-only directory listing inside the editor.
@@ -401,7 +401,7 @@ Source: [file](../src/curriculum/03-opening-files/lesson-03.md)
 <!-- lesson: 6a75e416116f97fc366586ca -->
 
 Status: ✅
-Source: [file](../src/curriculum/03-opening-files/lesson-04.md)
+Source: [file](../../src/curriculum/03-opening-files/lesson-04.md)
 
 - **Concept:** None new — apply file-finding together with insert mode and Backspace across several files: delete a duplicate word, split a sentence into a new paragraph, and start a file from nothing.
 - **Activity:** Browse a directory with `:Explore`, open two existing files in turn, fix each one using insert mode and Backspace, save each one, then create a third file with `:e` and write a line into it.
@@ -412,7 +412,7 @@ Source: [file](../src/curriculum/03-opening-files/lesson-04.md)
 <!-- lesson: 6a75e416116f97fc366586cb -->
 
 Status: ✅
-Source: [file](../src/curriculum/03-opening-files/lesson-05.md)
+Source: [file](../../src/curriculum/03-opening-files/lesson-05.md)
 
 (Authored as `type: review` with no `# --config--` section, which is what makes it prose: instructions only, no terminal or checklist.)
 
@@ -437,7 +437,7 @@ Lessons, in teaching order:
 <!-- lesson: 6a75e416116f97fc366586cd -->
 
 Status: ✅
-Source: [file](../src/curriculum/04-editing/lesson-01.md)
+Source: [file](../../src/curriculum/04-editing/lesson-01.md)
 
 - **Concept:**
   - `x` deletes the character under the cursor.
@@ -450,7 +450,7 @@ Source: [file](../src/curriculum/04-editing/lesson-01.md)
 <!-- lesson: 6a75e416116f97fc366586ce -->
 
 Status: ✅
-Source: [file](../src/curriculum/04-editing/lesson-02.md)
+Source: [file](../../src/curriculum/04-editing/lesson-02.md)
 
 - **Concept:**
   - `dw` deletes from the cursor to the start of the next word — Vim's delete-plus-motion pattern.
@@ -465,7 +465,7 @@ Source: [file](../src/curriculum/04-editing/lesson-02.md)
 <!-- lesson: 6a75e416116f97fc366586cf -->
 
 Status: ✅
-Source: [file](../src/curriculum/04-editing/lesson-03.md)
+Source: [file](../../src/curriculum/04-editing/lesson-03.md)
 
 - **Concept:** None new — combine `x`/`r`/`dw`/`dd`/`D` freely to bring a file to a target state.
 - **Activity:** Edit a small file into its expected end state (delete a stray block of lines with `dd`, remove a duplicated word with `dw`, fix two pairs of swapped letters with `r`, trim trailing text with `D`, and strip out several stray characters with `x`).
@@ -476,7 +476,7 @@ Source: [file](../src/curriculum/04-editing/lesson-03.md)
 <!-- lesson: 6a75e416116f97fc366586d0 -->
 
 Status: ✅
-Source: [file](../src/curriculum/04-editing/lesson-04.md)
+Source: [file](../../src/curriculum/04-editing/lesson-04.md)
 
 - **Concept:**
   - `yy` yanks (copies) the whole line the cursor is on — the column it's sitting in doesn't matter, only the line.
@@ -489,7 +489,7 @@ Source: [file](../src/curriculum/04-editing/lesson-04.md)
 <!-- lesson: 6a75e416116f97fc366586d1 -->
 
 Status: ✅
-Source: [file](../src/curriculum/04-editing/lesson-05.md)
+Source: [file](../../src/curriculum/04-editing/lesson-05.md)
 
 - **Concept:**
   - Recap: `yy`/`p` copy a line from one file into another (previous lesson).
@@ -502,7 +502,7 @@ Source: [file](../src/curriculum/04-editing/lesson-05.md)
 <!-- lesson: 6a75e416116f97fc366586d2 -->
 
 Status: ✅
-Source: [file](../src/curriculum/04-editing/lesson-06.md)
+Source: [file](../../src/curriculum/04-editing/lesson-06.md)
 
 - **Concept:**
   - `cw` deletes a word and drops into insert mode to type its replacement.
@@ -515,7 +515,7 @@ Source: [file](../src/curriculum/04-editing/lesson-06.md)
 <!-- lesson: 6a75e416116f97fc366586d3 -->
 
 Status: ✅
-Source: [file](../src/curriculum/04-editing/lesson-07.md)
+Source: [file](../../src/curriculum/04-editing/lesson-07.md)
 
 - **Concept:** None new — combine `cc`, `dd`, `yy`, `p` (and `u`/`Ctrl-r` if something goes wrong) freely to restructure a document.
 - **Activity:** Turn a bare skeleton file (`computer-mouse.md`: a placeholder title, two placeholder section headings, and a small picture) into a short history of the computer mouse — rewrite the headings, pull a paragraph in from each of two source files (`first-mouse.md`, `modern-mouse.md`) with `yy`/`p`, and relocate the second heading with `dd`/`p` so it lands after the picture instead of before it.
@@ -526,7 +526,7 @@ Source: [file](../src/curriculum/04-editing/lesson-07.md)
 <!-- lesson: 6a75e416116f97fc366586d4 -->
 
 Status: ✅
-Source: [file](../src/curriculum/04-editing/lesson-08.md)
+Source: [file](../../src/curriculum/04-editing/lesson-08.md)
 
 (Authored as `type: review` with no `# --config--` section, which is what makes it prose: instructions only, no terminal or checklist.)
 
@@ -551,7 +551,7 @@ Lessons, in teaching order:
 <!-- lesson: 6a75e416116f97fc366586d6 -->
 
 Status: ✅
-Source: [file](../src/curriculum/05-visual-mode/lesson-01.md)
+Source: [file](../../src/curriculum/05-visual-mode/lesson-01.md)
 
 - **Concept:** `v` starts visual mode, extending a selection character by character as the cursor moves.
 - **Activity:** Select a span of text with `v` and movement, then leave visual mode with `Esc` without acting on it yet. This lesson is deliberately just the "try it out" step — selecting is a visible, self-contained thing to explore before the next lesson pairs it with an action.
@@ -562,7 +562,7 @@ Source: [file](../src/curriculum/05-visual-mode/lesson-01.md)
 <!-- lesson: 6a9739dff0c3a37f2239211a -->
 
 Status: ✅
-Source: [file](../src/curriculum/05-visual-mode/lesson-02.md)
+Source: [file](../../src/curriculum/05-visual-mode/lesson-02.md)
 
 - **Concept:**
   - `~` toggles the case of the character under the cursor in normal mode, and in visual mode, it toggles the case of all selected characters.
@@ -577,7 +577,7 @@ Source: [file](../src/curriculum/05-visual-mode/lesson-02.md)
 <!-- lesson: 6a75e416116f97fc366586d7 -->
 
 Status: ✅
-Source: [file](../src/curriculum/05-visual-mode/lesson-03.md)
+Source: [file](../../src/curriculum/05-visual-mode/lesson-03.md)
 
 - **Concept:**
   - `V` selects whole lines at a time. `V` must be typed as uppercase; lowercase `v` is the character-wise selection from the previous lesson. When this lesson is authored, call this out for the learner the same way modules 02 and 04 do for `G` and `D`.
@@ -590,7 +590,7 @@ Source: [file](../src/curriculum/05-visual-mode/lesson-03.md)
 <!-- lesson: 6a9739e2374a6d659e2e6d3f -->
 
 Status: ✅
-Source: [file](../src/curriculum/05-visual-mode/lesson-04.md)
+Source: [file](../../src/curriculum/05-visual-mode/lesson-04.md)
 
 - **Concept:**
   - With a selection active, `d` cuts it, `y` yanks (copies) it, and `p` pastes whatever is in the register after the current line — the same commands from module 4, now acting on entire lines instead of a motion.
@@ -602,7 +602,7 @@ Source: [file](../src/curriculum/05-visual-mode/lesson-04.md)
 <!-- lesson: 6a75e416116f97fc366586da -->
 
 Status: ✅
-Source: [file](../src/curriculum/05-visual-mode/lesson-05.md)
+Source: [file](../../src/curriculum/05-visual-mode/lesson-05.md)
 
 - **Concept:** `o` in visual mode jumps the cursor to the opposite end of the selection. This makes it easier to select and rearrange line-wise content from either end.
 - **Activity:** Use `o` with `V`, `d`, and `p` to move the remaining two paragraphs into order, fix the bullet list order, delete the `## Clipboard` heading, and save.
@@ -613,7 +613,7 @@ Source: [file](../src/curriculum/05-visual-mode/lesson-05.md)
 <!-- lesson: 6a75e416116f97fc366586e4 -->
 
 Status: ✅
-Source: [file](../src/curriculum/05-visual-mode/lesson-06.md)
+Source: [file](../../src/curriculum/05-visual-mode/lesson-06.md)
 
 - **Concept:** None new — use `V`, `o`, `y`, and `p` to copy content between files, then complete a sequence.
 - **Activity:** Copy the strand data from `strands.md` into `dna.md`, then use `guide.md` as reference to complete the incomplete Opposite Strand. When selecting multiple lines in `strands.md`, `o` lets the user swap to the top of the selection and trim if they overshoot.
@@ -624,7 +624,7 @@ Source: [file](../src/curriculum/05-visual-mode/lesson-06.md)
 <!-- lesson: 6a75e416116f97fc366586d9 -->
 
 Status: ✅
-Source: [file](../src/curriculum/05-visual-mode/lesson-07.md)
+Source: [file](../../src/curriculum/05-visual-mode/lesson-07.md)
 
 - **Concept:** None new.
 - **Activity:** Review.
@@ -646,7 +646,7 @@ Lessons, in teaching order:
 <!-- lesson: 6a75e416116f97fc366586db -->
 
 Status: ✅
-Source: [file](../src/curriculum/06-search-replace/lesson-01.md)
+Source: [file](../../src/curriculum/06-search-replace/lesson-01.md)
 
 - **Concept:**
   - `/` opens a search prompt; typing a pattern and pressing `Enter` jumps to the next match.
@@ -660,7 +660,7 @@ Source: [file](../src/curriculum/06-search-replace/lesson-01.md)
 <!-- lesson: 6a75e416116f97fc366586dc -->
 
 Status: ✅
-Source: [file](../src/curriculum/06-search-replace/lesson-02.md)
+Source: [file](../../src/curriculum/06-search-replace/lesson-02.md)
 
 - **Concept:**
   - `%` jumps between a bracket and its matching pair: `[`, `]`.
@@ -673,7 +673,7 @@ Source: [file](../src/curriculum/06-search-replace/lesson-02.md)
 <!-- lesson: 6a8dad423a99ade720f842fb -->
 
 Status: ✅
-Source: [file](../src/curriculum/06-search-replace/lesson-03.md)
+Source: [file](../../src/curriculum/06-search-replace/lesson-03.md)
 
 - **Concept:**
   - `%` jumps between matching parentheses `()` and braces `{}`, in addition to brackets.
@@ -687,7 +687,7 @@ Source: [file](../src/curriculum/06-search-replace/lesson-03.md)
 <!-- lesson: 6a75e416116f97fc366586dd -->
 
 Status: ✅
-Source: [file](../src/curriculum/06-search-replace/lesson-04.md)
+Source: [file](../../src/curriculum/06-search-replace/lesson-04.md)
 
 - **Concept:**
   - `:s/old/new/` replaces the first occurrence of `old` with `new` on the current line.
@@ -702,7 +702,7 @@ Source: [file](../src/curriculum/06-search-replace/lesson-04.md)
 <!-- lesson: 6a7a4d19e6cc6699ab83a2ab -->
 
 Status: ✅
-Source: [file](../src/curriculum/06-search-replace/lesson-05.md)
+Source: [file](../../src/curriculum/06-search-replace/lesson-05.md)
 
 - **Concept:**
   - `yl` yanks the character under the cursor into the unnamed register (charwise).
@@ -716,7 +716,7 @@ Source: [file](../src/curriculum/06-search-replace/lesson-05.md)
 <!-- lesson: 6a75e416116f97fc366586de -->
 
 Status: ✅
-Source: [file](../src/curriculum/06-search-replace/lesson-06.md)
+Source: [file](../../src/curriculum/06-search-replace/lesson-06.md)
 
 - **Concept:**
   - `:s/old/new/` substitutes the first match per line.
@@ -731,7 +731,7 @@ Source: [file](../src/curriculum/06-search-replace/lesson-06.md)
 <!-- lesson: 6a75e416116f97fc366586df -->
 
 Status: ✅
-Source: [file](../src/curriculum/06-search-replace/lesson-07.md)
+Source: [file](../../src/curriculum/06-search-replace/lesson-07.md)
 
 - **Concept:** No new commands — applies `:%s/pattern//gn` from the previous lesson alongside `/`, `n`/`N`, `:s`, `:%s`, and `r` in one realistic editing task.
 - **Activity:** Decrypt a ciphered message by choosing the right substitution tool for each cipher character based on how often it appears.
@@ -742,7 +742,7 @@ Source: [file](../src/curriculum/06-search-replace/lesson-07.md)
 <!-- lesson: 6a75e416116f97fc366586e0 -->
 
 Status: ✅
-Source: [file](../src/curriculum/06-search-replace/lesson-08.md)
+Source: [file](../../src/curriculum/06-search-replace/lesson-08.md)
 
 - **Concept:**
   - `:vimgrep pattern files` searches all matching files and collects every match into the quickfix list.
@@ -756,7 +756,7 @@ Source: [file](../src/curriculum/06-search-replace/lesson-08.md)
 <!-- lesson: 6a75e416116f97fc366586e1 -->
 
 Status: ✅
-Source: [file](../src/curriculum/06-search-replace/lesson-09.md)
+Source: [file](../../src/curriculum/06-search-replace/lesson-09.md)
 
 - **Concept:**
   - `:clist` (`:cl`) displays the full quickfix list with file, line, and match text, giving a complete overview before navigating.
@@ -769,7 +769,7 @@ Source: [file](../src/curriculum/06-search-replace/lesson-09.md)
 <!-- lesson: 6a8ed61bc9287431260c5e29 -->
 
 Status: ✅
-Source: [file](../src/curriculum/06-search-replace/lesson-10.md)
+Source: [file](../../src/curriculum/06-search-replace/lesson-10.md)
 
 - **Concept:**
   - `:vimgrep pattern files` searches multiple files and records every match in the quickfix list.
@@ -782,7 +782,7 @@ Source: [file](../src/curriculum/06-search-replace/lesson-10.md)
 <!-- lesson: 6a75e416116f97fc366586e2 -->
 
 Status: ✅
-Source: [file](../src/curriculum/06-search-replace/lesson-11.md)
+Source: [file](../../src/curriculum/06-search-replace/lesson-11.md)
 
 - **Concept:**
   - `:cdo {cmd}` runs a command on every entry in the quickfix list, applying a change to all matches at once.
@@ -794,7 +794,7 @@ Source: [file](../src/curriculum/06-search-replace/lesson-11.md)
 <!-- lesson: 6a7b8d5f1e5aa0cf31e40357 -->
 
 Status: ✅
-Source: [file](../src/curriculum/06-search-replace/lesson-12.md)
+Source: [file](../../src/curriculum/06-search-replace/lesson-12.md)
 
 - **Concept:** No new commands — applies `:vimgrep`, `:clist`, `:cnext`/`:cprev`, and `:cdo` from the previous three lessons. **Setting:** Dallas City Directory. Eight files: a directory (`index.md`), background reading (`about.md`), and six content pages (`page-1.md` through `page-6.md`).
 - **Activity:** 1. Fix phone number formatting — the Plumbers section (`page-4.md`) and those same five businesses in the white pages (`page-1.md`) have `555_XXXX` instead of `555-XXXX`. Ten instances across two files. The learner uses `:vimgrep` to find all occurrences, `:clist` to survey, and `:cdo` to fix in bulk. 2. Move a misplaced entry — The Petal Cafe is listed under Florists (`page-3.md`). It belongs under Restaurants (`page-5.md`), alphabetically between Oak & Trinity and Ranch Dressing.
@@ -805,7 +805,7 @@ Source: [file](../src/curriculum/06-search-replace/lesson-12.md)
 <!-- lesson: 6a75e416116f97fc366586e3 -->
 
 Status: ✅
-Source: [file](../src/curriculum/06-search-replace/lesson-13.md)
+Source: [file](../../src/curriculum/06-search-replace/lesson-13.md)
 
 - **Concept:** None new.
 - **Activity:** Review.
@@ -830,7 +830,7 @@ Lessons, in teaching order:
 <!-- lesson: 6a75e416116f97fc366586e5 -->
 
 Status: 🚧
-Source: [file](../src/curriculum/07-command-grammar/lesson-01.md)
+Source: [file](../../src/curriculum/07-command-grammar/lesson-01.md)
 
 - **Concept:** A number placed before a motion or operator repeats it that many times — `5j` moves down 5 lines, `3dd` deletes 3 lines. The same mechanic, applied to movement and to editing.
 - **Activity:** Use a count with a motion to move a precise distance, then a count with `dd` to delete a precise number of lines.
@@ -841,7 +841,7 @@ Source: [file](../src/curriculum/07-command-grammar/lesson-01.md)
 <!-- lesson: 6a75e416116f97fc366586e6 -->
 
 Status: 🚧
-Source: [file](../src/curriculum/07-command-grammar/lesson-02.md)
+Source: [file](../../src/curriculum/07-command-grammar/lesson-02.md)
 
 - **Concept:** Text objects describe "what," independent of cursor position; `iw` means "the word the cursor is in," usable with `d` or `c` (`diw`, `ciw`).
 - **Activity:** Delete or change a word using `diw`/`ciw` without first moving to its start.
@@ -852,7 +852,7 @@ Source: [file](../src/curriculum/07-command-grammar/lesson-02.md)
 <!-- lesson: 6a75e416116f97fc366586e7 -->
 
 Status: 🚧
-Source: [file](../src/curriculum/07-command-grammar/lesson-03.md)
+Source: [file](../../src/curriculum/07-command-grammar/lesson-03.md)
 
 - **Concept:** None new — real edits often chain a count with a motion, or pair `diw`/`ciw` with the word the cursor happens to be in.
 - **Activity:** Bring a file to a target state using a mix of counted commands and `diw`/`ciw`.
@@ -863,7 +863,7 @@ Source: [file](../src/curriculum/07-command-grammar/lesson-03.md)
 <!-- lesson: 6a75e416116f97fc366586e8 -->
 
 Status: 🚧
-Source: [file](../src/curriculum/07-command-grammar/lesson-04.md)
+Source: [file](../../src/curriculum/07-command-grammar/lesson-04.md)
 
 - **Concept:** None new.
 - **Activity:** Review.
@@ -885,7 +885,7 @@ Lessons, in teaching order:
 <!-- lesson: 6a75e416116f97fc366586eb -->
 
 Status: ✅
-Source: [file](../src/curriculum/08-capstone/lesson-01.md)
+Source: [file](../../src/curriculum/08-capstone/lesson-01.md)
 
 - **Concept:** None new — a read-only reference of the full committed command set, organized by category (modes, motion, editing, visual, search, counts/text objects, quitting).
 - **Activity:** None (read-only).
@@ -896,7 +896,7 @@ Source: [file](../src/curriculum/08-capstone/lesson-01.md)
 <!-- lesson: 6a75e416116f97fc366586ea -->
 
 Status: ✅
-Source: [file](../src/curriculum/08-capstone/lesson-02.md)
+Source: [file](../../src/curriculum/08-capstone/lesson-02.md)
 
 - **Concept:** No new commands — this capstone synthesizes file navigation, search, yank and paste, editing, and saving in a puzzle-driven task.
 - **Activity:** The learner explores Maren's study and solves three independent puzzles: a rune crossword whose odd word is STORM, a potion formula whose diagonal extraction is LAUREL, and a Sylvan translation puzzle whose pooled initials identify CRANE. They enter the three keys in order in `study.md`.
@@ -909,7 +909,7 @@ Source: [file](../src/curriculum/08-capstone/lesson-02.md)
 <!-- lesson: 6a7dbe380cec0eb56fe6a538 -->
 
 Status: ✅
-Source: [file](../src/curriculum/08-capstone/lesson-03.md)
+Source: [file](../../src/curriculum/08-capstone/lesson-03.md)
 
 Explains how the capstone puzzles could have been solved, including the final keys.
 
@@ -922,7 +922,7 @@ Explains how the capstone puzzles could have been solved, including the final ke
 <!-- lesson: 84b33a45faa62b616d22e329 -->
 
 Status: ✅
-Source: [file](../src/curriculum/08-capstone/lesson-04.md)
+Source: [file](../../src/curriculum/08-capstone/lesson-04.md)
 
 Provides next steps for continuing to learn Vim after completing the course.
 
