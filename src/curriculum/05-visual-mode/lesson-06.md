@@ -27,7 +27,7 @@ In this lesson, you'll practice copying and pasting lines of text using the comm
 
 You're on `dna.md`.
 
-Switch to `strands.md` and copy the strand data into `dna.md`.
+Switch to `strands.md` and copy the entire content into `dna.md`.
 
 Also, the Opposite Strand is incomplete. Use `guide.md` for reference and complete it.
 
