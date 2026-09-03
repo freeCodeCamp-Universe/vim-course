@@ -166,7 +166,7 @@ The liber holds a tongue no longer spoken:
 Six pairs remain, by time left quite unbroken.
 Follow the pattern that the text has woven.
 
-Three phrases follow. Translate each in turn,
+Three phrases await. Translate each in turn,
 And match the target tongue for which they yearn.
 
 Let every finished phrase begin to speak:
