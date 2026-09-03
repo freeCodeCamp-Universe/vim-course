@@ -118,7 +118,7 @@ No async work in the keystroke loop. State is pure data, mutations are spread-ba
 
 - **Engine tests** (`src/engine/*.test.ts`) call `dispatch()` directly and assert on returned state.
 - **Component tests** (`src/components/**/*.test.tsx`) use React Testing Library, query by role, simulate user events.
-- **Curriculum tests** (`src/curriculum/*.test.ts`) load real lesson files and check structural invariants.
+- **Curriculum tests** (`src/curriculum/*.test.ts`) load real lesson files and check structural invariants and drive every command through the engine. See [curriculum testing](./guides/curriculum-testing.md).
 - **Validation tests** (`src/validation/**/*.test.ts`) test checklist predicates against synthetic contexts.
 - **Terminal tests** (`src/terminal/*.test.ts`) test the DOM grid renderer in jsdom.
 
@@ -128,6 +128,7 @@ All test files are co-located with source (e.g., `dispatch.test.ts` next to `dis
 
 - [Add a new Vim command](./guides/adding-commands.md)
 - [Build process overview](./guides/build-process.md)
+- [Curriculum testing](./guides/curriculum-testing.md)
 - [UX design decisions](./guides/ux-decisions.md)
 
 ## Detailed layer docs
