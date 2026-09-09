@@ -218,8 +218,6 @@
 .cursor.block {
   display: inline-block;
   min-inline-size: 1ch;
-  padding-block: 0.08em;
-  margin-block: -0.08em;
   outline: 1px solid currentcolor;
   outline-offset: -1px;
 }
@@ -237,8 +235,8 @@
 }
 
 .cursor-selection .cursor.block {
-  padding-block: 0;
-  margin-block: 0;
+  display: inline;
+  min-inline-size: 0;
   outline: none;
 }
 
