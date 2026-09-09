@@ -35,7 +35,7 @@ While `hjkl` moves the cursor one character at a time, Vim also has commands for
 
 ---
 
-Starting from the top of the file, use <kbd>j</kbd> to move down to the last paragraph. Jump forward word by word with <kbd>w</kbd> until you reach "essential". Then, jump back word by word with <kbd>b</kbd> until you reach "IMproved".
+Starting from the top of the file, use <kbd>j</kbd> to move down to the last paragraph. Jump forward word by word with <kbd>w</kbd> until you reach "features". Then, jump back word by word with <kbd>b</kbd> until you reach "IMproved".
 
 # --files--
 
@@ -46,9 +46,9 @@ For early Unix systems, developers used editors like `ed` (short for "editor"). 
 
 In 1976, `ex` (short for "extended") was created with more advanced editing shortcuts as terminals shifted from paper printing to electronic screens.
 
-In 1979, `vi` (short for "visual") was released as a full-screen editor. It freed users from `ed` and `ex`'s line-by-line constraints. Now they could see and edit an entire screen of text, taking advantage of the new video display monitors replacing paper terminals.
+In 1979, `vi` (short for "visual") was released as a full-screen editor. It freed users from `ed` and `ex`'s line-by-line constraints. Now they could see and edit an entire screen of text, taking advantage of the new video display monitors.
 
-In 1991, Vim (short for "Vi IMproved") was released, adding essential modern features like multiple undo levels, split windows, and syntax highlighting. It eventually became the standard text editor on most Linux systems.
+In 1991, Vim (short for "Vi IMproved") was released, adding modern features like multiple undo levels, split windows, and syntax highlighting. It eventually became the standard text editor on most Linux systems.
 ```
 
 # --config--
@@ -65,8 +65,8 @@ In 1991, Vim (short for "Vi IMproved") was released, adding essential modern fea
     },
     {
       "label": "Jump forward through the words.",
-      "hint": "You should press <kbd>w</kbd> to jump forward word by word until the cursor reaches \"essential\".",
-      "test": { "command": "w", "cursorReached": [7, 61] }
+      "hint": "You should press <kbd>w</kbd> to jump forward word by word until the cursor reaches \"features\".",
+      "test": { "command": "w", "cursorReached": [7, 68] }
     },
     {
       "label": "Jump backward through the words.",

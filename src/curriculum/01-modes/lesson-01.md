@@ -28,7 +28,7 @@ The learner understands why Vim is worth learning, and performs the exact keystr
 
 # --instructions--
 
-Vim (short for Vi IMproved) is a free and open-source text editor, controlled entirely through keyboard shortcuts and requiring no mouse.
+Vim (short for "Vi IMproved") is a free and open-source text editor, controlled entirely through keyboard shortcuts and requiring no mouse.
 
 Vim runs mainly inside terminal windows and comes preinstalled on almost every Linux, macOS, and Unix computer.
 
@@ -51,7 +51,6 @@ Vim is charityware. Most of the money donated is useed to help children in Ugand
 {
   "start": "shell",
   "cursor": [1, 1],
-  "allowedCommands": ["vim", ":q"],
   "checklist": [
     {
       "label": "Start Vim.",
