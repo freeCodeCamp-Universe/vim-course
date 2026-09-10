@@ -40,8 +40,10 @@ To quit and discard the change, you can use `:q!`, which acts as a force quit.
 ## about-vim.md
 
 ```md
-Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for "Vi Imitation" before changing to "Vi IMproved".
+# About Vim
 
+Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for "Vi Imitation" before changing to "Vi IMproved".
+Vim was first distributed on the Fred Fish #591 floppy disk.
 Vim is charityware. Most of the money donated is used to help children in Uganda.
 ```
 

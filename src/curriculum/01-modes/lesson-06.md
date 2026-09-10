@@ -33,9 +33,7 @@ Notice the `:` at the beginning of the command. This is how you enter command-li
 
 ---
 
-You may have noticed a typo in `about-vim.md`.
-
-Use one of the commands you previously learned to enter insert mode and change `useed` to `used`.
+Use one of the commands you previously learned to enter insert mode and change `# Vim` to `# About Vim`.
 
 Once you're done, save your changes with `:w`.
 
@@ -45,19 +43,25 @@ Note that you can use arrow keys to move the cursor around.
 
 ## about-vim.md
 
+<!-- prettier-ignore-start -->
 ```md
+# Vim
 Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for "Vi Imitation" before changing to "Vi IMproved".
-Vim is charityware. Most of the money donated is useed to help children in Uganda.
+Vim is charityware. Most of the money donated is used to help children in Uganda.
 ```
+<!-- prettier-ignore-end -->
 
 # --expected--
 
 ## about-vim.md
 
+<!-- prettier-ignore-start -->
 ```md
+# About Vim
 Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for "Vi Imitation" before changing to "Vi IMproved".
 Vim is charityware. Most of the money donated is used to help children in Uganda.
 ```
+<!-- prettier-ignore-end -->
 
 # --config--
 
@@ -66,12 +70,12 @@ Vim is charityware. Most of the money donated is used to help children in Uganda
   "cursor": [1, 1],
   "checklist": [
     {
-      "label": "Fix the `useed` typo.",
+      "label": "Change the heading to `# About Vim`.",
       "hint": "You should enter insert mode with either `i`, `a`, or `A` command before you can make the change.",
       "test": {
         "file": "about-vim.md",
-        "absent": ["useed"],
-        "contains": ["used"]
+        "absent": ["# Vim"],
+        "contains": ["# About Vim"]
       }
     },
     {

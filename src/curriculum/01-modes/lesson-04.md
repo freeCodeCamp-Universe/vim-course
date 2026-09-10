@@ -44,10 +44,13 @@ When you're done, press <kbd>Esc</kbd> to return to normal mode.
 
 ## about-vim.md
 
+<!-- prettier-ignore-start -->
 ```md
+# Vim
 Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for "Vi Imitation" before changing to "Vi IMproved".
-Vim is charityware. Most of the money donated is useed to help children in Uganda.
+Vim is charityware. Most of the money donated is used to help children in Uganda.
 ```
+<!-- prettier-ignore-end -->
 
 # --config--
 
@@ -66,6 +69,14 @@ Vim is charityware. Most of the money donated is useed to help children in Ugand
       "label": "Enter insert mode with `i`.",
       "hint": "You should press <kbd>i</kbd> to enter insert mode. The `--INSERT--` indicator should show up.",
       "test": { "command": "i" }
+    },
+    {
+      "label": "Type some text in insert mode.",
+      "hint": "You should type any text while in insert mode.",
+      "test": {
+        "file": "about-vim.md",
+        "notEquals": "# Vim\nVim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for \"Vi Imitation\" before changing to \"Vi IMproved\".\nVim is charityware. Most of the money donated is used to help children in Uganda."
+      }
     },
     {
       "label": "Then, return to normal mode.",

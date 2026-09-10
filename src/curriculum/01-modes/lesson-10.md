@@ -36,6 +36,8 @@ When you're done, save and quit.
 ## vim-notes.md
 
 ```md
+# Vim Notes
+
 Vim is known for its steep learning curve, and it's not uncommon to hear about the frustrations of beginners.
 
 Even quitting became a running joke online for a while. A Stack Overflow question about how to exit Vim has been viewed
@@ -46,6 +48,8 @@ Even quitting became a running joke online for a while. A Stack Overflow questio
 ## vim-notes.md
 
 ```md
+# Vim Notes
+
 Vim is known for its steep learning curve, and it's not uncommon to hear about the frustrations of beginners.
 
 Even quitting became a running joke online for a while. A Stack Overflow question about how to exit Vim has been viewed more than two million times.

@@ -40,10 +40,13 @@ Start Vim from the terminal by typing `vim` and pressing <kbd>Enter</kbd>.
 
 ## about-vim.md
 
+<!-- prettier-ignore-start -->
 ```md
+# Vim
 Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for "Vi Imitation" before changing to "Vi IMproved".
-Vim is charityware. Most of the money donated is useed to help children in Uganda.
+Vim is charityware. Most of the money donated is used to help children in Uganda.
 ```
+<!-- prettier-ignore-end -->
 
 # --config--
 

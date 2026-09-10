@@ -12,11 +12,11 @@ title: 'New lines and quitting'
 
 - `o` opens a new line below the current one and enters insert mode there.
 
-- `:w` saves the change — a recap from last lesson.
+- `:w` saves the changes — a recap from last lesson.
 - `:q` quits Vim. With no unsaved changes, it closes right away.
 
 **Activity:**
-Add a new line below the current one with `o`, save it with `:w`, then quit with `:q`.
+Add a new line below the current one with `o`, save the changes with `:w`, then quit with `:q`.
 
 **Goal:**
 The learner adds a new line without manually positioning the cursor first, reinforces saving, and closes a session with no unsaved changes.
@@ -33,24 +33,37 @@ If you want to start editing on a new line, you can use the `o` command. It open
 
 ---
 
-Use `o` to add a new line below the first line, save the change, then close Vim entirely with `:q` (short for "quit").
+Use `o` to add an empty line below the heading.
+
+Then, use `o` again to add the following paragraph below the first one:
+
+```md copy
+Vim was first distributed on the Fred Fish #591 floppy disk.
+```
+
+Save the changes, then close Vim entirely with `:q` (short for "quit").
 
 # --files--
 
 ## about-vim.md
 
+<!-- prettier-ignore-start -->
 ```md
+# About Vim
 Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for "Vi Imitation" before changing to "Vi IMproved".
 Vim is charityware. Most of the money donated is used to help children in Uganda.
 ```
+<!-- prettier-ignore-end -->
 
 # --expected--
 
 ## about-vim.md
 
 ```md
-Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for "Vi Imitation" before changing to "Vi IMproved".
+# About Vim
 
+Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for "Vi Imitation" before changing to "Vi IMproved".
+Vim was first distributed on the Fred Fish #591 floppy disk.
 Vim is charityware. Most of the money donated is used to help children in Uganda.
 ```
 
@@ -61,12 +74,21 @@ Vim is charityware. Most of the money donated is used to help children in Uganda
   "cursor": [1, 1],
   "checklist": [
     {
-      "label": "Add a new line below the first line with `o`.",
-      "hint": "You should press <kbd>o</kbd> to open a new line below the current cursor position.",
+      "label": "Add an empty line below the heading with `o`.",
+      "hint": "You should keep the cursor on the heading line and press <kbd>o</kbd> to open a new line below it.",
       "test": {
         "command": "o",
         "file": "about-vim.md",
         "line": { "number": 2, "equals": "" }
+      }
+    },
+    {
+      "label": "Add the new paragraph below the first paragraph with `o`.",
+      "hint": "You should move the cursor to the first paragraph, press <kbd>o</kbd> to open a new line below it, then add the new paragraph.",
+      "test": {
+        "command": "o",
+        "file": "about-vim.md",
+        "matches": "/Vi IMproved\"\\.[\\s\\S]*Vim was first distributed on the Fred Fish #591 floppy disk\\.[\\s\\S]*Vim is charityware\\./"
       }
     },
     {

@@ -34,8 +34,10 @@ Try adding some text to the file and use the command to save and quit.
 ## about-vim.md
 
 ```md
-Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for "Vi Imitation" before changing to "Vi IMproved".
+# About Vim
 
+Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for "Vi Imitation" before changing to "Vi IMproved".
+Vim was first distributed on the Fred Fish #591 floppy disk.
 Vim is charityware. Most of the money donated is used to help children in Uganda.
 ```
 
@@ -50,7 +52,7 @@ Vim is charityware. Most of the money donated is used to help children in Uganda
       "hint": "You should make any change to the file.",
       "test": {
         "file": "about-vim.md",
-        "notEquals": "Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for \"Vi Imitation\" before changing to \"Vi IMproved\".\n\nVim is charityware. Most of the money donated is used to help children in Uganda."
+        "notEquals": "# About Vim\n\nVim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for \"Vi Imitation\" before changing to \"Vi IMproved\".\nVim was first distributed on the Fred Fish #591 floppy disk.\nVim is charityware. Most of the money donated is used to help children in Uganda."
       }
     },
     {

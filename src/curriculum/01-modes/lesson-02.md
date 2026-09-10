@@ -26,7 +26,13 @@ The learner opens a specific file from inside a running Vim session, without qui
 
 # --instructions--
 
-Bare `vim` opens an empty session, with no file loaded. To open a file within Vim, you need to use `:e` (short for "edit") followed by the filename: `:e <filename>`.
+The bare `vim` command opens a welcome screen with no file loaded.
+
+To open a file within Vim, you need to use the `:e` command (short for "edit") followed by the filename:
+
+```
+:e <filename>
+```
 
 For example, to open `hello.txt`, you would type `:e hello.txt` and press <kbd>Enter</kbd>.
 
@@ -38,10 +44,13 @@ Start Vim, then try opening the `about-vim.md` file using the `:e` command.
 
 ## about-vim.md
 
+<!-- prettier-ignore-start -->
 ```md
+# Vim
 Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for "Vi Imitation" before changing to "Vi IMproved".
-Vim is charityware. Most of the money donated is useed to help children in Uganda.
+Vim is charityware. Most of the money donated is used to help children in Uganda.
 ```
+<!-- prettier-ignore-end -->
 
 # --config--
 
