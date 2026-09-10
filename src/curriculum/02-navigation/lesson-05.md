@@ -31,8 +31,6 @@ The cursor starts at the end of the file. Use any navigation command to move up 
 It introduced a visual mode, using the new screens to render multiple lines of text at once.
 ```
 
-You can copy and paste the text into the terminal instead of typing it manually.
-
 When you're done, save the file.
 
 # --files--
