@@ -25,22 +25,31 @@ describe('CurriculumSearch', () => {
     expect(onQueryChange).toHaveBeenCalledWith('hello');
   });
 
-  it('should focus the input on Alt+K when the input does not have focus', () => {
+  it('should focus the input on Ctrl+K when the input does not have focus', () => {
     renderSearch();
     const input = screen.getByRole('searchbox');
 
-    fireEvent.keyDown(window, { code: 'KeyK', altKey: true });
+    fireEvent.keyDown(window, { code: 'KeyK', ctrlKey: true });
 
     expect(input).toHaveFocus();
   });
 
-  it('should not steal focus on Alt+K when the input already has focus', () => {
+  it('should focus the input on Cmd+K when the input does not have focus', () => {
+    renderSearch();
+    const input = screen.getByRole('searchbox');
+
+    fireEvent.keyDown(window, { code: 'KeyK', metaKey: true });
+
+    expect(input).toHaveFocus();
+  });
+
+  it('should not steal focus on Ctrl+K when the input already has focus', () => {
     renderSearch();
     const input = screen.getByRole('searchbox');
     input.focus();
 
     const focusSpy = vi.spyOn(input, 'focus');
-    fireEvent.keyDown(window, { code: 'KeyK', altKey: true });
+    fireEvent.keyDown(window, { code: 'KeyK', ctrlKey: true });
 
     expect(focusSpy).not.toHaveBeenCalled();
   });
@@ -49,16 +58,14 @@ describe('CurriculumSearch', () => {
     renderSearch();
 
     const input = screen.getByRole('searchbox');
-    // Test env is non-Mac (jsdom), so getAltKeyName() returns 'Alt'.
-    // On macOS it returns 'AltGraph', matching the KeyboardEvent.key value for Option.
-    expect(input).toHaveAttribute('aria-keyshortcuts', 'Alt+K');
+    expect(input).toHaveAttribute('aria-keyshortcuts', 'Meta+K Control+K');
   });
 
-  it('should not respond to Alt+K when a meta key is also held', () => {
+  it('should not respond to Alt+K', () => {
     renderSearch();
     const input = screen.getByRole('searchbox');
 
-    fireEvent.keyDown(window, { code: 'KeyK', altKey: true, metaKey: true });
+    fireEvent.keyDown(window, { code: 'KeyK', altKey: true });
 
     expect(input).not.toHaveFocus();
   });

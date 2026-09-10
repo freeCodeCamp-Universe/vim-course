@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useAltKeyName, useAltLabel } from '@/hooks/usePlatformModifier';
+import { useCmdLabel } from '@/hooks/usePlatformModifier';
 import styles from './CurriculumSearch.module.css';
 
 interface Props {
@@ -9,12 +9,15 @@ interface Props {
 
 export function CurriculumSearch({ query, onQueryChange }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const altLabel = useAltLabel();
-  const altKeyName = useAltKeyName();
+  const cmdLabel = useCmdLabel();
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
-      if (!event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+      if (
+        (!event.ctrlKey && !event.metaKey) ||
+        event.altKey ||
+        event.shiftKey
+      ) {
         return;
       }
       if (event.code !== 'KeyK') {
@@ -42,10 +45,10 @@ export function CurriculumSearch({ query, onQueryChange }: Props) {
           onChange={(event) => onQueryChange(event.target.value)}
           placeholder="Search lessons by title or ID"
           aria-label="Search lessons by title or ID"
-          aria-keyshortcuts={`${altKeyName}+K`}
+          aria-keyshortcuts="Meta+K Control+K"
         />
         <span className={styles.hint} aria-hidden="true">
-          <span className={styles['hint-key']}>{altLabel}</span>
+          <span className={styles['hint-key']}>{cmdLabel}</span>
           <span className={styles['hint-key']}>K</span>
         </span>
       </label>
