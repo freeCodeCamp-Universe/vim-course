@@ -46,9 +46,9 @@ For example, if your cursor is on the `T` in the text above, pressing `d%` will 
 
 ---
 
-Practice `%` on line 1 by moving the cursor back and forth between the `[or rexpr]` brackets.
+Practice `%` on line 1 by moving the cursor back and forth between the `[engine]` brackets.
 
-Then, place the cursor on the space between `regex` and `syntax`, use `d%` to delete through the closing `]`. Ensure that there is no space between `regex` and the comma.
+Then, place the cursor on the space before `^syntax`, use `d%` to delete through the closing `]`. Ensure that there is no space between `regex` and the comma.
 
 Save the file when you're done.
 
@@ -57,7 +57,7 @@ Save the file when you're done.
 ## regex.md
 
 ```md
-A regular expression, or regex syntax parser engine [or rexpr], is a sequence of characters for finding and replacing text patterns. The concept was invented by mathematician Stephen Cole Kleene in 1951 as a mathematical theory, which included his introduction of the asterisk , known as the "Kleene ★".
+A regular expression, or regex ^syntax\sparser pattern$ ?=matching [engine], is a sequence of characters for finding and replacing text patterns. The concept was invented by mathematician Stephen Cole Kleene in 1951 as a mathematical theory, which included his introduction of the asterisk , known as the "Kleene ★".
 
 The symbol `☆` reached computer science in the mid-1960s (`☆`)when Unix pioneer Ken Thompson baked regex into early text editors. since the Kleene ★ was already established in mathematics, `☆` became the natural wildcard for text search.
 
@@ -95,7 +95,7 @@ Today, regEx is a standard tool across programming languagEs, hElping dEvElopErs
       "hint": "You should press <kbd>Shift</kbd> + <kbd>5</kbd> to jump to the closing `]` on line 1.",
       "test": {
         "command": "%",
-        "cursorReached": [1, 62]
+        "cursorReached": [1, 75]
       }
     },
     {
@@ -104,9 +104,9 @@ Today, regEx is a standard tool across programming languagEs, hElping dEvElopErs
       "test": {
         "command": "%",
         // identify the closing delimiter as the command precondition
-        "commandAt": [1, 62],
+        "commandAt": [1, 75],
         // identify the opening delimiter as the postcondition
-        "cursorReached": [1, 53]
+        "cursorReached": [1, 68]
       }
     },
     {

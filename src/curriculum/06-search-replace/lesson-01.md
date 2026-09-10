@@ -50,7 +50,9 @@ To move to the next occurrence, you can press <kbd>n</kbd>. To move back to the 
 
 ---
 
-The `regex.md` file is open for you.
+The `regex.md` file is open for you. The file has a lot of errors, which you'll correct gradually.
+
+You'll practice the search operation for now.
 
 Search for the word `Kleene`. Once you land on it, use `n` to jump to the next occurrence of `Kleene`, and `N` to move backward.
 
@@ -59,7 +61,7 @@ Search for the word `Kleene`. Once you land on it, use `n` to jump to the next o
 ## regex.md
 
 ```md
-A regular expression, or regex syntax parser engine [or rexpr], is a sequence of characters for finding and replacing text patterns. The concept was invented by mathematician Stephen Cole Kleene in 1951 as a mathematical theory, which included his introduction of the asterisk , known as the "Kleene ★".
+A regular expression, or regex ^syntax\sparser pattern$ ?=matching [engine], is a sequence of characters for finding and replacing text patterns. The concept was invented by mathematician Stephen Cole Kleene in 1951 as a mathematical theory, which included his introduction of the asterisk , known as the "Kleene ★".
 
 The symbol `☆` reached computer science in the mid-1960s (`☆`)when Unix pioneer Ken Thompson baked regex into early text editors. since the Kleene ★ was already established in mathematics, `☆` became the natural wildcard for text search.
 
