@@ -141,9 +141,9 @@ Source: [file](../../src/curriculum/01-modes/lesson-07.md)
 
 - **Concept:**
   - `o` opens a new line below the current one and enters insert mode there.
-  - `:w` saves the change — a recap from last lesson.
+  - `:w` saves the changes — a recap from last lesson.
   - `:q` quits Vim. With no unsaved changes, it closes right away.
-- **Activity:** Add a new line below the current one with `o`, save it with `:w`, then quit with `:q`.
+- **Activity:** Add a new line below the current one with `o`, save the changes with `:w`, then quit with `:q`.
 - **Goal:** The learner adds a new line without manually positioning the cursor first, reinforces saving, and closes a session with no unsaved changes.
 
 #### 8. **The `O` command and force quitting** — type: `learn`

@@ -61,7 +61,7 @@ In 1991, Vim (short for "Vi IMproved") was released, adding modern features like
     {
       "label": "Jump to the end of that line.",
       "hint": "You should press <kbd>Shift</kbd> + <kbd>4</kbd> (which is `$`) to jump to the very end of the line.",
-      "test": { "command": "$", "cursorReached": [5, 266] }
+      "test": { "command": "$", "cursorReached": [5, 240] }
     },
     {
       "label": "Jump back to the start of that line.",
