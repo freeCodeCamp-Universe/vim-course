@@ -9,25 +9,19 @@ title: 'Complete the rearrangement'
 ## CAG
 
 **Concept:**
-`o` in visual mode jumps the cursor to the opposite end of the selection. This makes it easier to select and rearrange line-wise content from either end.
+Use visual line selection with `V`, then delete and paste selected lines with `d` and `p`.
 
 **Activity:**
-Use `o` with `V`, `d`, and `p` to move the remaining two paragraphs into order, fix the bullet list order, delete the `## Clipboard` heading, and save.
+Use `V`, `d`, and `p` to move the remaining two paragraphs into order, fix the bullet list order, delete the `## Clipboard` heading, and save.
 
 **Goal:**
-The learner uses `o` and the visual line editing flow to complete a multi-step rearrangement independently.
+The learner uses visual line editing to complete a multi-step rearrangement independently.
 
 ## Notes
 
 <!-- Some other notes -->
 
 # --instructions--
-
-There is one more command worth knowing before moving on: in visual mode, `o` moves the cursor to the opposite end of the selection, allowing you to extend the selection from the other side without canceling and restarting.
-
-In character-wise visual mode, this applies to the start and end characters. In line-wise visual mode, it applies to the first and last selected lines.
-
----
 
 Use visual mode and the commands you've learned to move the remaining paragraphs and bullet list into the following order:
 

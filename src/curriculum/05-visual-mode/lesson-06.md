@@ -9,10 +9,10 @@ title: 'Practice: Completing a DNA strand'
 ## CAG
 
 **Concept:**
-None new — use `V`, `o`, `y`, and `p` to copy content between files, then complete a sequence.
+None new — use `V`, `y`, and `p` to copy content between files, then complete a sequence.
 
 **Activity:**
-Copy the strand data from `strands.md` into `dna.md`, then use `guide.md` as reference to complete the incomplete Opposite Strand. When selecting multiple lines in `strands.md`, `o` lets the user swap to the top of the selection and trim if they overshoot.
+Copy the strand data from `strands.md` into `dna.md`, then use `guide.md` as reference to complete the incomplete Opposite Strand.
 
 **Goal:**
 The learner copies content between files using visual mode and completes a real DNA sequence using a reference file.

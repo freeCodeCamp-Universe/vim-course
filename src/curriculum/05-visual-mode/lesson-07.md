@@ -30,7 +30,6 @@ These are commands you've learned in this module.
 | `v` (lowercase) | Start character-wise visual mode.                         |
 | `V` (uppercase) | Start line-wise visual mode.                              |
 | `~`             | Toggle the case of the selected text.                     |
-| `o`             | Jump the cursor to the other end of the visual selection. |
 | `d`             | Delete the selected text.                                 |
 | `y`             | Yank (copy) the selected text.                            |
 | `p`             | Paste the last deleted or yanked text.                    |

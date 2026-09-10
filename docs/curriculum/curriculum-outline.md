@@ -594,9 +594,9 @@ Source: [file](../../src/curriculum/05-visual-mode/lesson-04.md)
 Status: ✅
 Source: [file](../../src/curriculum/05-visual-mode/lesson-05.md)
 
-- **Concept:** `o` in visual mode jumps the cursor to the opposite end of the selection. This makes it easier to select and rearrange line-wise content from either end.
-- **Activity:** Use `o` with `V`, `d`, and `p` to move the remaining two paragraphs into order, fix the bullet list order, delete the `## Clipboard` heading, and save.
-- **Goal:** The learner uses `o` and the visual line editing flow to complete a multi-step rearrangement independently.
+- **Concept:** Use visual line selection with `V`, then delete and paste selected lines with `d` and `p`.
+- **Activity:** Use `V`, `d`, and `p` to move the remaining two paragraphs into order, fix the bullet list order, delete the `## Clipboard` heading, and save.
+- **Goal:** The learner uses visual line editing to complete a multi-step rearrangement independently.
 
 #### 6. **Practice: Completing a DNA strand** — type: `practice`
 
@@ -605,8 +605,8 @@ Source: [file](../../src/curriculum/05-visual-mode/lesson-05.md)
 Status: ✅
 Source: [file](../../src/curriculum/05-visual-mode/lesson-06.md)
 
-- **Concept:** None new — use `V`, `o`, `y`, and `p` to copy content between files, then complete a sequence.
-- **Activity:** Copy the strand data from `strands.md` into `dna.md`, then use `guide.md` as reference to complete the incomplete Opposite Strand. When selecting multiple lines in `strands.md`, `o` lets the user swap to the top of the selection and trim if they overshoot.
+- **Concept:** None new — use `V`, `y`, and `p` to copy content between files, then complete a sequence.
+- **Activity:** Copy the strand data from `strands.md` into `dna.md`, then use `guide.md` as reference to complete the incomplete Opposite Strand.
 - **Goal:** The learner copies content between files using visual mode and completes a real DNA sequence using a reference file.
 
 #### 7. **Module review** — type: `review`

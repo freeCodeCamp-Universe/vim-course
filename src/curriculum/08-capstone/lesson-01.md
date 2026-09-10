@@ -94,7 +94,6 @@ This lesson provides a reference of all the commands taught in this course. You 
 | `v`     | Start character-wise visual mode.                                     |
 | `V`     | Start line-wise visual mode.                                          |
 | `~`     | Toggle the case of the selected text.                                 |
-| `o`     | Jump the cursor to the other end of the visual selection.             |
 | `d`     | Cut the selected text.                                                |
 | `y`     | Yank (copy) the selected text.                                        |
 | `c`     | Delete the selected text and enter insert mode to type a replacement. |
