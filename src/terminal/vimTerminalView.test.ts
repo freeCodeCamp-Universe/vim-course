@@ -474,7 +474,7 @@ describe('createVimTerminalView', () => {
     expect(selection).not.toHaveTextContent('col');
   });
 
-  it('should draw the startup splash and hide the ruler', () => {
+  it('should draw the startup splash with the cursor at the top-left and hide the ruler', () => {
     const splashLesson: AuthoredLessonDefinition = {
       ...lab,
       config: { ...lab.config, start: 'splash' },
@@ -482,6 +482,7 @@ describe('createVimTerminalView', () => {
     const { q } = mount(splashLesson);
 
     expect(q.getByText(/VIM - Vi IMproved/)).toBeInTheDocument();
+    expect(q.getByTestId('terminal-cursor')).toHaveTextContent('~');
     expect(q.queryByText('1,1')).not.toBeInTheDocument();
   });
 

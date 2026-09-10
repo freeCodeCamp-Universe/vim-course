@@ -391,7 +391,6 @@ function toModel(
     state.mode === 'command-line' ||
     state.mode === 'animation' ||
     state.mode === 'shell' ||
-    state.splashVisible ||
     state.quickfixListing
       ? null
       : state.cursor;

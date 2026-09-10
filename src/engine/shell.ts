@@ -18,7 +18,7 @@ const SPLASH_CONTENT: string[] = [
   'VIM - Vi IMproved',
   'by Bram Moolenaar et al.',
   '',
-  "This stands in for Vim's real startup screen in this course.",
+  "This stands in for Vim's real startup screen.",
   '',
   'type  :q<Enter>        to exit',
 ];
