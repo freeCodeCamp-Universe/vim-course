@@ -19,7 +19,7 @@ const lesson: ProseLessonDefinition = {
   id: 'intro',
   module: 1,
   lesson: 1,
-  title: 'Getting started with Vim',
+  title: 'Getting started with `Vim`',
   type: 'learn',
   instructions: 'Learn the basics.',
 };

@@ -30,7 +30,7 @@ export function LessonPage({ lesson, nextLessonId, isLastLesson, instructionsHtm
   const [tab, setTab] = useState<TabId>('instructions');
 
   useEffect(() => {
-    document.title = `${lesson.title} | Vim Course | freeCodeCamp.org`;
+    document.title = `${lesson.title.replaceAll('`', '')} | Vim Course | freeCodeCamp.org`;
   }, [lesson.title]);
 
   const [outlineOpen, setOutlineOpen] = useState(false);
