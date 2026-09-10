@@ -16,10 +16,10 @@ title: 'Saving with `:w`'
 - The `Down` arrow key moves the cursor to the next line — handy here since Vim's own movement keys haven't been taught yet.
 
 **Activity:**
-Press Down once to reach the last line, fix the "useed" typo into "used", then save with `:w`.
+Use an insert-family command to change the `# Vim` heading to `# About Vim`, then save with `:w`.
 
 **Goal:**
-The learner saves work without ending the session.
+The learner makes a targeted text change and saves it without ending the session.
 
 ## Notes
 

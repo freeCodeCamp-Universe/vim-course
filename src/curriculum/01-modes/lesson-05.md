@@ -16,10 +16,10 @@ title: 'The `a` and `A` commands'
 - `A` jumps to the end of the line and enters insert mode there, regardless of the cursor's column; it only works as a command from normal mode, so `Esc` is required before using it.
 
 **Activity:**
-Open `about-vim.md` with `vim about-vim.md` (a recap from earlier lessons). Press <kbd>i</kbd> again to reinforce last lesson, then <kbd>Esc</kbd>. Press <kbd>a</kbd> and notice the one-column difference from <kbd>i</kbd>, then <kbd>Esc</kbd>. Press <kbd>A</kbd> and notice it jumps to the end of the line regardless of cursor position.
+Open `about-vim.md` with `vim about-vim.md` (a recap from earlier lessons). Press <kbd>i</kbd>, type some text, and press <kbd>Esc</kbd>. Then press <kbd>a</kbd> and notice the one-column difference from <kbd>i</kbd>, press <kbd>Esc</kbd>, and press <kbd>A</kbd> to enter insert mode at the end of the line.
 
 **Goal:**
-The learner distinguishes `i`'s and `a`'s cursor placement and knows `A` always targets the end of the line.
+The learner uses the insert-family commands to type text, distinguishes `i`'s and `a`'s cursor placement, and knows `A` always targets the end of the line.
 
 ## Notes
 

@@ -115,8 +115,8 @@ Source: [file](../../src/curriculum/01-modes/lesson-05.md)
   - Recap: `i` enters insert mode just before the cursor.
   - `a` enters insert mode just after the cursor — one column to the right of `i`.
   - `A` jumps to the end of the line and enters insert mode there, regardless of the cursor's column; it only works as a command from normal mode, so `Esc` is required before using it.
-- **Activity:** Open `about-vim.md` with `vim about-vim.md` (a recap from earlier lessons). Press <kbd>i</kbd> again to reinforce last lesson, then <kbd>Esc</kbd>. Press <kbd>a</kbd> and notice the one-column difference from <kbd>i</kbd>, then <kbd>Esc</kbd>. Press <kbd>A</kbd> and notice it jumps to the end of the line regardless of cursor position.
-- **Goal:** The learner distinguishes `i`'s and `a`'s cursor placement and knows `A` always targets the end of the line.
+- **Activity:** Open `about-vim.md` with `vim about-vim.md` (a recap from earlier lessons). Press <kbd>i</kbd>, type some text, and press <kbd>Esc</kbd>. Then press <kbd>a</kbd> and notice the one-column difference from <kbd>i</kbd>, press <kbd>Esc</kbd>, and press <kbd>A</kbd> to enter insert mode at the end of the line.
+- **Goal:** The learner uses the insert-family commands to type text, distinguishes `i`'s and `a`'s cursor placement, and knows `A` always targets the end of the line.
 
 #### 6. **Saving with `:w`** — type: `learn`
 
@@ -129,8 +129,8 @@ Source: [file](../../src/curriculum/01-modes/lesson-06.md)
   - The colon opens command-line mode, where file operations live.
   - `:w` writes the buffer to disk without closing it — the status line confirms the write, and you stay in normal mode, ready to keep editing.
   - The `Down` arrow key moves the cursor to the next line — handy here since Vim's own movement keys haven't been taught yet.
-- **Activity:** Press Down once to reach the last line, fix the "useed" typo into "used", then save with `:w`.
-- **Goal:** The learner saves work without ending the session.
+- **Activity:** Use an insert-family command to change the `# Vim` heading to `# About Vim`, then save with `:w`.
+- **Goal:** The learner makes a targeted text change and saves it without ending the session.
 
 #### 7. **New lines and quitting** — type: `learn`
 
@@ -143,8 +143,8 @@ Source: [file](../../src/curriculum/01-modes/lesson-07.md)
   - `o` opens a new line below the current one and enters insert mode there.
   - `:w` saves the changes — a recap from last lesson.
   - `:q` quits Vim. With no unsaved changes, it closes right away.
-- **Activity:** Add a new line below the current one with `o`, save the changes with `:w`, then quit with `:q`.
-- **Goal:** The learner adds a new line without manually positioning the cursor first, reinforces saving, and closes a session with no unsaved changes.
+- **Activity:** Use `o` to add an empty line below the heading, use `o` again to add the Fred Fish paragraph below the first paragraph, save with `:w`, then quit with `:q`.
+- **Goal:** The learner uses `o` to add both a blank line and a paragraph in the correct locations, reinforces saving, and closes a session with no unsaved changes.
 
 #### 8. **The `O` command and force quitting** — type: `learn`
 

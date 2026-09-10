@@ -601,7 +601,7 @@ describe('authored lessons end to end', () => {
 
     expect(state.mode).toBe('normal');
     expect(state.activeFilePath).toBe('about-vim.md');
-    expect(state.buffer[0]).toBe(
+    expect(state.buffer[1]).toBe(
       'Vim was created by Bram Moolenaar and initially released in 1991. Its name originally stood for "Vi Imitation" before changing to "Vi IMproved".'
     );
     expect(vimLessonEngine.checkRequirements(state, lesson).every((result) => result.passed)).toBe(

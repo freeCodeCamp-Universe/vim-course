@@ -16,10 +16,10 @@ title: 'New lines and quitting'
 - `:q` quits Vim. With no unsaved changes, it closes right away.
 
 **Activity:**
-Add a new line below the current one with `o`, save the changes with `:w`, then quit with `:q`.
+Use `o` to add an empty line below the heading, use `o` again to add the Fred Fish paragraph below the first paragraph, save with `:w`, then quit with `:q`.
 
 **Goal:**
-The learner adds a new line without manually positioning the cursor first, reinforces saving, and closes a session with no unsaved changes.
+The learner uses `o` to add both a blank line and a paragraph in the correct locations, reinforces saving, and closes a session with no unsaved changes.
 
 ## Notes
 
