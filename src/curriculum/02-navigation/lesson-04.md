@@ -34,8 +34,6 @@ As a reminder:
 - <kbd>k</kbd> moves up
 - <kbd>l</kbd> moves right
 
-Your cursor starts at the top-left of V. Navigate to each checkpoint to trace every letter.
-
 # --files--
 
 ## vim.md
