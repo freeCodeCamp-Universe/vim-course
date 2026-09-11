@@ -69,8 +69,15 @@ the focus target instead. A plain `div[tabindex]` never summons the virtual
 keyboard on mobile; the `<textarea>` tells the OS the element accepts text
 input.
 
-The textarea is positioned off-screen (`position: absolute; inset-inline-start:
--9999px`) with zero dimensions and `opacity: 0`. It carries the same
+The textarea is 1×1 px, positioned inside the screen's padding area
+(`position: absolute; inset-block-start: 0; inset-inline-start: 0`) with
+`opacity: 0`. Mobile browsers silently refuse to focus zero-sized or
+off-screen elements, so the textarea must have real dimensions and sit within
+the viewport. The 1×1 px size keeps it focusable without covering the grid, so
+touch exploration (VoiceOver, TalkBack) still reaches the list items underneath.
+`font-size: 1rem` prevents iOS auto-zoom on focus (iOS zooms inputs with
+font-size < 16px). This matches the xterm.js pattern of a small in-viewport
+textarea whose position can be overridden at runtime. It carries the same
 `aria-label` and `aria-roledescription` as the screen div so screen readers on
 mobile announce it correctly. Keyboard events on the textarea bubble up to the
 screen, so the existing `keydown` handler still fires. For characters that
@@ -350,8 +357,8 @@ panel, then calls `focus()` on whichever element is the focus target.
 
 - `.terminal`: flex column, full height, monospace font, color custom properties.
 - `.screen`: flex-grow scrollable area, `padding-inline: 2ch`.
-- `.touch-input`: hidden textarea for touch-device keyboard input (absolutely
-  positioned off-screen, zero dimensions, `opacity: 0`).
+- `.touch-input`: hidden textarea for touch-device keyboard input (1×1 px,
+  in-viewport, `opacity: 0`).
 - `.grid`: full width, right inset for gutter alignment.
 - `.line`: flex row, min-height from `--terminal-line-height`.
 - `.gutter`: fixed width from `--terminal-gutter-width`, `margin-inline-end: 1ch`.

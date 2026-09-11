@@ -108,20 +108,30 @@
 /*
  * Hidden textarea that acts as the focus target on touch devices so the OS
  * opens its virtual keyboard. It must not be `display: none` or
- * `visibility: hidden` (both prevent focus). Instead it is positioned off the
- * visible area with zero dimensions. `opacity: 0` keeps any residual caret or
- * selection highlight invisible.
+ * `visibility: hidden` (both prevent focus), and must not be zero-sized or
+ * off-screen: mobile browsers silently refuse to focus such elements, so
+ * the `mousedown` redirect on `.screen` would call `focus()` to no effect.
+ *
+ * Instead it is 1×1 px, positioned inside the screen's padding area, with
+ * `opacity: 0`. This keeps it focusable without covering the grid, so
+ * touch exploration (VoiceOver, TalkBack) still reaches the list items.
+ * `font-size: 1rem` prevents iOS auto-zoom on focus (iOS zooms inputs
+ * with font-size < 16px). Matches the xterm.js pattern of a small
+ * in-viewport textarea whose position is overridden at runtime.
  */
 .touch-input {
   position: absolute;
-  inset-inline-start: -9999px;
-  inline-size: 0;
-  block-size: 0;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 1px;
+  block-size: 1px;
   padding: 0;
   border: none;
   opacity: 0;
   overflow: hidden;
   resize: none;
+  font-size: 1rem;
+  caret-color: transparent;
 }
 
 .grid {
