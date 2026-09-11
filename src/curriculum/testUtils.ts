@@ -624,6 +624,9 @@ function canonicalizeMatchesPattern(pattern: string): string | undefined {
   // is the three characters `\`, `\`, `t` (regex `\\t`), not a tab byte.
   s = s.replace(/\[ \\\\t\][*+]/g, ' ');
 
+  // An optional literal space still represents the canonical sentence spacing.
+  s = s.replace(/\\\. \?/g, '\\. ');
+
   // \n? → newline (include the optional newline).
   s = s.replace(/\\n\?/g, '\n');
 
