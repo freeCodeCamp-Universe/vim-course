@@ -110,7 +110,7 @@
  * opens its virtual keyboard. It must not be `display: none` or
  * `visibility: hidden` (both prevent focus), and must not be zero-sized or
  * off-screen: mobile browsers silently refuse to focus such elements, so
- * the `mousedown` redirect on `.screen` would call `focus()` to no effect.
+ * the tap-to-focus redirect would call `focus()` to no effect.
  *
  * Instead it is 1×1 px, positioned inside the screen's padding area, with
  * `opacity: 0`. This keeps it focusable without covering the grid, so

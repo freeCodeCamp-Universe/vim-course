@@ -85,8 +85,12 @@ mobile keyboards deliver via `input` events (where `keydown.key` is
 `"Unidentified"`), a separate `input` listener reads the textarea's value and
 forwards each character to `onKey`, then clears the textarea. IME composition
 is tracked via `compositionstart`/`compositionend` to prevent double-processing
-and premature clearing. A `mousedown` listener on the screen redirects taps to
-the textarea so the virtual keyboard opens when tapping anywhere in the terminal.
+and premature clearing. A `touchend` listener on the screen and a `click`
+listener on the terminal root redirect taps to the textarea so the virtual
+keyboard opens when tapping anywhere in the terminal. `mousedown` is not used
+because iOS Safari synthesizes it from the touch sequence and does not treat a
+programmatic `focus()` during a synthetic mouse event as a valid user activation
+for opening the keyboard.
 
 ### vimTerminalView.ts (Vim binding)
 

@@ -543,17 +543,29 @@ export function createTerminalView(options: TerminalViewOptions): TerminalView {
 
   el.append(screen, live, footer);
 
-  // On touch devices, tapping the visible screen area (grid, footer, empty
-  // space) should redirect focus to the hidden textarea so the virtual
-  // keyboard opens. Without this, the tap focuses the screen div (which has
-  // no tabIndex on touch) and the keyboard never appears.
-  const onScreenTap = (event: MouseEvent): void => {
-    if (inputEl && event.target !== inputEl) {
+  // On touch devices, tapping anywhere in the terminal should focus the
+  // hidden textarea so the OS opens its virtual keyboard.
+  //
+  // `mousedown` does not work here: on iOS Safari the browser synthesizes it
+  // from the touch sequence, and a programmatic `focus()` called during a
+  // synthetic mouse event is not treated as a valid user activation for
+  // opening the keyboard. `touchend` is the real user gesture iOS trusts.
+  // A `click` listener on the terminal root acts as a fallback for devices
+  // that may not fire `touchend` on the screen (e.g. taps on the footer,
+  // which is a sibling of `.screen`).
+  const onTouchEnd = (): void => {
+    if (inputEl && document.activeElement !== inputEl) {
+      inputEl.focus();
+    }
+  };
+  const onTerminalClick = (): void => {
+    if (inputEl && document.activeElement !== inputEl) {
       inputEl.focus();
     }
   };
   if (inputEl) {
-    screen.addEventListener('mousedown', onScreenTap);
+    screen.addEventListener('touchend', onTouchEnd);
+    el.addEventListener('click', onTerminalClick);
   }
 
   const onKeyDown = (event: KeyboardEvent): void => {
@@ -824,7 +836,8 @@ export function createTerminalView(options: TerminalViewOptions): TerminalView {
       focusTarget.removeEventListener('keydown', onKeyDown as EventListener);
       focusTarget.removeEventListener('paste', onPaste as EventListener);
       if (inputEl) {
-        screen.removeEventListener('mousedown', onScreenTap);
+        screen.removeEventListener('touchend', onTouchEnd);
+        el.removeEventListener('click', onTerminalClick);
         inputEl.removeEventListener('compositionstart', onCompositionStart);
         inputEl.removeEventListener('compositionend', onCompositionEnd);
         inputEl.removeEventListener('input', onInput);

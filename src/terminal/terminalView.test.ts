@@ -928,14 +928,25 @@ describe('createTerminalView (touch device)', () => {
     expect(textarea).toHaveFocus();
   });
 
-  it('should redirect screen taps to focus the textarea', () => {
+  it('should focus the textarea on touchend in the screen', () => {
     const { q } = mountTouch();
 
     const textarea = q.getByTestId('terminal-touch-input') as HTMLTextAreaElement;
     const screen = q.getByRole('application');
 
     const focusSpy = vi.spyOn(textarea, 'focus');
-    fireEvent.mouseDown(screen);
+    fireEvent.touchEnd(screen);
+
+    expect(focusSpy).toHaveBeenCalled();
+  });
+
+  it('should focus the textarea on click anywhere in the terminal', () => {
+    const { view, q } = mountTouch();
+
+    const textarea = q.getByTestId('terminal-touch-input') as HTMLTextAreaElement;
+
+    const focusSpy = vi.spyOn(textarea, 'focus');
+    fireEvent.click(view.el);
 
     expect(focusSpy).toHaveBeenCalled();
   });
