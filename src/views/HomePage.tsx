@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useCurriculumTree } from '@/curriculum/useCurriculumTree';
 import { LoadingState } from '@/components/base/LoadingState/LoadingState';
 import { FccLogoIcon } from '@/components/base/Icon';
+import { Link } from '@/components/base/Link/Link';
 import { Home } from './Home';
 import styles from './HomePage.module.css';
 
@@ -27,14 +28,9 @@ export function HomePage() {
           <FccLogoIcon className={styles['footer-logo']} />
           <span>
             Developed by the{' '}
-            <a
-              href="https://www.freecodecamp.org"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles['footer-link']}
-            >
+            <Link href="https://www.freecodecamp.org" target="_blank" rel="noopener noreferrer">
               freeCodeCamp
-            </a>{' '}
+            </Link>{' '}
             team
           </span>
         </p>

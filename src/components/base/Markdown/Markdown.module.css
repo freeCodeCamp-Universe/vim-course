@@ -11,6 +11,17 @@
   line-height: var(--line-height-prose);
 }
 
+.prose a {
+  color: var(--color-fg-primary);
+  text-underline-position: under;
+}
+
+.prose a:hover,
+.prose a:focus {
+  text-decoration: none;
+  background-color: var(--color-bg-tertiary);
+}
+
 .prose > *:not(hr) {
   margin-block: 0 var(--space-md);
 }

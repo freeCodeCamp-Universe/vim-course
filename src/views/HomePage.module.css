@@ -46,14 +46,6 @@
   flex-shrink: 0;
 }
 
-.footer-link {
-  color: var(--color-fg-primary);
-}
-
-.footer-link:hover {
-  text-decoration: none;
-}
-
 @media (width >= 768px) {
   .page {
     padding-inline: var(--space-xl);

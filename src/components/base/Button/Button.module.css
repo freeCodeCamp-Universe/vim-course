@@ -6,7 +6,8 @@
   border: 1px solid transparent;
   border-radius: var(--radius);
   cursor: pointer;
-  text-align: center;
+  text-align: center;  
+  text-decoration: none; /* For anchor elements styled as buttons */
 }
 
 .button.borderless {
