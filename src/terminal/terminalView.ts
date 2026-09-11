@@ -132,6 +132,20 @@ export interface TerminalView {
 const ARROW_KEYS = new Set(['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']);
 
 /**
+ * Whether the device has a touch screen and no hover-capable pointer (phones,
+ * tablets). On these devices a plain `<div tabindex="0">` receives focus but
+ * never summons the virtual keyboard, so we need a hidden `<textarea>` as the
+ * focus target. The query matches the project-wide touch-device convention.
+ */
+function isTouchDevice(): boolean {
+  return (
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(hover: none)').matches
+  );
+}
+
+/**
  * Normalize a keyboard event into the engine's key vocabulary, or null when the
  * view must not capture the key. `Tab`/`Shift+Tab` are never captured so the
  * terminal is not a keyboard trap; `Meta` combos and most `Alt`/`Ctrl` combos
@@ -470,7 +484,33 @@ export function createTerminalView(options: TerminalViewOptions): TerminalView {
   screen.setAttribute('role', 'application');
   screen.setAttribute('aria-roledescription', 'terminal');
   screen.setAttribute('aria-label', options.accessibleName);
-  screen.tabIndex = 0;
+
+  // On touch devices, a plain div never summons the virtual keyboard. A hidden
+  // <textarea> inside the screen acts as the real focus target so the OS opens
+  // its on-screen keyboard. On pointer devices the div keeps focus directly so
+  // the existing a11y attributes (role, roledescription, label) are announced.
+  const touch = isTouchDevice();
+  let inputEl: HTMLTextAreaElement | null = null;
+
+  if (touch) {
+    inputEl = document.createElement('textarea');
+    inputEl.className = styles['touch-input'];
+    inputEl.setAttribute('autocapitalize', 'off');
+    inputEl.setAttribute('autocomplete', 'off');
+    inputEl.setAttribute('autocorrect', 'off');
+    inputEl.setAttribute('spellcheck', 'false');
+    inputEl.setAttribute('inputmode', 'text');
+    inputEl.setAttribute('aria-label', options.accessibleName);
+    inputEl.setAttribute('aria-roledescription', 'terminal');
+    inputEl.tabIndex = 0;
+    inputEl.dataset.testid = 'terminal-touch-input';
+    screen.appendChild(inputEl);
+  } else {
+    screen.tabIndex = 0;
+  }
+
+  /** The element that owns keyboard focus: the textarea on touch, the screen on pointer. */
+  const focusTarget = inputEl ?? screen;
 
   const grid = document.createElement('div');
   grid.className = styles.grid;
@@ -502,6 +542,19 @@ export function createTerminalView(options: TerminalViewOptions): TerminalView {
   footer.append(footerStart, footerEndCol);
 
   el.append(screen, live, footer);
+
+  // On touch devices, tapping the visible screen area (grid, footer, empty
+  // space) should redirect focus to the hidden textarea so the virtual
+  // keyboard opens. Without this, the tap focuses the screen div (which has
+  // no tabIndex on touch) and the keyboard never appears.
+  const onScreenTap = (event: MouseEvent): void => {
+    if (inputEl && event.target !== inputEl) {
+      inputEl.focus();
+    }
+  };
+  if (inputEl) {
+    screen.addEventListener('mousedown', onScreenTap);
+  }
 
   const onKeyDown = (event: KeyboardEvent): void => {
     // Cmd+V (macOS) / Ctrl+V (Windows/Linux): read the system clipboard
@@ -539,7 +592,7 @@ export function createTerminalView(options: TerminalViewOptions): TerminalView {
     event.preventDefault();
     options.onKey(key);
   };
-  screen.addEventListener('keydown', onKeyDown);
+  focusTarget.addEventListener('keydown', onKeyDown as EventListener);
 
   const onPaste = (event: ClipboardEvent): void => {
     const text = event.clipboardData?.getData('text/plain');
@@ -548,7 +601,46 @@ export function createTerminalView(options: TerminalViewOptions): TerminalView {
       options.onPaste(text);
     }
   };
-  screen.addEventListener('paste', onPaste);
+  focusTarget.addEventListener('paste', onPaste as EventListener);
+
+  // On touch devices, mobile keyboards often deliver characters through `input`
+  // events instead of (or in addition to) `keydown`. The `keydown` for a tap
+  // may carry `event.key === "Unidentified"`, making `normalizeKey` return null.
+  // This listener reads the character from the textarea's `input` event and
+  // clears it afterward so the textarea stays empty.
+  let composing = false;
+
+  const onCompositionStart = (): void => {
+    composing = true;
+  };
+
+  const onCompositionEnd = (): void => {
+    composing = false;
+    if (inputEl) {
+      const text = inputEl.value;
+      inputEl.value = '';
+      for (const char of text) {
+        options.onKey(char);
+      }
+    }
+  };
+
+  const onInput = (): void => {
+    if (composing || !inputEl) {
+      return;
+    }
+    const text = inputEl.value;
+    inputEl.value = '';
+    for (const char of text) {
+      options.onKey(char);
+    }
+  };
+
+  if (inputEl) {
+    inputEl.addEventListener('compositionstart', onCompositionStart);
+    inputEl.addEventListener('compositionend', onCompositionEnd);
+    inputEl.addEventListener('input', onInput);
+  }
 
   let lastAnnouncement = '';
   let cachedCharWidth: number | null = null;
@@ -724,13 +816,19 @@ export function createTerminalView(options: TerminalViewOptions): TerminalView {
       if (screen.offsetParent === null) {
         return false;
       }
-      screen.focus();
+      focusTarget.focus();
       return true;
     },
     destroy() {
       resizeObserver?.disconnect();
-      screen.removeEventListener('keydown', onKeyDown);
-      screen.removeEventListener('paste', onPaste);
+      focusTarget.removeEventListener('keydown', onKeyDown as EventListener);
+      focusTarget.removeEventListener('paste', onPaste as EventListener);
+      if (inputEl) {
+        screen.removeEventListener('mousedown', onScreenTap);
+        inputEl.removeEventListener('compositionstart', onCompositionStart);
+        inputEl.removeEventListener('compositionend', onCompositionEnd);
+        inputEl.removeEventListener('input', onInput);
+      }
       el.remove();
     },
   };

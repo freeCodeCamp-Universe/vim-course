@@ -105,6 +105,25 @@
   opacity: 0;
 }
 
+/*
+ * Hidden textarea that acts as the focus target on touch devices so the OS
+ * opens its virtual keyboard. It must not be `display: none` or
+ * `visibility: hidden` (both prevent focus). Instead it is positioned off the
+ * visible area with zero dimensions. `opacity: 0` keeps any residual caret or
+ * selection highlight invisible.
+ */
+.touch-input {
+  position: absolute;
+  inset-inline-start: -9999px;
+  inline-size: 0;
+  block-size: 0;
+  padding: 0;
+  border: none;
+  opacity: 0;
+  overflow: hidden;
+  resize: none;
+}
+
 .grid {
   inline-size: 100%;
   padding-inline-end: var(--terminal-right-inset, 0);

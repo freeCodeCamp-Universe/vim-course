@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { fireEvent, within } from '@testing-library/react';
 import { createTerminalView, type TerminalView, type TerminalViewModel } from './terminalView';
 import styles from './terminalView.module.css';
@@ -793,5 +793,166 @@ describe('createTerminalView', () => {
       view.update(model({ announcement: 'hello world' }));
       expect(live.textContent).toBe('\nhello world');
     });
+  });
+});
+
+describe('createTerminalView (touch device)', () => {
+  let originalMatchMedia: typeof window.matchMedia;
+
+  function simulateTouch(): void {
+    window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+      matches: query === '(hover: none)',
+      media: query,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      onchange: null,
+      dispatchEvent: vi.fn(),
+    }));
+  }
+
+  beforeEach(() => {
+    originalMatchMedia = window.matchMedia;
+  });
+
+  afterEach(() => {
+    mounted?.destroy();
+    mounted = null;
+    window.matchMedia = originalMatchMedia;
+    vi.restoreAllMocks();
+  });
+
+  function mountTouch(
+    options: {
+      accessibleName?: string;
+      onKey?: (key: string) => void;
+      onPaste?: (text: string) => void;
+    } = {}
+  ) {
+    simulateTouch();
+    const view = createTerminalView({
+      accessibleName: options.accessibleName ?? 'terminal',
+      onKey: options.onKey ?? (() => {}),
+      onPaste: options.onPaste,
+    });
+    document.body.appendChild(view.el);
+    mounted = view;
+    const q = within(view.el);
+    return { view, q, screen: () => q.getByRole('application') };
+  }
+
+  it('should create a hidden textarea inside the screen on touch devices', () => {
+    const { q } = mountTouch();
+
+    const textarea = q.getByTestId('terminal-touch-input');
+    expect(textarea).toBeInTheDocument();
+    expect(textarea.tagName).toBe('TEXTAREA');
+    expect(textarea).toHaveAttribute('autocapitalize', 'off');
+    expect(textarea).toHaveAttribute('autocomplete', 'off');
+    expect(textarea).toHaveAttribute('autocorrect', 'off');
+    expect(textarea).toHaveAttribute('spellcheck', 'false');
+  });
+
+  it('should not give the screen div a tabIndex on touch devices', () => {
+    const { screen } = mountTouch();
+
+    expect(screen()).not.toHaveAttribute('tabindex');
+  });
+
+  it('should label the textarea with the accessible name and roledescription', () => {
+    const { q } = mountTouch({ accessibleName: 'editor' });
+
+    const textarea = q.getByTestId('terminal-touch-input');
+    expect(textarea).toHaveAttribute('aria-label', 'editor');
+    expect(textarea).toHaveAttribute('aria-roledescription', 'terminal');
+  });
+
+  it('should forward characters from input events to onKey', () => {
+    const onKey = vi.fn();
+    const { q } = mountTouch({ onKey });
+
+    const textarea = q.getByTestId('terminal-touch-input') as HTMLTextAreaElement;
+    textarea.value = 'j';
+    fireEvent.input(textarea);
+
+    expect(onKey).toHaveBeenCalledWith('j');
+    expect(textarea.value).toBe('');
+  });
+
+  it('should forward each character separately when multiple arrive at once', () => {
+    const onKey = vi.fn();
+    const { q } = mountTouch({ onKey });
+
+    const textarea = q.getByTestId('terminal-touch-input') as HTMLTextAreaElement;
+    textarea.value = 'dd';
+    fireEvent.input(textarea);
+
+    expect(onKey).toHaveBeenCalledTimes(2);
+    expect(onKey).toHaveBeenNthCalledWith(1, 'd');
+    expect(onKey).toHaveBeenNthCalledWith(2, 'd');
+  });
+
+  it('should defer to compositionend during an IME composition', () => {
+    const onKey = vi.fn();
+    const { q } = mountTouch({ onKey });
+
+    const textarea = q.getByTestId('terminal-touch-input') as HTMLTextAreaElement;
+
+    fireEvent.compositionStart(textarea);
+    textarea.value = 'n';
+    fireEvent.input(textarea);
+    expect(onKey).not.toHaveBeenCalled();
+
+    textarea.value = 'ni';
+    fireEvent.input(textarea);
+    expect(onKey).not.toHaveBeenCalled();
+
+    fireEvent.compositionEnd(textarea);
+    expect(onKey).toHaveBeenCalledTimes(2);
+    expect(onKey).toHaveBeenNthCalledWith(1, 'n');
+    expect(onKey).toHaveBeenNthCalledWith(2, 'i');
+    expect(textarea.value).toBe('');
+  });
+
+  it('should focus the textarea on focus() when on screen', () => {
+    const { view, q } = mountTouch();
+
+    const textarea = q.getByTestId('terminal-touch-input') as HTMLTextAreaElement;
+    const screen = q.getByRole('application');
+    Object.defineProperty(screen, 'offsetParent', { value: document.body, configurable: true });
+
+    const moved = view.focus();
+
+    expect(moved).toBe(true);
+    expect(textarea).toHaveFocus();
+  });
+
+  it('should redirect screen taps to focus the textarea', () => {
+    const { q } = mountTouch();
+
+    const textarea = q.getByTestId('terminal-touch-input') as HTMLTextAreaElement;
+    const screen = q.getByRole('application');
+
+    const focusSpy = vi.spyOn(textarea, 'focus');
+    fireEvent.mouseDown(screen);
+
+    expect(focusSpy).toHaveBeenCalled();
+  });
+
+  it('should clean up all touch listeners on destroy', () => {
+    const onKey = vi.fn();
+    simulateTouch();
+    const view = createTerminalView({ accessibleName: 'terminal', onKey });
+    document.body.appendChild(view.el);
+
+    const q = within(view.el);
+    const textarea = q.getByTestId('terminal-touch-input') as HTMLTextAreaElement;
+
+    view.destroy();
+
+    textarea.value = 'x';
+    fireEvent.input(textarea);
+    expect(onKey).not.toHaveBeenCalled();
   });
 });

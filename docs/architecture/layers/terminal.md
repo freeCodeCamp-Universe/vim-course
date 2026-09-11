@@ -47,7 +47,8 @@ The view knows nothing about Vim, lessons, or the engine. It receives a
 
 ```
 div.terminal                          (root)
-├── div.screen                        (role="application", tabIndex=0)
+├── div.screen                        (role="application")
+│   ├── textarea.touch-input          (touch only: hidden focus target, see below)
 │   └── div.grid                      (role="list", aria-label="{name} contents")
 │       ├── div.line [role="listitem"] (one per content row)
 │       ├── div [role="img"]          (wrapper for described-image groups)
@@ -60,6 +61,25 @@ div.terminal                          (root)
         ├── span                      (ruler text, e.g. "1,5")
         └── span.sr-only              (accessible label for ruler)
 ```
+
+On **pointer devices** (desktops, laptops) the `.screen` div has `tabIndex=0`
+and is the focus target. On **touch devices** (detected via
+`matchMedia('(hover: none)')`) a hidden `<textarea>` inside `.screen` becomes
+the focus target instead. A plain `div[tabindex]` never summons the virtual
+keyboard on mobile; the `<textarea>` tells the OS the element accepts text
+input.
+
+The textarea is positioned off-screen (`position: absolute; inset-inline-start:
+-9999px`) with zero dimensions and `opacity: 0`. It carries the same
+`aria-label` and `aria-roledescription` as the screen div so screen readers on
+mobile announce it correctly. Keyboard events on the textarea bubble up to the
+screen, so the existing `keydown` handler still fires. For characters that
+mobile keyboards deliver via `input` events (where `keydown.key` is
+`"Unidentified"`), a separate `input` listener reads the textarea's value and
+forwards each character to `onKey`, then clears the textarea. IME composition
+is tracked via `compositionstart`/`compositionend` to prevent double-processing
+and premature clearing. A `mousedown` listener on the screen redirects taps to
+the textarea so the virtual keyboard opens when tapping anywhere in the terminal.
 
 ### vimTerminalView.ts (Vim binding)
 
@@ -316,10 +336,13 @@ content.
 
 ### Focus and keyboard trapping
 
-The `.screen` element has `tabIndex=0` and `role="application"`. Tab and
-Shift+Tab always pass through to prevent keyboard traps. Meta combos and most
-Alt/Ctrl combos pass through for browser/OS shortcuts. The `focus()` method
-checks `screen.offsetParent !== null` to avoid focusing a hidden tab panel.
+On pointer devices, the `.screen` element has `tabIndex=0` and
+`role="application"`. On touch devices the hidden `<textarea>` inside
+`.screen` holds `tabIndex=0` instead (see DOM structure above). In both cases,
+Tab and Shift+Tab always pass through to prevent keyboard traps. Meta combos
+and most Alt/Ctrl combos pass through for browser/OS shortcuts. The `focus()`
+method checks `screen.offsetParent !== null` to avoid focusing a hidden tab
+panel, then calls `focus()` on whichever element is the focus target.
 
 ## CSS structure
 
@@ -327,6 +350,8 @@ checks `screen.offsetParent !== null` to avoid focusing a hidden tab panel.
 
 - `.terminal`: flex column, full height, monospace font, color custom properties.
 - `.screen`: flex-grow scrollable area, `padding-inline: 2ch`.
+- `.touch-input`: hidden textarea for touch-device keyboard input (absolutely
+  positioned off-screen, zero dimensions, `opacity: 0`).
 - `.grid`: full width, right inset for gutter alignment.
 - `.line`: flex row, min-height from `--terminal-line-height`.
 - `.gutter`: fixed width from `--terminal-gutter-width`, `margin-inline-end: 1ch`.
