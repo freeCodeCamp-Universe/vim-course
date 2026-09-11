@@ -47,20 +47,6 @@ In 1979, `vi` (short for "visual") was released as a full-screen editor. It free
 In 1991, Vim (short for "Vi IMproved") was released, adding modern features like multiple undo levels, split windows, and syntax highlighting. It eventually became the standard text editor on most Linux systems.
 ```
 
-# --expected--
-
-## editor-history.md
-
-```md
-For early Unix systems, developers used editors like `ed` (short for "editor"). At the time, computers lacked video monitors and used teletype machines that physically printed output onto paper. Because `ed` couldn't display the whole file, users had to blind-type commands to modify text and print lines onto paper to see the result.
-
-In 1976, `ex` (short for "extended") was created with more advanced editing shortcuts as terminals shifted from paper printing to electronic screens. It introduced a visual mode, using the new screens to render multiple lines of text at once.
-
-In 1979, `vi` (short for "visual") was released as a full-screen editor. It freed users from `ed` and `ex`'s line-by-line constraints. Now they could see and edit an entire screen of text, taking advantage of the new video display monitors.
-
-In 1991, Vim (short for "Vi IMproved") was released, adding modern features like multiple undo levels, split windows, and syntax highlighting. It eventually became the standard text editor on most Linux systems.
-```
-
 # --config--
 
 ```json
@@ -89,7 +75,7 @@ In 1991, Vim (short for "Vi IMproved") was released, adding modern features like
       "hintOnAdvance": true,
       "test": {
         "file": "editor-history.md",
-        "equalsExpectedNormalizingWhitespace": true,
+        "matches": "/^For early Unix systems, developers used editors like `ed` \\(short for \"editor\"\\)\\. At the time, computers lacked video monitors and used teletype machines that physically printed output onto paper\\. Because `ed` couldn't display the whole file, users had to blind-type commands to modify text and print lines onto paper to see the result\\.\\n\\nIn 1976, `ex` \\(short for \"extended\"\\) was created with more advanced editing shortcuts as terminals shifted from paper printing to electronic screens\\. ?It introduced a visual mode, using the new screens to render multiple lines of text at once\\.\\n\\nIn 1979, `vi` \\(short for \"visual\"\\) was released as a full-screen editor\\. It freed users from `ed` and `ex`'s line-by-line constraints\\. Now they could see and edit an entire screen of text, taking advantage of the new video display monitors\\.\\n\\nIn 1991, Vim \\(short for \"Vi IMproved\"\\) was released, adding modern features like multiple undo levels, split windows, and syntax highlighting\\. It eventually became the standard text editor on most Linux systems\\.$/",
         "matchAgainstSaved": true
       }
     }
