@@ -149,7 +149,7 @@ body {
 #root {
   display: flex;
   flex-direction: column;
-  min-block-size: 100dvh;
+  min-block-size: var(--app-height, 100dvh);
 }
 
 /*
@@ -157,10 +157,14 @@ body {
  * space via flex without body scrolling. [data-lesson-page] is on LessonPage
  * (all lesson types); [data-tab] is kept as a secondary selector for
  * robustness.
+ *
+ * --app-height is stamped by useVirtualKeyboardViewport.ts on touch devices
+ * so the layout shrinks when the mobile virtual keyboard opens, keeping the
+ * terminal command line visible above the keyboard.
  */
 #root:has([data-lesson-page]),
 #root:has([data-tab]) {
-  block-size: 100dvh;
+  block-size: var(--app-height, 100dvh);
   overflow: hidden;
 }
 
