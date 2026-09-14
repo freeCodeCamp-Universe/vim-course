@@ -152,6 +152,10 @@ export function processExplorerKey(state: EditorState, key: string): CommandResu
     return openExplorerSelection(state);
   }
 
+  if (key === 'h' || key === 'l' || key === 'ArrowLeft' || key === 'ArrowRight') {
+    return { state, actions: [] };
+  }
+
   if (key === '-') {
     if (!state.explorer || state.explorer.cwd === '') {
       return { state, actions: [] };

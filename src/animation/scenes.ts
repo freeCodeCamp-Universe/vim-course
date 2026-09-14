@@ -56,7 +56,7 @@ const SPARKLE_GROUPS = [
   '˚༄. ݁₊ ⊹  ݁₊ ⊹ ₊ ݁.',
   '.𖥔 ݁ .₊ ⊹˚༺ .˖ִ  𖦹',
 ];
-const HAT_LINES = ['   ,', ' _/(_'];
+const HAT_LINES = ['  )\\  ', '_/  \\_'];
 
 function completionScene(frame: number, rows: number, cols: number): string[] {
   const animationFrame = frame % COMPLETION_PERIOD;

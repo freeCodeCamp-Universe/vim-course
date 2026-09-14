@@ -91,6 +91,15 @@ describe('netrw explorer via :Explore', () => {
     expect(upAgain.explorer?.selected).toBe(0);
   });
 
+  it('should silently ignore h, l, and horizontal arrow keys', () => {
+    const state = explore();
+    const after = run(state, ['h', 'l', 'ArrowLeft', 'ArrowRight']);
+
+    expect(after.explorer).toEqual(state.explorer);
+    expect(after.cursor).toEqual(state.cursor);
+    expect(after.status).toBe('');
+  });
+
   it('should clamp the selection at the top and bottom of the listing', () => {
     const top = run(explore(), ['k', 'k', 'k']);
     expect(top.explorer?.selected).toBe(0);
@@ -131,7 +140,7 @@ describe('netrw explorer via :Explore', () => {
     expect(refused.history).not.toContainEqual({ type: 'ex', command: ':e c.txt' });
   });
 
-  it('should ignore keys other than j/k/Enter, reporting each as unsupported', () => {
+  it('should ignore keys other than j/k/h/l/Enter, reporting each as unsupported', () => {
     const before = explore();
     const after = run(before, ['x', 'i', 'd', 'd', 'l', 'h', ':', 'G']);
 
