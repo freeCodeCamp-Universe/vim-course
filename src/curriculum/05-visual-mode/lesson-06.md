@@ -83,7 +83,7 @@ C → G
     {
       "label": "`dna.md` should contain the Virus Strand.",
       "hint": "You can open `strands.md`, press <kbd>Shift</kbd> + <kbd>v</kbd> to start visual line selection, select and yank the lines with <kbd>y</kbd>, then open `dna.md` and paste with <kbd>p</kbd>.",
-      "evaluateWhen": { "fileOpen": "dna.md" },
+      "evaluateWhen": { "fileChanged": "dna.md" },
       "test": {
         "file": "dna.md",
         "contains": [
