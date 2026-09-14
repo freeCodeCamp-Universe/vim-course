@@ -42,7 +42,7 @@ The foo was quiet that morning.
 One foo helped another foo save the foo.
 ```
 
-If you want to replace `foo` with `bar`, you would move the cursor to the line containing `foo`, then type `:s/foo/bar` and press `Enter`. The command will replace the first occurrence of `foo` with `bar` on that line.
+If you want to replace `foo` with `bar`, you would move the cursor to the line containing `foo`, then type `:s/foo/bar/` and press <kbd>Enter</kbd>. The command will replace the first occurrence of `foo` with `bar` on that line.
 
 To replace _all_ occurrences on the current line, you can add the `g` flag at the end of the command, like this: `:s/foo/bar/g`.
 

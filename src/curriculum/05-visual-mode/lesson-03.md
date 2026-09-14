@@ -26,7 +26,7 @@ The learner applies `~` to a line-wise selection, and understands the difference
 
 # --instructions--
 
-The `v` command allows you to select text character by character, which may not be efficient in some cases.
+The lowercase `v` command allows you to select text character by character, which may not be efficient in some cases.
 
 If you want to select entire lines, you can use uppercase `V` instead. The command also enters visual mode, but allows you to select whole lines. You can see a counter in the bottom-right corner of the terminal indicating how many lines are selected.
 

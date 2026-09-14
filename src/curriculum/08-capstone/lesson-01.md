@@ -27,7 +27,7 @@ You've reached the end of the course.
 
 There is a capstone project that will test your ability to apply what you've learned in a practical scenario.
 
-This lesson provides a reference of all the commands taught in this course. You can use this as a cheatsheet for the the capstone project, and as a reference for future use.
+This lesson provides a reference of all the commands taught in this course. You can use this as a cheatsheet for the capstone project, and as a reference for future use.
 
 ## Starting Vim and entering insert mode
 
