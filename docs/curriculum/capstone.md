@@ -126,7 +126,7 @@ The counter is an integer on the checklist item's runtime state. It increments o
       },
       "test": {
         "file": "study.md",
-        "contains": ["/^Key[ \\t]*1[ \\t]*:[ \\t]*STORM[ \\t]*$/im"]
+        "contains": ["/^Key[ \\t]*1[ \\t]*:[ \\t]*KEY1[ \\t]*$/im"]
       }
     },
     {
@@ -140,7 +140,7 @@ The counter is an integer on the checklist item's runtime state. It increments o
       },
       "test": {
         "file": "study.md",
-        "contains": ["/^Key[ \\t]*2[ \\t]*:[ \\t]*LAUREL[ \\t]*$/im"]
+        "contains": ["/^Key[ \\t]*2[ \\t]*:[ \\t]*KEY2[ \\t]*$/im"]
       }
     },
     {
@@ -154,7 +154,7 @@ The counter is an integer on the checklist item's runtime state. It increments o
       },
       "test": {
         "file": "study.md",
-        "contains": ["/^Key[ \\t]*3[ \\t]*:[ \\t]*CRANE[ \\t]*$/im"]
+        "contains": ["/^Key[ \\t]*3[ \\t]*:[ \\t]*KEY3[ \\t]*$/im"]
       }
     },
     {
@@ -164,9 +164,9 @@ The counter is an integer on the checklist item's runtime state. It increments o
         "file": "study.md",
         "saved": true,
         "contains": [
-          "/^Key[ \\t]*1[ \\t]*:[ \\t]*STORM[ \\t]*$/im",
-          "/^Key[ \\t]*2[ \\t]*:[ \\t]*LAUREL[ \\t]*$/im",
-          "/^Key[ \\t]*3[ \\t]*:[ \\t]*CRANE[ \\t]*$/im"
+          "/^Key[ \\t]*1[ \\t]*:[ \\t]*KEY1[ \\t]*$/im",
+          "/^Key[ \\t]*2[ \\t]*:[ \\t]*KEY2[ \\t]*$/im",
+          "/^Key[ \\t]*3[ \\t]*:[ \\t]*KEY3[ \\t]*$/im"
         ],
         "matchAgainstSaved": true
       }
