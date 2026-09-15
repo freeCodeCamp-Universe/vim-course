@@ -61,4 +61,10 @@ describe('KbdCombo', () => {
 
     expect(screen.getByText('+')).toBeInTheDocument();
   });
+
+  it('should render a minimal combo without a separator', () => {
+    render(<KbdCombo keys={['Ctrl', 'K']} minimal />);
+
+    expect(screen.queryByText('+')).not.toBeInTheDocument();
+  });
 });

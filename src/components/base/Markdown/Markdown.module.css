@@ -1,7 +1,7 @@
 .prose {
   --prose-lh-base: var(--line-height-prose);
   --prose-lh-code: 1.7;
-  --prose-lh-kbd: 2;
+  --prose-lh-kbd: 1.9;
 
   font-family: var(--font-sans);
   color: var(--color-fg-primary);
@@ -88,6 +88,7 @@
   text-align: center;
 }
 
+.prose p:has(kbd),
 .prose li:has(kbd),
 .prose td:has(kbd) {
   line-height: var(--prose-lh-kbd);

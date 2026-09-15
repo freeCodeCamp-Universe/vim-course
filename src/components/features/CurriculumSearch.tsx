@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useCmdLabel } from '@/hooks/usePlatformModifier';
+import { KbdCombo } from '@/components/base/KbdCombo/KbdCombo';
 import styles from './CurriculumSearch.module.css';
 
 interface Props {
@@ -9,7 +9,6 @@ interface Props {
 
 export function CurriculumSearch({ query, onQueryChange }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const cmdLabel = useCmdLabel();
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -48,8 +47,11 @@ export function CurriculumSearch({ query, onQueryChange }: Props) {
           aria-keyshortcuts="Meta+K Control+K"
         />
         <span className={styles.hint} aria-hidden="true">
-          <span className={styles['hint-key']}>{cmdLabel}</span>
-          <span className={styles['hint-key']}>K</span>
+          <KbdCombo
+            keys={['Cmd', 'K']}
+            minimal
+            className={styles['hint-combo']}
+          />
         </span>
       </label>
     </div>

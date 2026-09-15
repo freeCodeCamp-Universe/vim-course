@@ -17,9 +17,22 @@
   border-block-start: 1px solid var(--color-border-secondary);
 }
 
+.keys {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.keys > span {
+  white-space: nowrap;
+}
+
 .action {
   margin: 0;
   color: var(--color-fg-primary);
   text-align: end;
   font-size: var(--text-sm);
+}
+
+.keys + .action {
+  margin-inline-start: var(--space-md);
 }

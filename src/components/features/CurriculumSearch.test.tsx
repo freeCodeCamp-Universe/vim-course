@@ -61,6 +61,13 @@ describe('CurriculumSearch', () => {
     expect(input).toHaveAttribute('aria-keyshortcuts', 'Meta+K Control+K');
   });
 
+  it('should render the keyboard shortcut hint as kbd elements', () => {
+    renderSearch();
+
+    expect(screen.getByText(/^(⌘|Ctrl)$/, { selector: 'kbd' })).toBeInTheDocument();
+    expect(screen.getByText('K', { selector: 'kbd' })).toBeInTheDocument();
+  });
+
   it('should not respond to Alt+K', () => {
     renderSearch();
     const input = screen.getByRole('searchbox');

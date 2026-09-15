@@ -13,13 +13,19 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  flex: 0 0 auto;
   min-inline-size: 1.6rem;
   min-block-size: 1.6rem;
   font-family: var(--font-mono);
+  white-space: nowrap;
 }
 
 .combo kbd.kbd-square {
   inline-size: 1.6rem;
+}
+
+.combo.minimal kbd {
+  box-shadow: none;
 }
 
 .combo kbd.kbd-symbol {

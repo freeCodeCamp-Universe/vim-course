@@ -12,6 +12,8 @@ export interface KbdComboProps {
    * modal where the chips must always be visually separated.
    */
   separateAll?: boolean;
+  /** When true, omit separators and render flat key chips for compact hints. */
+  minimal?: boolean;
 }
 
 /** A non-ASCII symbol key (e.g. ⌥, ⌘) runs directly into the next key with no separator. */
@@ -25,7 +27,12 @@ function isSymbolKey(resolved: string): boolean {
  * together without a separator, matching macOS convention. Resolves 'Alt' and 'Cmd'
  * to platform-specific labels. Hidden below 768px on pointer devices.
  */
-export function KbdCombo({ keys, className, separateAll = false }: KbdComboProps) {
+export function KbdCombo({
+  keys,
+  className,
+  separateAll = false,
+  minimal = false,
+}: KbdComboProps) {
   const altLabel = useAltLabel();
   const cmdLabel = useCmdLabel();
 
@@ -42,10 +49,12 @@ export function KbdCombo({ keys, className, separateAll = false }: KbdComboProps
   const resolved = keys.map(resolveKey);
 
   return (
-    <span className={`${styles.combo}${className ? ` ${className}` : ''}`}>
+    <span
+      className={`${styles.combo}${minimal ? ` ${styles.minimal}` : ''}${className ? ` ${className}` : ''}`}
+    >
       {resolved.map((label, index) => (
         <span key={keys[index]}>
-          {index > 0 && (separateAll || !isSymbolKey(resolved[index - 1])) ? (
+          {!minimal && index > 0 && (separateAll || !isSymbolKey(resolved[index - 1])) ? (
             <span className={styles.plus}>+</span>
           ) : null}
           <kbd
