@@ -49,19 +49,21 @@ This lesson provides a reference of all the commands taught in this course. You 
 
 ## Navigation
 
-| Command | Description                                                     |
-| ------- | --------------------------------------------------------------- |
-| `h`     | Move left.                                                      |
-| `j`     | Move down.                                                      |
-| `k`     | Move up.                                                        |
-| `l`     | Move right.                                                     |
-| `w`     | Jump to the start of the next word.                             |
-| `b`     | Jump to the start of the previous word.                         |
-| `0`     | Jump to the start of the line.                                  |
-| `$`     | Jump to the end of the line.                                    |
-| `gg`    | Jump to the first line of the file.                             |
-| `G`     | Jump to the last line of the file. Note: `G` must be uppercase. |
-| `{n}G`  | Jump to line `{n}`. Note: `G` must be uppercase.                |
+| Command         | Description                                                     |
+| --------------- | --------------------------------------------------------------- |
+| `h`             | Move left.                                                      |
+| `j`             | Move down.                                                      |
+| `k`             | Move up.                                                        |
+| `l`             | Move right.                                                     |
+| `w`             | Jump to the start of the next word.                             |
+| `b`             | Jump to the start of the previous word.                         |
+| `0`             | Jump to the start of the line.                                  |
+| `$`             | Jump to the end of the line.                                    |
+| `gg`            | Jump to the first line of the file.                             |
+| `G`             | Jump to the last line of the file. Note: `G` must be uppercase. |
+| `{n}G`          | Jump to line `{n}`. Note: `G` must be uppercase.                |
+| `:set number`   | Show line numbers.                                              |
+| `:set nonumber` | Hide line numbers.                                              |
 
 ## Opening files
 

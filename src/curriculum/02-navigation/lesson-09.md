@@ -38,3 +38,5 @@ These are commands you've learned in this module.
 | `gg`            | Jump to the first line of the file.                       |
 | `G` (uppercase) | Jump to the last line of the file.                        |
 | `{n}G`          | Jump to line `{n}`.<br/><br/>Note: `G` must be uppercase. |
+| `:set number`   | Show line numbers.                                        |
+| `:set nonumber` | Hide line numbers.                                        |
