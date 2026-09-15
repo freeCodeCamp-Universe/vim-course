@@ -35,10 +35,10 @@ Vim lets you do this from normal mode: type `/` followed by the text you want to
 For example, if you type:
 
 ```
-/Foo
+/foo
 ```
 
-Vim will search forward from your current cursor position and jump to the next `Foo` it finds.
+Vim will search forward from your current cursor position and jump to the next `foo` it finds.
 
 Note that the search is case-sensitive. If you want to search for `foo` and `Foo` at the same time, you can add the `\c` flag at the end of the search term, like this:
 
