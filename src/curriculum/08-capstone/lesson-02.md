@@ -100,119 +100,131 @@ X ᚹ I G ᛈ R
 ## puzzle-2/instructions.md
 
 ```md
-When the green gives no names and each herb looks the same,
-Find what guides seekers, and bring it to flame.
-Into the cauldron -- each count, every step as it's penned.
-Follow what's written from beginning to end.
-
-When the last herb is placed, let the ingredients alight:
-First in the first reveals the initial sight.
-Second in second, then third as it's grown,
-Follow the pattern till the key is shown.
+Six recipes rest upon the case,
+Three bring harm, three grant sweet grace.
+Seek the healing brew that holds Starshell,
+Whose written steps let the secret spell:
+First in the first brings the initial sign.
+Second in second, then third down the line,
+Follow the pattern till the key shall shine.
 ```
 
 ## puzzle-2/sylvanglow-philtre.md
 
 ```md
-# SYLVANGLOW PHILTRE
+# Sylvanglow Philtre
 
-Sharpens a herbalist's senses, helps identify wild plants by scent, texture, and taste. Favored by foragers and apothecaries.
+Nature: healing
 
-## Reagents
-
-Sorrel -- 1 measure
-Bluewort -- 1 measure
-Lichenwort -- 2 measures
-Yarrow -- 2 measures
+Clears the senses and sharpens focus under pressure. Carried by scouts and combat mages.
 
 ## Preparation
 
-The lichen opens.
-The yarrow follows.
-The blue binds.
-The yarrow returns.
-The lichen rises once more.
-The sorrel seals.
+Lichenwort
+Yarrow
+Bluewort
+Starshell
+Lichenwort
+Sorrel
 ```
 
-## puzzle-2/seedfire-tonic.md
+## puzzle-2/embersap-tonic.md
 
 ```md
-# SEEDFIRE TONIC
+# Embersap Tonic
 
-Accelerates germination and strengthens early root growth. Used in poor soil or late planting seasons.
+Nature: healing
 
-## Reagents
-
-Goldenbloom -- 2 measures
-Groundwort -- 1 measure
-Seedwort -- 2 measures
+Kindles a sustained inner warmth that eases fatigue and quickens recovery. Favored by soldiers and long-distance travelers.
 
 ## Preparation
 
-The seedwort wakes.
-The goldenbloom follows.
-The seedwort returns.
-The groundwort settles.
-The goldenbloom seals.
+Seedwort
+Goldenbloom
+Seedwort
+Groundwort
+Goldenbloom
 ```
 
-## puzzle-2/grimspore-tincture.md
+## puzzle-2/rotspore-tincture.md
 
 ```md
-# GRIMSPORE TINCTURE
+# Rotspore Tincture
 
-Spreads fungal blight rapidly through nearby soil. Difficult to contain once applied.
+Nature: harmful
 
-## Reagents
-
-Grimleaf -- 3 measures
-Copperleaf -- 1 measure
-Ashroot -- 1 measure
+Induces severe nausea and disorientation when ingested. Difficult to neutralize once absorbed into the body.
 
 ## Preparation
 
-The ashroot darkens.
-The grimleaf spreads.
-The copperleaf follows.
-The grimleaf returns.
-The grimleaf closes.
+Ashroot
+Grimleaf
+Copperleaf
+Starshell
+Goldenbloom
+Grimleaf
 ```
 
 ## puzzle-2/blightmoss-brew.md
 
 ```md
-# BLIGHTMOSS BREW
+# Blightmoss Brew
 
-Produces toxic spores lethal to seedlings. Hazardous to breathe in enclosed spaces.
+Nature: harmful
 
-## Reagents
-
-Darkwort -- 2 measures
-Frostmoss -- 1 measure
-Grimleaf -- 2 measures
+Releases a dense vapor that clouds vision and causes respiratory distress. Hazardous in enclosed spaces.
 
 ## Preparation
 
-The grimleaf spreads.
-The darkwort smolders.
-The frostmoss chills.
-The grimleaf returns.
-The darkwort seals.
+Grimleaf
+Darkwort
+Frostmoss
+Grimleaf
+Starshell
+Darkwort
 ```
 
-## puzzle-2/cauldron.md
+## puzzle-2/verdant-draught.md
 
 ```md
+# Verdant Draught
 
+Nature: healing
+
+Reduces fever and calms inflammation. Brewed and stored by village healers for common ailments.
+
+## Preparation
+
+Feverwort
+Cloverleaf
+Meadowbloom
+Sorrel
+Yarrow
+```
+
+## puzzle-2/thornblight-extract.md
+
+```md
+# Thornblight Extract
+
+Nature: harmful
+
+Weakens the joints and causes muscle tremors with repeated exposure. Historically used to disable captives.
+
+## Preparation
+
+Voidmoss
+Grimleaf
+Ashroot
+Darkwort
+Frostmoss
 ```
 
 ## puzzle-2/hints.md
 
 ```md
-- Find the formula that helps an herbalist tell plants apart.
-- Match each shortened name to its ingredient. Fill the cauldron one measure per line, following the verse.
-- Take letter one from line one, letter two from line two, and so on.
+- Find the recipe with a beneficial effect that contains a specific ingredient.
+- Follow the preparation steps, take letter one from line one, letter two from line two, and so on.
 ```
 
 ## puzzle-3/instructions.md
@@ -222,12 +234,12 @@ The liber holds a tongue no longer spoken:
 Six pairs remain, by time left quite unbroken.
 Follow the pattern that the text has woven.
 
-Three phrases await. Translate each in turn,
+Two phrases await. Translate each in turn,
 And match the target tongue for which they yearn.
 
 Let every finished phrase begin to speak:
 The first of every word is what you seek.
-Pool sixteen letters as the dark grows light;
+Pool twelve letters as the dark grows light;
 The five-letter key takes its majestic flight.
 ```
 
@@ -243,19 +255,17 @@ Noreth arveth pharom fyrath reth. - The noble archer pursues the fierce wolf.
 
 ----- ᝰ -----
 
-Sorath arveth melvath. -
+Noreth reth velkath laryn eska. -
 
-Noreth reth drovak laryn eska. -
-
-The fierce troll pursued the savage archer. -
+The fierce troll watched the savage archer. -
 ```
 
 ## puzzle-3/hints.md
 
 ```md
 - Study the pairs to uncover the old language's rules.
-- Translate all three phrases, then gather the first letter of every word.
-- Use the sixteen available letters to assemble the five-letter word for a flying creature.
+- Translate both phrases, then gather the first letter of every word.
+- Use the twelve available letters to assemble the five-letter word for a flying creature.
 ```
 
 # --config--

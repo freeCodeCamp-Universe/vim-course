@@ -25,7 +25,7 @@ Explains how the capstone puzzles could have been solved, including the final ke
 
 If you have completed the capstone, congratulations!
 
-The goal of the capstone was to bring together the skills you learned for managing files, searching for information, and editing text, which are what you generally would do in a real-world workflow.
+The goal of the capstone is to bring together the skills you learned for managing files, searching for information, and editing text, which are what you generally would do in a real-world workflow.
 
 This lesson is a walkthrough of the capstone, explaining how each puzzle can be solved. If you already solved the capstone, feel free to skip this one.
 
@@ -86,9 +86,8 @@ The words that appear in the grid are: WOLF, BEAR, TIGER, CASE, CHEST, BOX, and 
 
 This puzzle involves the following steps:
 
-- Identify the correct potion
-- List the ingredients in the correct order; their occurrences should match the measure count
-- Extract the letter by line: first letter of the first line, second letter of the second line, third letter of the third line, and so on.
+- Find the recipe with a beneficial effect that contains Starshell.
+- Extract the letter from each ingredient by line: first letter of the first ingredient, second letter of the second ingredient, third letter of the third ingredient, and so on.
 - The letters spell out the key.
 
 :::tabs
@@ -96,52 +95,50 @@ This puzzle involves the following steps:
 ### instructions.md
 
 ```md
-When the green gives no names and each herb looks the same,
-Find what guides seekers, and bring it to flame.
-Into the cauldron -- each count, every step as it's penned.
-Follow what's written from beginning to end.
-
-When the last herb is placed, let the ingredients alight:
-First in the first reveals the initial sight.
-Second in second, then third as it's grown,
-Follow the pattern till the key is shown.
+Six recipes rest upon the case,
+Three bring harm, three grant sweet grace.
+Seek the healing brew that holds Starshell,
+Whose written steps let the secret spell:
+First in the first brings the initial sign.
+Second in second, then third down the line,
+Follow the pattern till the key shall shine.
 ```
 
 ### sylvanglow-philtre.md
 
 ```md
-# SYLVANGLOW PHILTRE
+# Sylvanglow Philtre
 
-Sharpens a herbalist's senses, helps identify wild plants by scent, texture, and taste. Favored by foragers and apothecaries.
+Nature: healing
 
-## Reagents
-
-Sorrel -- 1 measure
-Bluewort -- 1 measure
-Lichenwort -- 2 measures
-Yarrow -- 2 measures
+Clears the senses and sharpens focus under pressure. Carried by scouts and combat mages.
 
 ## Preparation
 
-The lichen opens.
-The yarrow follows.
-The blue binds.
-The yarrow returns.
-The lichen rises once more.
-The sorrel seals.
+Lichenwort
+Yarrow
+Bluewort
+Starshell
+Lichenwort
+Sorrel
 ```
 
 :::
 
-The riddle looks for a brew that strengthens a herbalist's senses. The Sylvanglow Philtre is the only brew that does this, so this is the correct potion.
+You can search either by the nature of the recipes (healing) or by the specific ingredient (Starshell):
 
-`cauldron.md` is provided as a drafting space for the ingredients. If you write them in the order specified in the formula, you get the following lines:
+- `:vimgrep healing\c *.md`
+- `:vimgrep starshell\c *.md`
+
+Among the six recipes, only Sylvanglow Philtre meets both conditions.
+
+The preparation section lists the ingredients in order:
 
 ```md
 Lichenwort
 Yarrow
 Bluewort
-Yarrow
+Starshell
 Lichenwort
 Sorrel
 ```
@@ -166,12 +163,12 @@ The liber holds a tongue no longer spoken:
 Six pairs remain, by time left quite unbroken.
 Follow the pattern that the text has woven.
 
-Three phrases await. Translate each in turn,
+Two phrases await. Translate each in turn,
 And match the target tongue for which they yearn.
 
 Let every finished phrase begin to speak:
 The first of every word is what you seek.
-Pool sixteen letters as the dark grows light;
+Pool twelve letters as the dark grows light;
 The five-letter key takes its majestic flight.
 ```
 
@@ -187,11 +184,9 @@ Noreth arveth pharom fyrath reth. - The noble archer pursues the fierce wolf.
 
 ----- ᝰ -----
 
-Sorath arveth melvath. -
+Noreth reth velkath laryn eska. -
 
-Noreth reth drovak laryn eska. -
-
-The fierce troll pursued the savage archer. -
+The fierce troll watched the savage archer. -
 ```
 
 :::
@@ -215,15 +210,14 @@ The vocabulary is:
 | trinthar         | savage  |
 | velkath          | chase   |
 
-The three phrases translate as follows:
+The two phrases translate as follows:
 
-| Ancient language                            | English                                  |
-| ------------------------------------------- | ---------------------------------------- |
-| Sorath arveth melvath.                      | The cunning archer watches.              |
-| Noreth reth drovak laryn eska.              | The noble wolf attacks the lurking elf.  |
-| The fierce troll pursued the savage archer. | Fyrath lorvath repharom trinthar arveth. |
+| Source                                      | Translation                               |
+| ------------------------------------------- | ----------------------------------------- |
+| Noreth reth velkath laryn eska.             | The noble wolf chases the lurking elf.    |
+| The fierce troll watched the savage archer. | Fyrath lorvath remelvath trinthar arveth. |
 
-Taking the first letter of every word across all three answers, you have: T, C, A, W, T, N, W, A, T, L, E, F, L, R, T, A.
+Taking the first letter of every word across both answers, you have: T, N, W, C, T, L, E, F, L, R, T, A.
 
 The five-letter word that can be formed from these letters and is a flying creature is CRANE.
 
