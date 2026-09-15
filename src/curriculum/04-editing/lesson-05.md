@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586d1
 type: learn
 title: 'Undoing and redoing'
+introduces: u, Ctrl-r
 ---
 
 # --author-notes--

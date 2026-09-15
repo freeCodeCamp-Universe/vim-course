@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586d0
 type: learn
 title: 'Copying and pasting'
+introduces: yy, p
 ---
 
 # --author-notes--

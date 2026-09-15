@@ -36,6 +36,11 @@ from the project root (`projects/vim-course/`).
 - **`pnpm sync-curriculum-doc`** — regenerate `docs/curriculum/curriculum-outline.md` from
   `ordering.ts` and the lesson files. Use `--check` to verify without writing
   (runs in CI).
+- **`pnpm check-review-commands`** — verify that each module's review lesson
+  lists every command from its lessons' `introduces` frontmatter, and that the
+  capstone cheatsheet matches the reviews. Use `--check` to exit 1 on drift (CI).
+- **`pnpm sync-command-reference`** — rebuild the capstone command reference
+  (`08-capstone/lesson-01.md`) from the module review lessons.
 
 `add-module` and `add-lesson` call `sync-curriculum-doc` automatically, so you do
 not need to run it separately after using them.

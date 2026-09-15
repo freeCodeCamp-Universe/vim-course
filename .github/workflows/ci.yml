@@ -40,8 +40,8 @@ jobs:
       - name: Test
         run: pnpm test
 
-      - name: Check curriculum doc
-        run: pnpm sync-curriculum-doc --check
+      - name: Validate curriculum integrity
+        run: pnpm validate:curriculum-integrity
 
       - name: Build
         run: pnpm build

@@ -55,9 +55,9 @@ Source: [file](../../src/curriculum/01-modes/lesson-01.md)
 
 - **Concept:**
   - Vim is a text editor you run entirely from the keyboard, no mouse needed.
-  - It comes preinstalled on almost every Linux, macOS, and Unix computer, so it's the one editor you can count on finding already there, even on a computer you don't normally use.
+  - It comes preinstalled on almost every Linux, macOS, and Unix computer.
   - You start it by typing `vim` in the terminal (optionally followed by a filename) and pressing `Enter`.
-  - This lesson opens on that plain prompt instead of inside the editor, so the last thing it teaches is the launch itself.
+  - This lesson starts with a bare terminal.
 - **Activity:** Read why Vim is worth learning, then in the terminal type `vim` and press `Enter` to open the file.
 - **Goal:** The learner understands why Vim is worth learning, and performs the exact keystrokes that get them from a bare terminal into Vim.
 

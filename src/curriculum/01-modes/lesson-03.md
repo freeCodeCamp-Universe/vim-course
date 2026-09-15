@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586b4
 type: learn
 title: 'Opening a file directly'
+introduces: vim <filename>
 ---
 
 # --author-notes--

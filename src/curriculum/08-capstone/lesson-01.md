@@ -29,7 +29,17 @@ There is a capstone project that will test your ability to apply what you've lea
 
 This lesson provides a reference of all the commands taught in this course. You can use this as a cheatsheet for the capstone project, and as a reference for future use.
 
-## Starting Vim and entering insert mode
+## Modes, insert, save, quit
+
+### Modes
+
+Vim has multiple modes, including:
+
+- **Normal mode:** This is the default mode when you open Vim.
+- **Insert mode:** This mode allows you to insert text.
+- **Command-line mode:** This mode allows you to execute commands. You can enter command mode by pressing <kbd>:</kbd> in normal mode.
+
+### Commands
 
 | Command          | Description                                                          |
 | ---------------- | -------------------------------------------------------------------- |
@@ -37,11 +47,11 @@ This lesson provides a reference of all the commands taught in this course. You 
 | `:e <filename>`  | Open a file from inside Vim.                                         |
 | `vim <filename>` | Open a specific file directly.                                       |
 | `i`              | Enter insert mode and place the cursor before the current character. |
-| `a`              | Enter insert mode and place the cursor after the current character.  |
-| `A`              | Enter insert mode and place the cursor at the end of the line.       |
-| `o`              | Open a new line below the current line and enter insert mode.        |
-| `O`              | Open a new line above the current line and enter insert mode.        |
-| `Esc`            | Return to normal mode.                                               |
+| `a` (lowercase)  | Enter insert mode and place the cursor after the current character.  |
+| `A` (uppercase)  | Enter insert mode and place the cursor at the end of the line.       |
+| `o` (lowercase)  | Open a new line below the current line and enter insert mode.        |
+| `O` (uppercase)  | Open a new line above the current line and enter insert mode.        |
+| `Esc`            | Return to normal mode from insert mode.                              |
 | `:w`             | Save.                                                                |
 | `:q`             | Quit.                                                                |
 | `:q!`            | Quit without saving.                                                 |
@@ -49,56 +59,56 @@ This lesson provides a reference of all the commands taught in this course. You 
 
 ## Navigation
 
-| Command         | Description                                                     |
-| --------------- | --------------------------------------------------------------- |
-| `h`             | Move left.                                                      |
-| `j`             | Move down.                                                      |
-| `k`             | Move up.                                                        |
-| `l`             | Move right.                                                     |
-| `w`             | Jump to the start of the next word.                             |
-| `b`             | Jump to the start of the previous word.                         |
-| `0`             | Jump to the start of the line.                                  |
-| `$`             | Jump to the end of the line.                                    |
-| `gg`            | Jump to the first line of the file.                             |
-| `G`             | Jump to the last line of the file. Note: `G` must be uppercase. |
-| `{n}G`          | Jump to line `{n}`. Note: `G` must be uppercase.                |
-| `:set number`   | Show line numbers.                                              |
-| `:set nonumber` | Hide line numbers.                                              |
+| Command         | Description                                               |
+| --------------- | --------------------------------------------------------- |
+| `h`             | Move left.                                                |
+| `j`             | Move down.                                                |
+| `k`             | Move up.                                                  |
+| `l`             | Move right.                                               |
+| `w`             | Jump to the start of the next word.                       |
+| `b`             | Jump to the start of the previous word.                   |
+| `0`             | Jump to the start of the line.                            |
+| `$`             | Jump to the end of the line.                              |
+| `gg`            | Jump to the first line of the file.                       |
+| `G` (uppercase) | Jump to the last line of the file.                        |
+| `{n}G`          | Jump to line `{n}`.<br/><br/>Note: `G` must be uppercase. |
+| `:set number`   | Show line numbers.                                        |
+| `:set nonumber` | Hide line numbers.                                        |
 
 ## Opening files
 
-| Command         | Description                                                                                                                                 |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `:e <filename>` | Open a file by name. If the file doesn't exist, open a new empty buffer; the new file is not saved unless you explicitly save it with `:w`. |
-| `:Explore`      | Open a read-only directory listing. Note: `:Explore` must be capitalized.                                                                   |
-| `Ctrl-g`        | Report the name of the currently open file and the cursor position in the status bar.                                                       |
+| Command                             | Description                                                                                                                                          |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `vim <filename>` or `:e <filename>` | Open a file by name.<br/><br/>If the file doesn't exist, open a new empty buffer; the new file is not saved unless you explicitly save it with `:w`. |
+| `:Explore`                          | Open a read-only directory listing.<br/><br/>Note: `:Explore` must be capitalized.                                                                   |
+| `Ctrl-g`                            | Report the name of the currently open file and the cursor position in the status bar.                                                                |
 
 ## Editing
 
-| Command  | Description                                                                 |
-| -------- | --------------------------------------------------------------------------- |
-| `x`      | Delete the character under the cursor.                                      |
-| `r`      | Replace the character under the cursor with the next key pressed.           |
-| `dw`     | Delete from the cursor to the start of the next word.                       |
-| `dd`     | Delete the entire current line.                                             |
-| `D`      | Delete from the cursor to the end of the line. Note: `D` must be uppercase. |
-| `yy`     | Yank (copy) the current line.                                               |
-| `p`      | Paste the yanked or deleted text after the cursor or current line.          |
-| `u`      | Undo the last change.                                                       |
-| `Ctrl-r` | Redo a change you just undid.                                               |
-| `cw`     | Delete a word and enter insert mode to type its replacement.                |
-| `cc`     | Delete the current line and enter insert mode to type its replacement.      |
+| Command         | Description                                                            |
+| --------------- | ---------------------------------------------------------------------- |
+| `x`             | Delete the character under the cursor.                                 |
+| `r`             | Replace the character under the cursor with the next key pressed.      |
+| `dw`            | Delete from the cursor to the start of the next word.                  |
+| `dd`            | Delete the entire current line.                                        |
+| `D` (uppercase) | Delete from the cursor to the end of the line.                         |
+| `yy`            | Yank (copy) the current line.                                          |
+| `p`             | Paste the yanked or deleted text after the cursor or current line.     |
+| `u`             | Undo the last change.                                                  |
+| `Ctrl-r`        | Redo a change you just undid.                                          |
+| `cw`            | Delete a word and enter insert mode to type its replacement.           |
+| `cc`            | Delete the current line and enter insert mode to type its replacement. |
 
 ## Visual mode
 
-| Command | Description                                                           |
-| ------- | --------------------------------------------------------------------- |
-| `v`     | Start character-wise visual mode.                                     |
-| `V`     | Start line-wise visual mode.                                          |
-| `~`     | Toggle the case of the selected text.                                 |
-| `d`     | Cut the selected text.                                                |
-| `y`     | Yank (copy) the selected text.                                        |
-| `c`     | Delete the selected text and enter insert mode to type a replacement. |
+| Command         | Description                            |
+| --------------- | -------------------------------------- |
+| `v` (lowercase) | Start character-wise visual mode.      |
+| `V` (uppercase) | Start line-wise visual mode.           |
+| `~`             | Toggle the case of the selected text.  |
+| `d`             | Delete the selected text.              |
+| `y`             | Yank (copy) the selected text.         |
+| `p`             | Paste the last deleted or yanked text. |
 
 ## Search and replace in a single file
 
@@ -122,11 +132,12 @@ This lesson provides a reference of all the commands taught in this course. You 
 
 ### Replacing on the current line
 
-| Command        | Description                                                           |
-| -------------- | --------------------------------------------------------------------- |
-| `:s/old/new/`  | Replace the first occurrence of `old` with `new` on the line.         |
-| `:s/old/new/g` | Replace all occurrences of `old` with `new` on the line.              |
-| `:s/old/new/i` | Replace the first occurrence of `old` with `new`, case-insensitively. |
+| Command         | Description                                                           |
+| --------------- | --------------------------------------------------------------------- |
+| `:s/old/new/`   | Replace the first occurrence of `old` with `new` on the line.         |
+| `:s/old/new/g`  | Replace all occurrences of `old` with `new` on the line.              |
+| `:s/old/new/i`  | Replace the first occurrence of `old` with `new`, case-insensitively. |
+| `:s/old/new/gi` | Replace all occurrences of `old` with `new`, case-insensitively.      |
 
 ### Replacing in the entire file
 
@@ -153,10 +164,16 @@ This lesson provides a reference of all the commands taught in this course. You 
 
 ### Navigating search results
 
-| Command          | Description                                                                                                                               |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `:cnext` (`:cn`) | Jump to the next entry in the quickfix list.                                                                                              |
-| `:cprev` (`:cp`) | Jump to the previous entry in the quickfix list.                                                                                          |
-| `:clist` (`:cl`) | Display all entries in the quickfix list.                                                                                                 |
-| `:cc {number}`   | Jump to a specific entry in the quickfix list by its number.                                                                              |
-| `:cdo {command}` | Run a command on every entry in the quickfix list.<br/><br/>Note: `:cdo` requires the quickfix list to be populated first via `:vimgrep`. |
+| Command           | Description                                                  |
+| ----------------- | ------------------------------------------------------------ |
+| `:cnext` or `:cn` | Jump to the next entry in the quickfix list.                 |
+| `:cprev` or `:cp` | Jump to the previous entry in the quickfix list.             |
+| `:clist` or `:cl` | Display all entries in the quickfix list.                    |
+| `:cc {number}`    | Jump to a specific entry in the quickfix list by its number. |
+
+### Replacing across multiple files
+
+| Command                      | Description                                                                                                                               |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `:cdo {command}`             | Run a command on every entry in the quickfix list.<br/><br/>Note: `:cdo` requires the quickfix list to be populated first via `:vimgrep`. |
+| `:cdo s/old/new/g \| update` | Replace all occurrences of `old` with `new` across all files in the quickfix list and save the changes.                                   |

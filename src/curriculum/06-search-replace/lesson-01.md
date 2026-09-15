@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586db
 type: learn
 title: 'Searching forward and repeating it'
+introduces: /pattern, /pattern\c, n, N
 ---
 
 # --author-notes--

@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586c7
 type: learn
 title: 'Opening a known file'
+introduces: Ctrl-g
 ---
 
 # --author-notes--

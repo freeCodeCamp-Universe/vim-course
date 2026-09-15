@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586d7
 type: learn
 title: 'Line-wise selection'
+introduces: V
 ---
 
 # --author-notes--

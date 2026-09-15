@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586c3
 type: learn
 title: 'Showing line numbers and going to a specific line'
+introduces: {n}G, :set number, :set nonumber
 ---
 
 # --author-notes--

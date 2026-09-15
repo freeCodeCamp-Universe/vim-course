@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586ce
 type: learn
 title: 'Deleting bigger units'
+introduces: dw, dd, D
 ---
 
 # --author-notes--

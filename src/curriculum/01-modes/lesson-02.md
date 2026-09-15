@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586b3
 type: learn
 title: 'Opening a file with `:e`'
+introduces: :e <filename>
 ---
 
 # --author-notes--

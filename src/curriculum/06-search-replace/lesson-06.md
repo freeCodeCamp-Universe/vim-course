@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586de
 type: learn
 title: 'Substituting text in every line'
+introduces: :%s/old/new/, :%s/old/new/g, :%s/pattern//gn
 ---
 
 # --author-notes--

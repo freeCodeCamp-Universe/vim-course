@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586e0
 type: learn
 title: 'Searching and editing across multiple files'
+introduces: :vimgrep pattern files, :cnext, :cprev
 ---
 
 # --author-notes--

@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586c9
 type: learn
 title: 'Browsing to find the right file'
+introduces: :Explore
 ---
 
 # --author-notes--

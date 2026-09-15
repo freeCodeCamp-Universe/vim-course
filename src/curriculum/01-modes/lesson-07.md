@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586b8
 type: learn
 title: 'New lines and quitting'
+introduces: o, :q
 ---
 
 # --author-notes--

@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586bf
 type: learn
 title: 'Jumping across words'
+introduces: w, b
 ---
 
 # --author-notes--

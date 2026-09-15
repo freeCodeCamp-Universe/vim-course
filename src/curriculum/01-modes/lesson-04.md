@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586b5
 type: learn
 title: 'Entering insert mode'
+introduces: i, Esc
 ---
 
 # --author-notes--

@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586d6
 type: learn
 title: 'Visual mode and character-wise selection'
+introduces: v
 ---
 
 # --author-notes--

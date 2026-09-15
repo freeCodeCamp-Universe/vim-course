@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586b9
 type: learn
 title: 'The `O` command and force quitting'
+introduces: O, :q!
 ---
 
 # --author-notes--

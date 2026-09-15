@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586ba
 type: learn
 title: 'Saving and quitting together'
+introduces: :wq
 ---
 
 # --author-notes--

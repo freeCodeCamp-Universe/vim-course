@@ -25,7 +25,7 @@ Review.
 
 These are commands you've learned in this module.
 
-## Single-file commands
+## Search and replace in a single file
 
 ### Jumping to matching delimiters
 
@@ -47,11 +47,12 @@ These are commands you've learned in this module.
 
 ### Replacing on the current line
 
-| Command        | Description                                                           |
-| -------------- | --------------------------------------------------------------------- |
-| `:s/old/new/`  | Replace the first occurrence of `old` with `new` on the line.         |
-| `:s/old/new/g` | Replace all occurrences of `old` with `new` on the line.              |
-| `:s/old/new/i` | Replace the first occurrence of `old` with `new`, case-insensitively. |
+| Command         | Description                                                           |
+| --------------- | --------------------------------------------------------------------- |
+| `:s/old/new/`   | Replace the first occurrence of `old` with `new` on the line.         |
+| `:s/old/new/g`  | Replace all occurrences of `old` with `new` on the line.              |
+| `:s/old/new/i`  | Replace the first occurrence of `old` with `new`, case-insensitively. |
+| `:s/old/new/gi` | Replace all occurrences of `old` with `new`, case-insensitively.      |
 
 ### Replacing in the entire file
 
@@ -68,7 +69,7 @@ These are commands you've learned in this module.
 | `yl`                    | Yank the character under the cursor into the unnamed register.    |
 | `Ctrl-r` (command line) | Paste the contents of the unnamed register into the command line. |
 
-## Multi-file commands
+## Search and replace in multiple files
 
 ### Searching across files
 
@@ -78,10 +79,16 @@ These are commands you've learned in this module.
 
 ### Navigating search results
 
-| Command          | Description                                                                                                                               |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `:cnext` (`:cn`) | Jump to the next entry in the quickfix list.                                                                                              |
-| `:cprev` (`:cp`) | Jump to the previous entry in the quickfix list.                                                                                          |
-| `:clist` (`:cl`) | Display all entries in the quickfix list.                                                                                                 |
-| `:cc {number}`   | Jump to a specific entry in the quickfix list by its number.                                                                              |
-| `:cdo {command}` | Run a command on every entry in the quickfix list.<br/><br/>Note: `:cdo` requires the quickfix list to be populated first via `:vimgrep`. |
+| Command           | Description                                                  |
+| ----------------- | ------------------------------------------------------------ |
+| `:cnext` or `:cn` | Jump to the next entry in the quickfix list.                 |
+| `:cprev` or `:cp` | Jump to the previous entry in the quickfix list.             |
+| `:clist` or `:cl` | Display all entries in the quickfix list.                    |
+| `:cc {number}`    | Jump to a specific entry in the quickfix list by its number. |
+
+### Replacing across multiple files
+
+| Command                      | Description                                                                                                                               |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `:cdo {command}`             | Run a command on every entry in the quickfix list.<br/><br/>Note: `:cdo` requires the quickfix list to be populated first via `:vimgrep`. |
+| `:cdo s/old/new/g \| update` | Replace all occurrences of `old` with `new` across all files in the quickfix list and save the changes.                                   |

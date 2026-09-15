@@ -2,6 +2,7 @@
 id: 6a9739e2374a6d659e2e6d3f
 type: learn
 title: 'Deleting, copying, and pasting a selection'
+introduces: d, y, p
 ---
 
 # --author-notes--

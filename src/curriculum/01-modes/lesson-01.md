@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586b2
 type: learn
 title: 'What is Vim?'
+introduces: vim
 ---
 
 # --author-notes--
@@ -11,10 +12,9 @@ title: 'What is Vim?'
 **Concept:**
 
 - Vim is a text editor you run entirely from the keyboard, no mouse needed.
-
-- It comes preinstalled on almost every Linux, macOS, and Unix computer, so it's the one editor you can count on finding already there, even on a computer you don't normally use.
+- It comes preinstalled on almost every Linux, macOS, and Unix computer.
 - You start it by typing `vim` in the terminal (optionally followed by a filename) and pressing `Enter`.
-- This lesson opens on that plain prompt instead of inside the editor, so the last thing it teaches is the launch itself.
+- This lesson starts with a bare terminal.
 
 **Activity:**
 Read why Vim is worth learning, then in the terminal type `vim` and press `Enter` to open the file.

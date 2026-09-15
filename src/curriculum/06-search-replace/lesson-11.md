@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586e2
 type: learn
 title: 'Batch replacing across files with `:cdo`'
+introduces: :cdo {command}, :cdo s/old/new/g | update
 ---
 
 # --author-notes--

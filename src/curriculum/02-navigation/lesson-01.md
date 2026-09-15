@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586be
 type: learn
 title: 'Moving up, down, left, right'
+introduces: h, j, k, l
 ---
 
 # --author-notes--

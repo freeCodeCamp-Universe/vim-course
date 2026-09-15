@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586c2
 type: learn
 title: 'Jumping to the top and bottom of a file'
+introduces: gg, G
 ---
 
 # --author-notes--

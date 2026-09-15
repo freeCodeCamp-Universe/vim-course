@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586e1
 type: learn
 title: 'Navigating the quickfix list'
+introduces: :clist, :cc {number}
 ---
 
 # --author-notes--

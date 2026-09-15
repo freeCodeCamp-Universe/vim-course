@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586cd
 type: learn
 title: 'Making single-character changes'
+introduces: x, r
 ---
 
 # --author-notes--

@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586d2
 type: learn
 title: 'Deleting and entering insert mode'
+introduces: cw, cc
 ---
 
 # --author-notes--

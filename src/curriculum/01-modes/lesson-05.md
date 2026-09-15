@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586b6
 type: learn
 title: 'The `a` and `A` commands'
+introduces: a, A
 ---
 
 # --author-notes--

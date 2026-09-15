@@ -2,6 +2,7 @@
 id: 6a75e416116f97fc366586dd
 type: learn
 title: 'Substituting text on a specific line'
+introduces: :s/old/new/, :s/old/new/g, :s/old/new/i, :s/old/new/gi
 ---
 
 # --author-notes--

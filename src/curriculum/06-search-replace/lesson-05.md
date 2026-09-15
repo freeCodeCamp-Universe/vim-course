@@ -2,6 +2,7 @@
 id: 6a7a4d19e6cc6699ab83a2ab
 type: learn
 title: 'Yanking a character into the command line'
+introduces: yl, Ctrl-r
 ---
 
 # --author-notes--
@@ -30,19 +31,19 @@ You may have noticed that the file has some strange star symbols. You're going t
 
 However, the symbol `☆` is not on your keyboard, so you'll need to copy it from the file and paste it into the command line.
 
-To do this, move the cursor to the `☆` and use the `yl` command, which is for yanking the character under the cursor.
+To do this, move the cursor to a `☆` and use the `yl` command, which is for yanking the character under the cursor.
 
 To paste the symbol into the command line:
 
-- Press <kbd>:</kbd> to enter command mode.
+- Press <kbd>:</kbd> to enter command-line mode.
 - Press <kbd>Ctrl</kbd> + <kbd>r</kbd> (Linux/Windows) or <kbd>Control</kbd> + <kbd>r</kbd> (Mac). You'll see a `"` appear in the command line.
-- Press <kbd>Shift</kbd> + <kbd>'</kbd> (which produces `"`) to execute the command.
+- Press <kbd>Shift</kbd> + <kbd>'</kbd> (which produces `"`) to paste.
 
 ---
 
-Move the cursor to the second paragraph and type `:s/☆/*/g` to replace all `☆` occurrences with `*`.
+Move the cursor to the second paragraph and use `:s/☆/*/g` to replace all `☆` occurrences with `*`.
 
-Note: You might expect that `*` needs escaping. That's true in search patterns where `*` is a special character, but in replacements, the symbol is treated as a literal character, so it doesn't need escaping.
+Note: You might expect that `*` needs escaping. That's true in search patterns where `*` is a special character. But in replacements, the symbol is treated as a literal character, so it doesn't need escaping.
 
 Save the file after the change.
 

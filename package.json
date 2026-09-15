@@ -23,7 +23,10 @@
     "build-lesson-data": "node --import tsx/esm --import ./scripts/prebuild-register.ts scripts/build-lesson-data.ts",
     "add-module": "tsx scripts/add-module.ts",
     "add-lesson": "tsx scripts/add-lesson.ts",
-    "sync-curriculum-doc": "tsx scripts/sync-curriculum-doc.ts"
+    "sync-curriculum-doc": "tsx scripts/sync-curriculum-doc.ts",
+    "check-review-commands": "tsx scripts/check-review-commands.ts",
+    "sync-command-reference": "tsx scripts/check-review-commands.ts --sync-capstone",
+    "validate:curriculum-integrity": "pnpm sync-curriculum-doc --check && pnpm check-review-commands --check"
   },
   "dependencies": {
     "react": "19.2.8",
