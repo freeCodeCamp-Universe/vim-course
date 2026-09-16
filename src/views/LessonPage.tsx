@@ -3,6 +3,8 @@ import { isProseLesson, type ClientLessonDefinition } from '@/curriculum/types';
 import type { Heading } from '@/utils/extractHeadings';
 import { LessonToolbar } from '@/components/features/LessonToolbar';
 import { Outline } from '@/components/features/Outline';
+import { useSeoMeta } from '@/hooks/useSeoMeta';
+import { seoConfig } from '@/utils/seo.config';
 import { LessonWorkspace, type TabId } from './LessonWorkspace';
 import styles from './LessonPage.module.css';
 
@@ -29,9 +31,18 @@ export function LessonPage({ lesson, nextLessonId, isLastLesson, instructionsHtm
   const prose = isProseLesson(lesson);
   const [tab, setTab] = useState<TabId>('instructions');
 
+  const cleanTitle = lesson.title.replaceAll('`', '');
+  const pageTitle = `${cleanTitle} | Vim Course | freeCodeCamp.org`;
+
   useEffect(() => {
-    document.title = `${lesson.title.replaceAll('`', '')} | Vim Course | freeCodeCamp.org`;
-  }, [lesson.title]);
+    document.title = pageTitle;
+  }, [pageTitle]);
+
+  useSeoMeta({
+    title: pageTitle,
+    description: seoConfig.siteDescription,
+    path: `/learn/${lesson.id}`,
+  });
 
   const [outlineOpen, setOutlineOpen] = useState(false);
   const outlineButtonRef = useRef<HTMLButtonElement | null>(null);

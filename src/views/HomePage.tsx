@@ -3,6 +3,8 @@ import { useCurriculumTree } from '@/curriculum/useCurriculumTree';
 import { LoadingState } from '@/components/base/LoadingState/LoadingState';
 import { FccLogoIcon } from '@/components/base/Icon';
 import { Link } from '@/components/base/Link/Link';
+import { useSeoMeta } from '@/hooks/useSeoMeta';
+import { seoConfig } from '@/utils/seo.config';
 import { Home } from './Home';
 import styles from './HomePage.module.css';
 
@@ -10,8 +12,10 @@ export function HomePage() {
   const tree = useCurriculumTree();
 
   useEffect(() => {
-    document.title = 'Vim Course | freeCodeCamp.org';
+    document.title = seoConfig.siteTitle;
   }, []);
+
+  useSeoMeta({ title: seoConfig.siteTitle, description: seoConfig.siteDescription, path: '/' });
 
   if (!tree) {
     return <LoadingState label="Loading course" />;

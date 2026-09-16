@@ -34,13 +34,27 @@ Runs `vite build`. Compiles and bundles the React app into `dist/`, producing
 the entry `index.html`, hashed JS/CSS assets, and copying the
 `public/data/` files into `dist/data/`.
 
-### 4. Generate static routes: `pnpm build:static-routes`
+### 4. Generate static routes with SEO meta: `pnpm build:static-routes`
 
-Runs `scripts/generate-spa-routes.ts`. Reads the curriculum tree from
-`dist/data/curriculum-tree.json` and copies `dist/index.html` into
-`dist/learn/{id}/index.html` for every lesson ID. This lets a static host
-resolve deep links (e.g., `/learn/103-deleting-text`) to a real file so
-Wouter can take over once JS loads.
+Runs `scripts/generate-spa-routes.ts`. Uses `dist/index.html` as a template
+(it contains a `<!-- SEO_META_PLACEHOLDER -->` comment) and the curriculum
+tree from `dist/data/curriculum-tree.json`. For every route (the homepage
+and each lesson) the script:
+
+1. Injects per-route `<title>`, `<meta>` (description, keywords, Open Graph,
+   Twitter Card), `<link rel="canonical">`, and JSON-LD structured data into
+   the template.
+2. Writes the result to `dist/index.html` (homepage) and
+   `dist/learn/{id}/index.html` (lessons).
+
+All SEO values come from `src/utils/seo.config.ts` (shared constants and
+homepage copy) and the lesson titles in the curriculum tree. The homepage
+uses `@type: "WebSite"` for JSON-LD; lesson pages use `@type: "WebPage"`.
+
+This lets a static host resolve deep links (e.g., `/learn/103-deleting-text`)
+to a real file so Wouter can take over once JS loads, and ensures that
+crawlers and social-link-preview bots see correct metadata without executing
+JavaScript.
 
 ## Requirements
 
