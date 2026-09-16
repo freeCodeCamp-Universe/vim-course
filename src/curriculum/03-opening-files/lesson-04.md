@@ -33,8 +33,8 @@ First, create a `cursor-origin.md` file and write this line in it:
 
 Then, find and fix the following files:
 
-- `cursor-history.md`: Remove the duplicate occurrence of "term" in the first sentence.
-- `cursor-in-terminal.md`: Move the last sentence, "However, ...", to a new paragraph.
+- `cursor-history.md`: Remove the duplicate occurrence of `term` in the first sentence.
+- `cursor-in-terminal.md`: Move the last sentence, `However, ...`, to a new paragraph.
 
 Save each file when you're done.
 
@@ -95,7 +95,7 @@ However, a popular configuration is a solid, non-blinking cursor, which eliminat
       }
     },
     {
-      "label": "Remove the duplicate \"term\" in `cursor-history.md` and save it.",
+      "label": "Remove the duplicate `term` in `cursor-history.md` and save it.",
       "hint": "You should move the cursor onto an extra `term`, remove it along with the extra space, and save the file with `:w`.",
       "evaluateWhen": { "fileOpen": "cursor-history.md" },
       "test": {
@@ -106,7 +106,7 @@ However, a popular configuration is a solid, non-blinking cursor, which eliminat
     },
     {
       "label": "Move the last sentence in `cursor-in-terminal.md` to a new paragraph and save it.",
-      "hint": "You should move the cursor just before \"However\", delete the space before it, and press <kbd>Enter</kbd> to start a new paragraph. Then, save the file with `:w`.",
+      "hint": "You should move the cursor just before `However`, delete the space before it, and press <kbd>Enter</kbd> to start a new paragraph. Then, save the file with `:w`.",
       "evaluateWhen": { "fileOpen": "cursor-in-terminal.md" },
       "test": {
         "file": "cursor-in-terminal.md",

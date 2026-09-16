@@ -45,7 +45,7 @@ First, start Vim and open `return.md` from the terminal.
 Then:
 
 - Move the cursor to the stray "q" in `typewriterq's` and press <kbd>x</kbd>.
-- Move the cursor to the last letter of "carriagg", and press <kbd>r</kbd> followed by <kbd>e</kbd> to replace the letter.
+- Move the cursor to the last letter of `carriagg`, and press <kbd>r</kbd> followed by <kbd>e</kbd> to replace the letter.
 
 When you're done, save the file.
 
@@ -99,7 +99,7 @@ The Return key is named after the typewriter's carriage return, which was a phys
     },
     {
       "label": "Delete the stray \"q\" using the `x` command.",
-      "hint": "You should move the cursor onto the \"q\" in \"typewriterq's\" and press <kbd>x</kbd> to delete it.",
+      "hint": "You should move the cursor onto the \"q\" in `typewriterq's` and press <kbd>x</kbd> to delete it.",
       "test": {
         "command": "x",
         "file": "return.md",
@@ -109,7 +109,7 @@ The Return key is named after the typewriter's carriage return, which was a phys
     },
     {
       "label": "Replace the last letter of `carriagg` with \"e\" using the `r` command.",
-      "hint": "You should move the cursor onto the last \"g\" in \"carriagg\" and press <kbd>r</kbd> then <kbd>e</kbd> to replace the letter.",
+      "hint": "You should move the cursor onto the last \"g\" in `carriagg` and press <kbd>r</kbd> then <kbd>e</kbd> to replace the letter.",
       "test": {
         "command": "r",
         "file": "return.md",
